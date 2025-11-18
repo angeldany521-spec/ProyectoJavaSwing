@@ -6,6 +6,18 @@ public abstract class Persona {
 	private String telefono;
 	private String correo;
 	
+	public Persona(int id, String nombre, String telefono, String correo) {
+		this.id = id;
+		this.nombre = nombre;
+		this.telefono = telefono;
+		this.correo = correo;
+	
+	}
+	
+	public Persona() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public int getId() {
 		return id;
 	}
