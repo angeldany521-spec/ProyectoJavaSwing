@@ -1,0 +1,23 @@
+# Requerimientos del proyecto
+
+Requerimientos Funcionales
+-Gestionar los Clientes
+-Gestionar los Barberos
+-Gestionar los Servicios
+-Gestionar las Citas/Reservaciones
+-Gestionar Usuarios
+
+
+Requerimientos No Funcionales
+-Interfaz Grafica
+-Base de datos enlazada
+-Buen desempeño
+-Seguridad
+-Portabilidad
+
+
+
+
+
+
+
