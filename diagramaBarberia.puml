@@ -4,9 +4,16 @@ title Diagrama de Clases - Aplicación Barbería
 left to right direction
 ' === Paquete de Interfaz (UI / Presentación) ===
 package "Interfaz" {
+
+	class PantallaAdmin {
+	+ MostrarEmpleados() : void
+	+ RegistrarEmpleados() : void
+	+ EliminarEmpleados() : void
+	}
+
     class PantallaPrincipal {
         + mostrarMenu(): void
-        + navegar(opcion: int): void
+        + mostrarVentanas() : void
     }
 
     class GestionCitasUI {
@@ -26,8 +33,8 @@ package "Interfaz" {
     }
 
     class Login {
-    +registrarUsuario() : void
-    +verificarRol() : void
+    + verificarRol() : void
+    + iniciarSesion() : void
 }
 }
 
@@ -43,7 +50,7 @@ package "Dominio" {
     }
 
     class Cliente {
-        
+    - PuntosFidelidad : int
     }
 
     class Barbero {
@@ -55,15 +62,22 @@ package "Dominio" {
     }
     
     interface Usuario {
-    - user : String
-    - contraseña : String
-    - rol : String
+    
     + registrar(): void
     + actualizarDatos(): void
 }
+
+	abstract class usuarioBase extends Persona {
+	- user : String
+	- contraseña : String
+	- rol : String
+	}
     
-    class UsuarioRegular extends Persona implements Usuario {}
-    class Admin extends Persona implements Usuario{}
+    class UsuarioRegular extends usuarioBase implements Usuario {
+    }
+    class Admin extends usuarioBase implements Usuario{
+    - nivelAcceso : int
+    }
 
 
     class Cita {
