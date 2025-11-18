@@ -67,7 +67,7 @@ package "Dominio" {
     + actualizarDatos(): void
 }
 
-	abstract class usuarioBase extends Persona {
+	abstract class UsuarioBase extends Persona {
 	- user : String
 	- contraseña : String
 	- rol : String
@@ -75,7 +75,7 @@ package "Dominio" {
     
     class UsuarioRegular extends usuarioBase implements Usuario {
     }
-    class Admin extends usuarioBase implements Usuario{
+    class Admin extends UsuarioBase implements Usuario{
     - nivelAcceso : int
     }
 
