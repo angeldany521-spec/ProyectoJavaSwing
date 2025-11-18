@@ -1,0 +1,124 @@
+@startuml
+title Diagrama de Clases - Aplicación Barbería
+
+left to right direction
+' === Paquete de Interfaz (UI / Presentación) ===
+package "Interfaz" {
+    class PantallaPrincipal {
+        + mostrarMenu(): void
+        + navegar(opcion: int): void
+    }
+
+    class GestionCitasUI {
+        + mostrarCitas(): void
+        + crearCita(): void
+        + cancelarCita(): void
+    }
+
+    class GestionClientesUI {
+        + registrarCliente(): void
+        + mostrarClientes(): void
+    }
+
+    class GestionPagosUI {
+        + procesarPago(): void
+        + mostrarHistorialPagos(): void
+    }
+
+    class Login {
+    +registrarUsuario() : void
+    +verificarRol() : void
+}
+}
+
+' === Paquete de Dominio / Lógica ===
+package "Dominio" {
+
+    abstract class Persona {
+        - id: int
+        - nombre: String
+        - telefono: String
+        - correo: String
+        
+    }
+
+    class Cliente {
+        
+    }
+
+    class Barbero {
+        - especialidad: String
+        - disponible: boolean
+        + asignarCita(): void
+        + actualizarDisponibilidad(): void
+        + mostrarHorarios(): void
+    }
+    
+    interface Usuario {
+    - user : String
+    - contraseña : String
+    - rol : String
+    + registrar(): void
+    + actualizarDatos(): void
+}
+    
+    class UsuarioRegular extends Persona implements Usuario {}
+    class Admin extends Persona implements Usuario{}
+
+
+    class Cita {
+        - idCita: int
+        - fecha: Date
+        - hora: String
+        - estado: String
+        + agendarCita(): void
+        + cancelarCita(): void
+        + actualizarEstado(): void
+    }
+
+    class Servicio {
+        - idServicio: int
+        - nombre: String
+        - precio: double
+        - duracion: int
+        + agregarServicio(): void
+        + editarServicio(): void
+        + consultarPrecio(): double
+    }
+
+    class Pago {
+        - idPago: int
+        - monto: double
+        - metodoPago: String
+        - fechaPago: Date
+        + registrarPago(): void
+        + consultarPago(): void
+    }
+
+    ' Herencia
+    Persona <|-- Cliente
+    Persona <|-- Barbero
+}
+
+' === Paquete de Persistencia / Datos ===
+package "Persistencia" {
+    class BaseDatos {
+        + conectar(): void
+        + guardarDatos(objeto): void
+        + consultarDatos(tabla: String): void
+    }
+}
+
+' === Relaciones internas ===
+Cliente  --  Cita 
+Barbero  --  Cita 
+Cita  --  Pago 
+Cita  --  Servicio  
+
+' === Relaciones entre paquetes ===
+GestionClientesUI --> Cliente 
+GestionCitasUI --> Cita 
+GestionPagosUI --> Pago 
+Dominio --> Persistencia 
+Login --> Usuario
+@enduml
