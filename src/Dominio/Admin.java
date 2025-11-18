@@ -3,15 +3,21 @@ package Dominio;
 public class Admin extends UsuarioBase implements Usuario{
 	private int nivelAcceso;
 	
+	
+	public void setNivelAcceso(int nivelAcceso) {
+		this.nivelAcceso = nivelAcceso;
+	}
+	public int getNivelAcceso() {
+		return nivelAcceso;
+	}
+	
 	@Override
 	public void registrar() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void actualizarDatos() {
-		// TODO Auto-generated method stub
 		
 	}
 
