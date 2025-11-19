@@ -30,7 +30,7 @@ public class PantallaAdmin {
         frame.setBounds(100, 100, 900, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setLayout(new BorderLayout());
+        frame.getContentPane().setLayout(new BorderLayout());
 
         // ---------------- SIDEBAR ----------------
         JPanel sidebar = new JPanel();
@@ -43,8 +43,8 @@ public class PantallaAdmin {
         logoPanel.setBackground(new Color(245, 247, 250));
         logoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
 
-        JLabel title = new JLabel("barberPiece");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        JLabel title = new JLabel("BarberPiece");
+        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
         logoPanel.add(title);
 
         sidebar.add(logoPanel);
@@ -59,27 +59,42 @@ public class PantallaAdmin {
         pantallaInicio.add(new JLabel("Pantalla de inicio"));
 
         // Pantalla agregar
-        JPanel pantallaAgregar = new JPanel();
-        pantallaAgregar.add(new JLabel("Pantalla para agregar cosas"));
+        JPanel pantallaCitas = new JPanel();
+        pantallaCitas.add(new JLabel("Historial de Citas"));
+        
+        JPanel pantallaPagos = new JPanel();
+        pantallaPagos.add(new JLabel("Historial de Pagos"));
+        
+        
 
         // Añadir pantallas
         panelPrincipal.add(pantallaInicio, "INICIO");
-        panelPrincipal.add(pantallaAgregar, "AGREGAR");
+        panelPrincipal.add(pantallaCitas, "CITAS");
+        panelPrincipal.add(pantallaCitas, "PAGOS");
 
         // ---------------- BOTONES DEL SIDEBAR ----------------
-        sidebar.add(createMenuButton("Gestion Barberos", () -> {
+        sidebar.add(createMenuButton("Gestion Empleados", () -> {
             cardLayout.show(panelPrincipal, "INICIO");
         }));
 
-        sidebar.add(createMenuButton("Historial de Pagos", () -> {
-            cardLayout.show(panelPrincipal, "AGREGAR");
+        sidebar.add(createMenuButton("Historial de Citas", () -> {
+            cardLayout.show(panelPrincipal, "CITAS");
         }));
-
+        sidebar.add(createMenuButton("Historial de Pagos", () -> {
+        	cardLayout.show(panelPrincipal, "PAGOS");
+        }));
+        
+        
+        sidebar.add(createMenuButton("Cerrar Sesión", () -> {
+			frame.dispose();
+			
+		}));
+        
         sidebar.add(Box.createVerticalGlue());
 
         // Añadir todo al frame
-        frame.add(sidebar, BorderLayout.WEST);
-        frame.add(panelPrincipal, BorderLayout.CENTER);
+        frame.getContentPane().add(sidebar, BorderLayout.WEST);
+        frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
     }
 
     // ---- Método para crear botones con acción ----
