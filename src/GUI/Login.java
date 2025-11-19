@@ -5,10 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
-
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -28,7 +26,35 @@ public class Login {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-
+		try {
+		
+			  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+			  
+			  if ("".equals(info.getName())) {
+			  
+			  UIManager.setLookAndFeel(info.getClassName());
+			  
+			  break;
+			  
+			  }
+			  
+			  }
+			  
+			  } catch (Exception e) {
+			  
+			  // Si Nimbus no está disponible, puedes establecer otro Look and Feel.
+			  
+			  try {
+			  
+			  UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			  
+			  } catch (Exception ex) {
+			  
+			  // Manejo de excepción
+			  
+			  }
+			  
+			  }
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -66,15 +92,11 @@ public class Login {
 		
 		
 		
-		
-		
-		
-		
 		ventanaLogin.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblIniciarSesion = new JLabel("Iniciar Sesion");
-		lblIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 25));
+		lblIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 23));
 		lblIniciarSesion.setBounds(20, 25, 158, 41);
 		panel.add(lblIniciarSesion);
 		
