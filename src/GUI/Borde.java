@@ -6,9 +6,11 @@ import javax.swing.border.Border;
 public class Borde implements Border {
 
     private int radius;
+    private Color color;
 
-    public Borde(int radius) {
+    public Borde(int radius, Color color) {
         this.radius = radius;
+        this.color = color;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class Borde implements Border {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.setColor(Color.GRAY); // color del borde
+        g.setColor(color); // color del borde
         g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
     }
 }

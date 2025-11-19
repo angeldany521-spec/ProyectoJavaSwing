@@ -54,7 +54,7 @@ public class Login {
 	private void initialize() {
 		ventanaLogin = new JFrame();
 		ventanaLogin.getContentPane().setBackground(Paleta.fondoPrincipal);
-		ventanaLogin.setBounds(100, 100, 560, 587);
+		ventanaLogin.setBounds(100, 100, 519, 578);
 		ventanaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventanaLogin.getContentPane().setLayout(null);
 		
@@ -62,7 +62,7 @@ public class Login {
 
 		panel.setBackground(Color.WHITE);
 		panel.setPreferredSize(new Dimension(300, 200));
-		panel.setBounds(85, 130, 389, 339);
+		panel.setBounds(58, 150, 389, 339);
 		
 		
 		
@@ -86,7 +86,7 @@ public class Login {
 		
 		campo_user = new JTextField();
 		campo_user.setBounds(20, 129, 345, 33);
-		campo_user.setBorder(new Borde(10));
+		campo_user.setBorder(new Borde(10, Paleta.bordeCampos));
 		panel.add(campo_user);
 		campo_user.setColumns(10);
 		
@@ -102,15 +102,15 @@ public class Login {
 		
 		campo_contra = new JTextField();
 		campo_contra.setColumns(10);
-		campo_contra.setBounds(20, 199, 345, 33);
-		campo_contra.setBorder(new Borde(10));
+		campo_contra.setBounds(20, 200, 345, 33);
+		campo_contra.setBorder(new Borde(10, Paleta.bordeCampos));
 		panel.add(campo_contra);
 		
 		JButton botonIniciarSesion = new JButton("Iniciar Sesion");
-		botonIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 16));
-		botonIniciarSesion.setBounds(20, 245, 345, 54);
+		botonIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 18));
+		botonIniciarSesion.setBounds(20, 258, 345, 41);
+		botonIniciarSesion.setBorder(new Borde(5, Paleta.bordeCampos));
 		botonIniciarSesion.setBackground(Paleta.fondoBoton);
-		botonIniciarSesion.setBorder(new Borde(5));
 		
 		panel.add(botonIniciarSesion);
 		
