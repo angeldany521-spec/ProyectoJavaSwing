@@ -36,8 +36,9 @@ public class GestionPagos {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1074, 534);
+		frame.setBounds(100, 100, 1109, 556);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("Gesti\u00F3n de Pagos");
 	}
 
 }
