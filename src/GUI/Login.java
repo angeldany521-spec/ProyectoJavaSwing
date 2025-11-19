@@ -1,18 +1,24 @@
 package GUI;
 
+import Imagenes.*;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.Canvas;
 
 
 
@@ -81,15 +87,27 @@ public class Login extends JFrame{
 		ventanaLogin = new JFrame();
 		ventanaLogin.setResizable(false);
 		ventanaLogin.getContentPane().setBackground(Paleta.fondoPrincipal);
-		ventanaLogin.setBounds(460, 120, 520, 578);
+		ventanaLogin.setBounds(460, 120, 520, 602);
 		ventanaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventanaLogin.getContentPane().setLayout(null);
 		
+		
+		
+		ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoBarberia-1-02.png"));
+		Image img = logo.getImage().getScaledInstance(220, 180, Image.SCALE_SMOOTH);
+		
+		
+		JLabel lbllogo = new JLabel(new ImageIcon(img));
+		lbllogo.setText("");
+		lbllogo.setBounds(114, 10, 277, 171);
+		ventanaLogin.getContentPane().add(lbllogo);
+		
+		
 		Panel panel = new Panel(15, 2, Paleta.borde);                          
 
-		panel.setBackground(Color.WHITE);
+		panel.setBackground(Paleta.panel);
 		panel.setPreferredSize(new Dimension(300, 200));
-		panel.setBounds(58, 150, 389, 339);
+		panel.setBounds(58, 190, 389, 339);
 		
 
 		ventanaLogin.getContentPane().add(panel);
@@ -98,11 +116,12 @@ public class Login extends JFrame{
 		JLabel lblIniciarSesion = new JLabel("Iniciar Sesion");
 		lblIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 23));
 		lblIniciarSesion.setBounds(20, 25, 158, 41);
+		lblIniciarSesion.setForeground(Paleta.textologin);
 		panel.add(lblIniciarSesion);
 		
 		JLabel lbl2 = new JLabel("Ingresa tus datos para acceder al sistema\r\n");
-		lbl2.setFont(new Font("SansSerif", Font.BOLD, 13));
-		lbl2.setForeground(Paleta.textologin);
+		lbl2.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lbl2.setForeground(Paleta.textologin2);
 		lbl2.setBounds(20, 70, 266, 19);
 		panel.add(lbl2);
 		
@@ -110,31 +129,37 @@ public class Login extends JFrame{
 		campo_user.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		campo_user.setBounds(20, 136, 345, 41);
 		campo_user.setBorder(new Borde(10, Paleta.bordeCampos));
+		campo_user.setOpaque(false);
+		campo_user.setForeground(Paleta.textologin);
 		panel.add(campo_user);
 		campo_user.setColumns(10);
 		
 		JLabel lbluser = new JLabel("Usuario");
 		lbluser.setFont(new Font("SansSerif", Font.BOLD, 14));
 		lbluser.setBounds(20, 110, 54, 16);
+		lbluser.setForeground(Paleta.textologin);
 		panel.add(lbluser);
 		
 		JLabel lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setFont(new Font("SansSerif", Font.BOLD, 14));
-		lblContrasea.setBounds(20, 187, 87, 16);
+		lblContrasea.setBounds(20, 189, 87, 16);
+		lblContrasea.setForeground(Paleta.textologin);
 		panel.add(lblContrasea);
 		
 		JButton botonIniciarSesion = new JButton("Iniciar Sesion");
 		botonIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 18));
-		botonIniciarSesion.setBounds(20, 280, 345, 33);
-		botonIniciarSesion.setBorder(new Borde(5, Paleta.bordeCampos));
+		botonIniciarSesion.setBounds(20, 278, 345, 35);
 		botonIniciarSesion.setBackground(Paleta.fondoBoton);
+		botonIniciarSesion.setForeground(Paleta.textologin);
 		
 		panel.add(botonIniciarSesion);
 		
 		campoContra = new JPasswordField();
 		campoContra.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		campoContra.setBounds(20, 213, 345, 41);
+		campoContra.setBounds(20, 217, 345, 41);
 		campoContra.setBorder(new Borde(10, Paleta.bordeCampos));
+		campoContra.setForeground(Paleta.textologin);
+		campoContra.setOpaque(false);
 		panel.add(campoContra);
 	}
 }
