@@ -17,10 +17,15 @@ public class Paleta {
 	    public static final Color textologin2 = new Color(70, 150, 230);
 	    
 	    
-	    public static final Color menu = fondoPrincipal;
-	    public static final Color fondo2 = new Color(0,0,0,220);
+	    public static final Color menu = new Color(0,0,0,215);
+	    public static final Color fondo2 = fondoPrincipal;
 	    public static final Color pressed = new Color(70, 150, 230);
-	    public static final Color active = new Color(0,0,0,100);
+	    public static final Color active = new Color(100, 20, 25);
+	    public static final Color table = fondoPrincipal;
+	    public static final Color headers = fondoPrincipal;
+	    public static final Color menuletras = fondoPrincipal;
+	    public static final Color fondoBoton2 = new Color(200, 50, 42);
+	    
 	    
 	    
 	    

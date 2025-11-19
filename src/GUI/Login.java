@@ -104,7 +104,7 @@ public class Login extends JFrame{
 		
 		
 		Panel panel = new Panel(15, 2, Paleta.borde);                          
-
+		
 		panel.setBackground(Paleta.panel);
 		panel.setPreferredSize(new Dimension(300, 200));
 		panel.setBounds(58, 190, 389, 339);
