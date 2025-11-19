@@ -15,6 +15,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 
 
@@ -22,7 +23,7 @@ public class Login {
 
 	private JFrame ventanaLogin;
 	private JTextField campo_user;
-	private JTextField campo_contra;
+	private JPasswordField campoContra;
 
 	/**
 	 * Launch the application.
@@ -85,7 +86,7 @@ public class Login {
 		panel.add(lbl2);
 		
 		campo_user = new JTextField();
-		campo_user.setBounds(20, 129, 345, 33);
+		campo_user.setBounds(20, 129, 345, 41);
 		campo_user.setBorder(new Borde(10, Paleta.bordeCampos));
 		panel.add(campo_user);
 		campo_user.setColumns(10);
@@ -100,19 +101,18 @@ public class Login {
 		lblContrasea.setBounds(20, 180, 87, 16);
 		panel.add(lblContrasea);
 		
-		campo_contra = new JTextField();
-		campo_contra.setColumns(10);
-		campo_contra.setBounds(20, 200, 345, 33);
-		campo_contra.setBorder(new Borde(10, Paleta.bordeCampos));
-		panel.add(campo_contra);
-		
 		JButton botonIniciarSesion = new JButton("Iniciar Sesion");
 		botonIniciarSesion.setFont(new Font("SansSerif", Font.BOLD, 18));
-		botonIniciarSesion.setBounds(20, 258, 345, 41);
+		botonIniciarSesion.setBounds(20, 273, 345, 33);
 		botonIniciarSesion.setBorder(new Borde(5, Paleta.bordeCampos));
 		botonIniciarSesion.setBackground(Paleta.fondoBoton);
 		
 		panel.add(botonIniciarSesion);
+		
+		campoContra = new JPasswordField();
+		campoContra.setBounds(20, 206, 345, 41);
+		campoContra.setBorder(new Borde(10, Paleta.bordeCampos));
+		panel.add(campoContra);
 		
 		
 	}
