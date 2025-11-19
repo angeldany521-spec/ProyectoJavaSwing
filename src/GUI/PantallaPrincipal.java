@@ -109,11 +109,9 @@ public class PantallaPrincipal {
         menu.add(crearCitas);
         menu.add(historialPagos);
         
+   
         
-
-        card = new CardLayout();
-        
-
+      
 
         frame.getContentPane().add(menu, BorderLayout.WEST);
         
@@ -129,14 +127,19 @@ public class PantallaPrincipal {
         btnCerrarSesion.setBounds(0, 464, 150, 46);
         menu.add(btnCerrarSesion);
         
-        JLabel lblNewLabel = new JLabel("BarberPiece");
-        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 17));
-        lblNewLabel.setBounds(10, 10, 102, 36);
-        menu.add(lblNewLabel);
         
+
         
+
         
+
         
+    
+        
+    
+
+    
+	        
        
         
         citas.addActionListener(new ActionListener() {
@@ -171,6 +174,7 @@ public class PantallaPrincipal {
         
         
     }
+	
 }
 
 
