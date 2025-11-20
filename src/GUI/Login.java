@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import com.formdev.flatlaf.FlatLightLaf;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -33,34 +36,10 @@ public class Login extends JFrame{
 	 */
 	public static void main(String[] args) {
 		try {
-		
-			  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-			  
-			  if ("".equals(info.getName())) {
-			  
-			  UIManager.setLookAndFeel(info.getClassName());
-			  
-			  break;
-			  
-			  }
-			  
-			  }
-			  
-			  } catch (Exception e) {
-			  
-			  // Si Nimbus no está disponible, puedes establecer otro Look and Feel.
-			  
-			  try {
-			  
-			  UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			  
-			  } catch (Exception ex) {
-			  
-			  // Manejo de excepción
-			  
-			  }
-			  
-			  }
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

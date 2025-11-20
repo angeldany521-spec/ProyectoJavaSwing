@@ -1,3 +1,4 @@
+
 package GUI;
 
 import java.awt.BorderLayout;
@@ -5,34 +6,28 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.DatabaseMetaData;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
-
-import java.awt.SystemColor;
-import java.awt.MultipleGradientPaint.ColorSpaceType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.plaf.DimensionUIResource;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import java.awt.FlowLayout;
-import java.awt.Rectangle;
-import java.awt.Component;
-import javax.swing.table.TableModel;
-import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.github.lgooddatepicker.components.CalendarPanel;
+
 
 
 
@@ -48,6 +43,11 @@ public class PantallaPrincipal {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -184,16 +184,33 @@ public class PantallaPrincipal {
         modeloCitas.addRow(new String[]{"Cliente", "Barbero", "Fecha", "Servicio", "Duracion", "Precio"});
         
         
+        
         tableCitas = new JTable(modeloCitas);
         tableCitas.getTableHeader().setBackground(Paleta.headers);
         tableCitas.getTableHeader().setForeground(Paleta.textologin2);
         tableCitas.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
-        tableCitas.setGridColor(Paleta.menu);
+        tableCitas.setShowGrid(true);
+        tableCitas.setGridColor(Color.black);
         tableCitas.setForeground(Paleta.menu);
         tableCitas.setFillsViewportHeight(true);
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
         scrollPane.setViewportView(tableCitas);
+        
+        tableCitas.putClientProperty(
+                FlatClientProperties.STYLE,
+                "showHorizontalLines:true; "
+                + // separadores de filas
+                "showVerticalLines:true; "
+                + // con líneas verticales
+                "rowHeight:28; "
+                + // altura agradable
+                "intercellSpacing:0,1; "
+                + // grosor de 1px entre filas
+                "selectionBackground:#E6F0FF; "
+                +
+                "selectionForeground:#0A1F44; "
+        );
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBounds(-185, 10, 1407, 51);
@@ -221,8 +238,10 @@ public class PantallaPrincipal {
         panelSuperior.add(eliminarCita);
         eliminarCita.setPreferredSize(new Dimension(200, 40));
         eliminarCita.setFont(new Font("SansSerif", Font.BOLD, 15));
+        
         eliminarCita.setBackground(Paleta.fondoBoton2);
         eliminarCita.setForeground(Paleta.textologin);
+        eliminarCita.setOpaque(true);
         
         
         PanelGestionPagos verHistorialPagos = new PanelGestionPagos();
@@ -237,7 +256,7 @@ public class PantallaPrincipal {
         panelSuperior_1.setLayout(null);
         
         JLabel lblHistorialPagos = new JLabel("Historial De Pagos");
-        lblHistorialPagos.setBounds(10, 8, 241, 35);
+        lblHistorialPagos.setBounds(9, 8, 241, 35);
         lblHistorialPagos.setForeground(new Color(70, 150, 230));
         lblHistorialPagos.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblHistorialPagos.setBackground(new Color(240, 235, 220));
@@ -255,31 +274,45 @@ public class PantallaPrincipal {
         panelSuperior_1.add(buscarHistorialPagos);
         
         JPanel panelFiltro = new JPanel();
-        panelFiltro.setBounds(330, 0, 180, 51);
+        panelFiltro.setBounds(334, 0, 196, 51);
         panelSuperior_1.add(panelFiltro);
         panelFiltro.setPreferredSize(new Dimension(100, 19));
         panelFiltro.setBackground(Paleta.fondoPrincipal);
         panelFiltro.setLayout(null);
         
-        JLabel lblNewLabel = new JLabel("Filtrar por");
-        lblNewLabel.setBounds(57, 7, 74, 19);
-        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 15));
-        panelFiltro.add(lblNewLabel);
+        JLabel lblFiltro = new JLabel("Filtrar por");
+        lblFiltro.setBounds(61, 7, 74, 19);
+        lblFiltro.setForeground(Paleta.textologin2);
+        lblFiltro.setFont(new Font("SansSerif", Font.BOLD, 15));
+        panelFiltro.add(lblFiltro);
         
-        JRadioButton rdbtnNewRadioButton = new JRadioButton("Metodo de pago");
-        rdbtnNewRadioButton.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        rdbtnNewRadioButton.setBounds(67, 27, 108, 21);
-        panelFiltro.add(rdbtnNewRadioButton);
+        ButtonGroup filtros = new ButtonGroup();
+        JRadioButton filtroMetodo = new JRadioButton("Metodo de pago");
+        filtroMetodo.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        filtroMetodo.setForeground(Paleta.panel);
+        filtroMetodo.setOpaque(false);
+        filtroMetodo.setBounds(69, 27, 117, 21);
+        panelFiltro.add(filtroMetodo);
         
-        JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Fecha");
-        rdbtnNewRadioButton_1.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        rdbtnNewRadioButton_1.setBounds(4, 27, 59, 21);
-        panelFiltro.add(rdbtnNewRadioButton_1);
+        JRadioButton filtroFecha = new JRadioButton("Fecha");
+        filtroFecha.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        filtroFecha.setForeground(Paleta.panel);
+        filtroFecha.setOpaque(false);
+        filtroFecha.setBounds(4, 27, 61, 21);
+        panelFiltro.add(filtroFecha);
+        
+        filtros.add(filtroMetodo);
+        filtros.add(filtroFecha);
+        
+        
+        
+        
+        
         
         JScrollPane scrollPane_1 = new JScrollPane();
         scrollPane_1.setOpaque(false);
         scrollPane_1.setBorder(null);
-        scrollPane_1.setBounds(0, 71, 1023, 500);
+        scrollPane_1.setBounds(0, 71, 1015, 500);
         verHistorialPagos.add(scrollPane_1);
         
         String[] columnasPagos = {"Cliente", "Monto", "Metodo de pago", "Fecha de pago"};
@@ -295,6 +328,8 @@ public class PantallaPrincipal {
         tableHistorialPagos.getTableHeader().setForeground(Paleta.textologin2);
         tableHistorialPagos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
         tableHistorialPagos.setGridColor(Paleta.menu);
+        
+        
         tableHistorialPagos.setForeground(Paleta.menu);
         tableHistorialPagos.setFillsViewportHeight(true);
         tableHistorialPagos.setBackground(Paleta.table);
@@ -302,14 +337,40 @@ public class PantallaPrincipal {
         scrollPane_1.setViewportView(tableHistorialPagos);
         
         
+        tableHistorialPagos.putClientProperty(
+                FlatClientProperties.STYLE,
+                "showHorizontalLines:true; "
+                + // separadores de filas
+                "showVerticalLines:true; "
+                + // con líneas verticales
+                "rowHeight:28; "
+                + // altura agradable
+                "intercellSpacing:0,1; "
+                + // grosor de 1px entre filas
+                "selectionBackground:#E6F0FF; "
+                +
+                "selectionForeground:#0A1F44; "
+        );
+        
+        
         CrearCita crearCita = new CrearCita();
         panel.add(crearCita, "crearcitas");
         crearCita.setOpaque(true);
+        crearCita.setBackground(Paleta.fondoPrincipal);
         crearCita.setLayout(null);
+        CalendarPanel calendar = new CalendarPanel();
         
-        JButton btnNewButton = new JButton("New button");
-        btnNewButton.setBounds(265, 180, 177, 138);
-        crearCita.add(btnNewButton);
+        
+        
+        JPanel panelCalen = new JPanel();
+        panelCalen.setBounds(49, 56, 800, 800);
+        crearCita.add(panelCalen);
+        calendar.setPreferredSize(new Dimension(700, 800));
+        panelCalen.add(calendar);
+        
+        
+        
+        
         
         
        
