@@ -358,15 +358,6 @@ public class PantallaPrincipal {
         crearCita.setOpaque(true);
         crearCita.setBackground(Paleta.fondoPrincipal);
         crearCita.setLayout(null);
-        CalendarPanel calendar = new CalendarPanel();
-        
-        
-        
-        JPanel panelCalen = new JPanel();
-        panelCalen.setBounds(49, 56, 800, 800);
-        crearCita.add(panelCalen);
-        calendar.setPreferredSize(new Dimension(700, 800));
-        panelCalen.add(calendar);
         
         
         

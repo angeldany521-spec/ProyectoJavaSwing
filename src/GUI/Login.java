@@ -16,8 +16,15 @@ import javax.swing.border.SoftBevelBorder;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+
+import BaseDeDatos.Conectar;
+
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.sql.Connection;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -105,11 +112,12 @@ public class Login extends JFrame{
 		panel.add(lbl2);
 		
 		campo_user = new JTextField();
-		campo_user.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		campo_user.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		campo_user.setBounds(20, 136, 345, 41);
 		campo_user.setBorder(new Borde(10, Paleta.bordeCampos));
 		campo_user.setOpaque(false);
-		campo_user.setForeground(Paleta.textologin);
+		campo_user.setForeground(Paleta.textologin2);
+		campo_user.setCaretColor(Paleta.textologin2);
 		panel.add(campo_user);
 		campo_user.setColumns(10);
 		
@@ -134,11 +142,43 @@ public class Login extends JFrame{
 		panel.add(botonIniciarSesion);
 		
 		campoContra = new JPasswordField();
-		campoContra.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		campoContra.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		campoContra.setBounds(20, 217, 345, 41);
 		campoContra.setBorder(new Borde(10, Paleta.bordeCampos));
-		campoContra.setForeground(Paleta.textologin);
+		campoContra.setForeground(Paleta.textologin2);
+		campoContra.setCaretColor(Paleta.textologin2);
 		campoContra.setOpaque(false);
 		panel.add(campoContra);
+		
+		JLabel lblerror = new JLabel("");
+		lblerror.setVisible(false);
+		lblerror.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblerror.setForeground(Paleta.fondoBoton);
+		lblerror.setBounds(34, 531, 438, 24);
+		ventanaLogin.getContentPane().add(lblerror);
+		
+		botonIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String usuario = campo_user.getText();
+				String contra = campoContra.getText();
+				
+				Connection con = Conectar.conexion(usuario, contra);
+					
+				if (con == null) {
+					lblerror.setVisible(true);
+					lblerror.setText("El usuario o la contraseña son incorrectos, favor intente de nuevo");
+				}
+				
+				else {
+					PantallaAdmin.main(null);
+					ventanaLogin.dispose();
+					}
+				
+				
+				
+			}
+		});
 	}
+	
+
 }
