@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 
 
 public class PantallaAdmin {
@@ -21,34 +23,11 @@ public class PantallaAdmin {
 
     public static void main(String[] args) {
     	try {
-    		
-			  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-			  
-			  if ("".equals(info.getName())) {
-			  
-			  UIManager.setLookAndFeel(info.getClassName());
-			  
-			  break;
-			  
-			  }
-			  
-			  }
-			  
-			  } catch (Exception e) {
-			  
-			  // Si Nimbus no está disponible, puedes establecer otro Look and Feel.
-			  
-			  try {
-			  
-			  UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			  
-			  } catch (Exception ex) {
-			  
-			  // Manejo de excepción
-			  
-			  }
-			  
-			  }
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
         EventQueue.invokeLater(() -> {
             try {
                 PantallaAdmin window = new PantallaAdmin();
@@ -69,12 +48,7 @@ public class PantallaAdmin {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	
-
         frame = new JFrame();
         frame.setBounds(100, 100, 1300, 900);
         frame.setTitle("BarberPiece - Panel Administrador");
@@ -118,7 +92,7 @@ public class PantallaAdmin {
         pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
         
         
-        JLabel lblEmpleados = new JLabel("Empleados");
+        JLabel lblEmpleados = new JLabel("No se");
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
         lblEmpleados.setBounds(432, 23, 170, 35);
