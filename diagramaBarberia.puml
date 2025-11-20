@@ -73,8 +73,9 @@ package "Dominio" {
 	- rol : String
 	}
     
-    class UsuarioRegular extends usuarioBase implements Usuario {
+    class UsuarioRegular extends UsuarioBase implements Usuario {
     }
+    
     class Admin extends UsuarioBase implements Usuario{
     - nivelAcceso : int
     }
