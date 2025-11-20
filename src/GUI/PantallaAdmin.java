@@ -64,6 +64,7 @@ public class PantallaAdmin {
     }
 
 
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -71,7 +72,6 @@ public class PantallaAdmin {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		
 	
 
@@ -88,7 +88,7 @@ public class PantallaAdmin {
         sidebar.setPreferredSize(new Dimension(250, 600));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 
-        // Logo
+        
         JPanel logoPanel = new JPanel();
         logoPanel.setForeground(new Color(0,0,0,215));
         logoPanel.setBackground(new Color(26, 26, 26));
@@ -115,6 +115,9 @@ public class PantallaAdmin {
         // Pantalla EMPLEADOS
         JPanel pantallaEmpleados = new JPanel();
         pantallaEmpleados.setLayout(null);
+        pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
+        
+        
         JLabel lblEmpleados = new JLabel("Empleados");
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
