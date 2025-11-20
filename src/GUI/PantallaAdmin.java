@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 
 
 public class PantallaAdmin {
@@ -20,7 +22,14 @@ public class PantallaAdmin {
     private JTable table_2;
 
     public static void main(String[] args) {
-    	
+
+    	try {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
         EventQueue.invokeLater(() -> {
             try {
                 PantallaAdmin window = new PantallaAdmin();
@@ -41,12 +50,7 @@ public class PantallaAdmin {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 	
-
         frame = new JFrame();
         frame.setBounds(100, 100, 1300, 900);
         frame.setTitle("BarberPiece - Panel Administrador");
@@ -90,7 +94,7 @@ public class PantallaAdmin {
         pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
         
         
-        JLabel lblEmpleados = new JLabel("Empleados");
+        JLabel lblEmpleados = new JLabel("No se");
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
         lblEmpleados.setBounds(432, 23, 170, 35);
@@ -143,7 +147,7 @@ public class PantallaAdmin {
             }
         ));
 
-        // Cambiar color del header
+        
         JTableHeader header = table_1.getTableHeader();
         table_1.getTableHeader().setBackground(Paleta.headers);
         table_1.getTableHeader().setForeground(Paleta.textologin2);
