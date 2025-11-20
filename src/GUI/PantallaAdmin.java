@@ -20,35 +20,7 @@ public class PantallaAdmin {
     private JTable table_2;
 
     public static void main(String[] args) {
-    	try {
-    		
-			  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-			  
-			  if ("".equals(info.getName())) {
-			  
-			  UIManager.setLookAndFeel(info.getClassName());
-			  
-			  break;
-			  
-			  }
-			  
-			  }
-			  
-			  } catch (Exception e) {
-			  
-			  // Si Nimbus no está disponible, puedes establecer otro Look and Feel.
-			  
-			  try {
-			  
-			  UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-			  
-			  } catch (Exception ex) {
-			  
-			  // Manejo de excepción
-			  
-			  }
-			  
-			  }
+    	
         EventQueue.invokeLater(() -> {
             try {
                 PantallaAdmin window = new PantallaAdmin();
