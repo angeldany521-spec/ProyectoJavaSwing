@@ -168,7 +168,7 @@ public class PantallaAdmin {
             }
         ));
 
-        // Cambiar color del header
+        
         JTableHeader header = table_1.getTableHeader();
         table_1.getTableHeader().setBackground(Paleta.headers);
         table_1.getTableHeader().setForeground(Paleta.textologin2);
