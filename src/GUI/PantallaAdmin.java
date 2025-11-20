@@ -91,7 +91,7 @@ public class PantallaAdmin {
         pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
         
         
-        JLabel lblEmpleados = new JLabel("No se");
+        JLabel lblEmpleados = new JLabel("Empleados");
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
         lblEmpleados.setBounds(432, 23, 170, 35);

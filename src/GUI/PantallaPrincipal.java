@@ -26,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.github.lgooddatepicker.components.CalendarPanel;
 
 
 
@@ -150,7 +149,7 @@ public class PantallaPrincipal {
         menu.add(lblbarber);
         
         CardLayout card = new CardLayout();
-        JPanel panel = +new JPanel();  
+        JPanel panel = new JPanel();  
         panel.setBackground(Paleta.fondo2);
         panel.setLayout(card);
         panel.setOpaque(true);
