@@ -64,9 +64,8 @@ public class PantallaAdmin {
         initialize();
     }
 
-<<<<<<< HEAD
-    private void initialize() {
-=======
+
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -76,8 +75,8 @@ public class PantallaAdmin {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-	}
->>>>>>> branch 'master' of https://github.com/angeldany521-spec/ProyectoJavaSwing.git
+	
+
 
         frame = new JFrame();
         frame.setBounds(100, 100, 1300, 900);
