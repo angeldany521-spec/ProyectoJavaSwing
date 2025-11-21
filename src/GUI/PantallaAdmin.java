@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -22,11 +24,42 @@ public class PantallaAdmin {
 
     public static void main(String[] args) {
 
+//    	try {
+//            UIManager.setLookAndFeel(new FlatLightLaf());
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+    	
+
     	try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+  		  
+  		  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+  		  
+  		  if ("Nimbus".equals(info.getName())) {
+  		  
+  		  UIManager.setLookAndFeel(info.getClassName());
+  		  
+  		  break;
+  		  
+  		  }
+  		  
+  		  }
+  		  
+  		  } catch (Exception e) {
+  		  
+  		  // Si Nimbus no está disponible, puedes establecer otro Look and Feel.
+  		  
+  		  try {
+  		  
+  		  UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+  		  
+  		  } catch (Exception ex) {
+  		  
+  		  // Manejo de excepción
+  		  
+  		  }
+  		  
+  		  }
 
 
         EventQueue.invokeLater(() -> {
@@ -59,14 +92,15 @@ public class PantallaAdmin {
 
         // ---------------- SIDEBAR ----------------
         JPanel sidebar = new JPanel();
-        sidebar.setBackground(new Color(0,0,0,230));
+        sidebar.setBackground(Paleta.menu);
         sidebar.setPreferredSize(new Dimension(250, 600));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+        
 
         
         JPanel logoPanel = new JPanel();
-        logoPanel.setForeground(new Color(0,0,0,215));
-        logoPanel.setBackground(new Color(26, 26, 26));
+    
+        logoPanel.setBackground(Paleta.menu);
         logoPanel.setPreferredSize(new Dimension(250, 70));
         logoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
         
@@ -89,29 +123,35 @@ public class PantallaAdmin {
 
         // Pantalla EMPLEADOS
         JPanel pantallaEmpleados = new JPanel();
+        pantallaEmpleados.setBackground(Paleta.fondo2);
         pantallaEmpleados.setLayout(null);
         pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
         
         
-        JLabel lblEmpleados = new JLabel("No se");
+        JLabel lblEmpleados = new JLabel("Empleados");
+        lblEmpleados.setForeground(Paleta.textologin2);
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
         lblEmpleados.setBounds(432, 23, 170, 35);
         pantallaEmpleados.add(lblEmpleados);
 
-        // Pantalla agregar
+        // Pantalla Citas
         JPanel pantallaCitas = new JPanel();
+        pantallaCitas.setBackground(Paleta.fondo2);
         pantallaCitas.setLayout(null);
         JLabel label = new JLabel("Historial de Citas");
         label.setFont(new Font("SansSerif", Font.BOLD, 27));
+        label.setForeground(Paleta.textologin2);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBounds(384, 5, 245, 49);
         pantallaCitas.add(label);
         
         
         JPanel pantallaPagos = new JPanel();
+        pantallaPagos.setBackground(Paleta.fondo2);
         pantallaPagos.setLayout(null);
         JLabel lbPagos = new JLabel("Historial de Pagos");
+        lbPagos.setForeground(Paleta.textologin2);
         lbPagos.setBounds(386, 5, 241, 49);
         lbPagos.setFont(new Font("SansSerif", Font.BOLD, 27));
         lbPagos.setHorizontalAlignment(SwingConstants.CENTER);
@@ -148,20 +188,41 @@ public class PantallaAdmin {
 
         
         JTableHeader header = table_1.getTableHeader();
-        table_1.getTableHeader().setBackground(Paleta.headers);
-        table_1.getTableHeader().setForeground(Paleta.textologin2);
+        header.setOpaque(true);
+        header.setBackground(Paleta.headers);
+        table_1.getTableHeader().setBackground(Color.BLACK);
+//        table_1.getTableHeader().setForeground(Paleta.textologin2);
         
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         
         scrollPane_1.setViewportView(table_1);
         
-        JButton btnAgregarEmpleado = new JButton("Agregar Empleado");
+        
+        ImageIcon agg = new ImageIcon(getClass().getResource("/Imagenes/botonAgregar.png"));
+        
+        Image img = agg.getImage();
+        Image size = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        ImageIcon aggIcon = new ImageIcon(size);
+        			
+        
+        JButton btnAgregarEmpleado = new JButton("Agregar ",aggIcon);
+        
+        btnAgregarEmpleado.setHorizontalTextPosition(SwingConstants.RIGHT);
+        btnAgregarEmpleado.setIconTextGap(3);
+        btnAgregarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnAgregarEmpleado.setForeground(Paleta.textologin);
         btnAgregarEmpleado.setBackground(Paleta.fondoBoton2);
-        btnAgregarEmpleado.setBounds(670, 70, 139, 26);
+        btnAgregarEmpleado.setBounds(664, 70, 145, 26);
         pantallaEmpleados.add(btnAgregarEmpleado);
         
-        JButton btEliminarEmpleado = new JButton("Eliminar Empleado");
+        ImageIcon elim = new ImageIcon(getClass().getResource("/Imagenes/botonBorrar.png"));
+      
+        Image img1 = elim.getImage();
+        Image size1 = img1.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        ImageIcon elimIcon = new ImageIcon(size1);
+        
+        JButton btEliminarEmpleado = new JButton("Eliminar",elimIcon);
+        btEliminarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btEliminarEmpleado.setForeground(Paleta.textologin);
         btEliminarEmpleado.setBackground(Paleta.fondoBoton2);
         btEliminarEmpleado.setBounds(821, 70, 139, 26);
@@ -177,7 +238,7 @@ public class PantallaAdmin {
         
         textField_2 = new JTextField();
         textField_2.setColumns(10);
-        textField_2.setBounds(161, 72, 572, 28);
+        textField_2.setBounds(161, 72, 501, 28);
         pantallaPagos.add(textField_2);
         
         JRadioButton rbMetodoPago = new JRadioButton("Metodos de Pago");
@@ -207,6 +268,7 @@ public class PantallaAdmin {
         	}
         ));
         table_2.getColumnModel().getColumn(2).setPreferredWidth(118);
+        table_2.setBackground(Paleta.headers);
         
         JTableHeader header2 = table_2.getTableHeader();
         table_2.getTableHeader().setBackground(Paleta.headers);
@@ -214,6 +276,11 @@ public class PantallaAdmin {
         
         header2.setFont(new Font("Segoe UI", Font.BOLD, 14));
         scrollPane_2.setViewportView(table_2);
+        
+        JLabel lblNewLabel_1 = new JLabel("Filtrar por: ");
+        lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblNewLabel_1.setBounds(680, 78, 69, 16);
+        pantallaPagos.add(lblNewLabel_1);
         
         
         JLabel lbBuscar2 = new JLabel("Buscar: ");
@@ -249,17 +316,22 @@ public class PantallaAdmin {
         
         JRadioButton rbFechaC = new JRadioButton("Fecha");
         rbFechaC.setForeground(Paleta.fondoBoton);
-        rbFechaC.setBounds(747, 68, 69, 23);
+        rbFechaC.setBounds(827, 70, 69, 23);
         pantallaCitas.add(rbFechaC);
         
         JRadioButton rbHoraC = new JRadioButton("Hora");
         rbHoraC.setForeground(Paleta.fondoBoton2);
-        rbHoraC.setBounds(818, 68, 57, 23);
+        rbHoraC.setBounds(900, 70, 57, 23);
         pantallaCitas.add(rbHoraC);
         
         ButtonGroup filtroCitas = new ButtonGroup();
         filtroCitas.add(rbFechaC);
         filtroCitas.add(rbHoraC);
+        
+        JLabel lblNewLabel = new JLabel("Filtrar por: ");
+        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblNewLabel.setBounds(758, 73, 69, 16);
+        pantallaCitas.add(lblNewLabel);
 
         // ---------------- BOTONES DEL SIDEBAR ----------------
         sidebar.add(createMenuButton("Gestion Empleados", () -> {
@@ -275,56 +347,56 @@ public class PantallaAdmin {
         }));
         
          
-        sidebar.add(Box.createVerticalStrut(410));
+        sidebar.add(Box.createVerticalStrut(310));
         sidebar.add(createMenuButton("Cerrar Sesión", () -> {
 			frame.dispose();
 			
 		}));
         
+        
 //        Component verticalGlue = Box.createVerticalGlue();
 //        sidebar.add(verticalGlue);
-        sidebar.add(Box.createVerticalStrut(500));
+        sidebar.add(Box.createVerticalStrut(400));
 
         // Añadir todo al frame
         frame.getContentPane().add(sidebar, BorderLayout.WEST);
         frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
+        
+        
     }
 
     // ---- Método para crear botones con acción ----
-    private JPanel createMenuButton(String text, Runnable action) {
+	private JButton createMenuButton(String text, Runnable action) {
 
-        JPanel button = new JPanel();
-        button.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        button.setMaximumSize(new Dimension(250, 45));
-        button.setBackground(Paleta.fondoBoton2);
+	    JButton btn = new JButton(text);
 
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        label.setForeground(Paleta.textologin);
-        label.setOpaque(true);
-        label.setBackground(Paleta.fondoBoton2);
+	    btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
+	    btn.setForeground(Paleta.textologin);
+	    btn.setBackground(Paleta.fondoBoton2);
 
-        button.add(label);
+	    btn.setFocusPainted(false);
+	    btn.setBorderPainted(false);
+	    btn.setHorizontalAlignment(SwingConstants.LEFT);
+	    btn.setPreferredSize(new Dimension(750, 105));
+	    btn.setMinimumSize(new Dimension(Integer.MAX_VALUE, 55));
+	    btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
 
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
+	    // Acción del botón
+	    btn.addActionListener(e -> action.run());
 
-//            @Override
-//            public void mouseEntered(java.awt.event.MouseEvent evt) {
-//                button.setBackground(Paleta.active);
-//                label.setBackground(Paleta.active);
-//            }
-//
-//            @Override
-//            public void mouseExited(java.awt.event.MouseEvent evt) {
-//              
-//            }
+	    // Si quieres hover (opcional)
+	    btn.addMouseListener(new java.awt.event.MouseAdapter() {
+	        @Override
+	        public void mouseEntered(java.awt.event.MouseEvent evt) {
+	            btn.setBackground(Paleta.active);
+	        }
 
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                action.run();
-            }
-        });
+	        @Override
+	        public void mouseExited(java.awt.event.MouseEvent evt) {
+	            btn.setBackground(Paleta.fondoBoton2);
+	        }
+	    });
 
-        return button;
-    }
+	    return btn;
+	}
 }
