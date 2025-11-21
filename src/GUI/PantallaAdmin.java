@@ -24,9 +24,9 @@ public class PantallaAdmin {
     private JTable tablaEmpleado;
     private JTextField tfPagos;
     private JTable tablaPagos;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
+    private JTextField tfNombre;
+    private JTextField tfUsuario;
+    private JTextField tfTelefono;
 
     public static void main(String[] args) {
 
@@ -166,12 +166,6 @@ public class PantallaAdmin {
         JPanel pantallaAgregar = new JPanel();
         pantallaAgregar.setBackground(Paleta.fondo2);
         pantallaAgregar.setLayout(null);
-        JLabel lbAgregar = new JLabel("Agregar Empleado");
-        lbAgregar.setForeground(Paleta.textologin2);
-        lbAgregar.setBounds(386, 5, 241, 49);
-        lbAgregar.setFont(new Font("SansSerif", Font.BOLD, 27));
-        lbAgregar.setHorizontalAlignment(SwingConstants.CENTER);
-        pantallaPagos.add(lbAgregar);
        
         
         
@@ -185,6 +179,11 @@ public class PantallaAdmin {
         pantallaEmpleados.add(lbBuscar);
         
         tfEmpleados = new JTextField();
+        tfEmpleados.setOpaque(false);
+        tfEmpleados.setForeground(Paleta.menu);
+        tfEmpleados.setBackground(Paleta.fondo2);
+        tfEmpleados.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfEmpleados.setBorder(new Borde(10, Paleta.menu));
         tfEmpleados.setColumns(10);
         tfEmpleados.setBounds(141, 70, 513, 28);
         pantallaEmpleados.add(tfEmpleados);
@@ -200,32 +199,17 @@ public class PantallaAdmin {
                 "Id", "Nombre", "Usuario", "Rol", "Telefono", "Estado"
             }
         ));
-        tablaEmpleado.setOpaque(true);
-        tablaEmpleado.setBackground(Color.BLACK);
+        tablaEmpleado.setFillsViewportHeight(true);
+        tablaEmpleado.setBackground(Paleta.menu);
         
         JTableHeader header = tablaEmpleado.getTableHeader();
         header.setOpaque(true);
         header.setBackground(Paleta.headers);
-        tablaEmpleado.getTableHeader().setBackground(Color.BLACK);
         tablaEmpleado.getTableHeader().setForeground(Paleta.textologin2);
         
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         
         scrollPane_1.setViewportView(tablaEmpleado);
-        
-        JScrollPane scrollPane_a = new JScrollPane();
-        scrollPane_a.setBounds(72, 110, 889, 60);
-        pantallaAgregar.add(scrollPane_a);
-        
-        JTable tablaAgregar = new JTable();
-        tablaAgregar.setModel(new DefaultTableModel(
-            new Object[][] {},
-            new String[] {
-                "Id", "Nombre", "Usuario", "Rol", "Telefono", "Estado"
-            }
-        ));
-        
-        scrollPane_a.setViewportView(tablaAgregar);
         
         ImageIcon agg = new ImageIcon(getClass().getResource("/Imagenes/botonAgregar.png"));
         
@@ -235,7 +219,6 @@ public class PantallaAdmin {
         			
         
         JButton btnAgregarEmpleado = new JButton("Agregar ",aggIcon);
-        
         btnAgregarEmpleado.setHorizontalTextPosition(SwingConstants.RIGHT);
         btnAgregarEmpleado.setIconTextGap(3);
         btnAgregarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -260,63 +243,118 @@ public class PantallaAdmin {
         panelPrincipal.add(pantallaAgregar,"AGREGAR");
         
         JLabel lblAgregarEmpleado = new JLabel("Agregar Empleado");
+        lblAgregarEmpleado.setForeground(Paleta.textologin2);
         lblAgregarEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
-        lblAgregarEmpleado.setForeground(new Color(70, 150, 230));
         lblAgregarEmpleado.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblAgregarEmpleado.setBounds(394, 31, 246, 35);
         pantallaAgregar.add(lblAgregarEmpleado);
         
         JPanel panel = new JPanel();
-        panel.setBounds(292, 182, 449, 495);
+        panel.setBorder(new Borde(10,Paleta.menu));
+        panel.setBackground(Paleta.menu);
+        panel.setBounds(293, 99, 449, 422);
         pantallaAgregar.add(panel);
         panel.setLayout(null);
         
-        JLabel lblNewLabel_2 = new JLabel("Nombre:");
-        lblNewLabel_2.setFont(new Font("Dialog", Font.BOLD, 14));
-        lblNewLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-        lblNewLabel_2.setBounds(49, 45, 77, 16);
-        panel.add(lblNewLabel_2);
+        JLabel lbNombre = new JLabel("Nombre:");
+        lbNombre.setForeground(Paleta.fondoPrincipal);
+        lbNombre.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbNombre.setHorizontalAlignment(SwingConstants.LEFT);
+        lbNombre.setBounds(49, 45, 77, 16);
+        panel.add(lbNombre);
         
-        textField = new JTextField();
-        textField.setBounds(122, 39, 275, 29);
-        panel.add(textField);
-        textField.setColumns(10);
+        tfNombre = new JTextField();
+        tfNombre.setOpaque(false);
+        tfNombre.setForeground(Paleta.fondoPrincipal);
+        tfNombre.setBackground(Paleta.menu);
+        tfNombre.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfNombre.setBorder(new Borde(10, Paleta.fondoPrincipal));
+        tfNombre.setBounds(122, 39, 275, 29);
+        tfNombre.setColumns(10);
+        panel.add(tfNombre);
         
-        JLabel lblNewLabel_2_1 = new JLabel("Usuario:");
-        lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.LEFT);
-        lblNewLabel_2_1.setFont(new Font("Dialog", Font.BOLD, 14));
-        lblNewLabel_2_1.setBounds(49, 113, 77, 16);
-        panel.add(lblNewLabel_2_1);
+        JLabel lbUsuario = new JLabel("Usuario:");
+        lbUsuario.setForeground(Paleta.fondoPrincipal);
+        lbUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+        lbUsuario.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbUsuario.setForeground(Paleta.fondoPrincipal);
+        lbUsuario.setBounds(49, 104, 77, 16);
+        panel.add(lbUsuario);
         
-        textField_1 = new JTextField();
-        textField_1.setColumns(10);
-        textField_1.setBounds(122, 107, 275, 29);
-        panel.add(textField_1);
+        tfUsuario = new JTextField();
+        tfUsuario.setOpaque(false);
+        tfUsuario.setForeground(Paleta.fondoPrincipal);
+        tfUsuario.setBackground(Paleta.menu);
+        tfUsuario.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfUsuario.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfUsuario.setColumns(10);
+        tfUsuario.setBounds(122, 98, 275, 29);
+        panel.add(tfUsuario);
         
-        JLabel lblNewLabel_2_1_1 = new JLabel("Rol:");
-        lblNewLabel_2_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-        lblNewLabel_2_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
-        lblNewLabel_2_1_1.setBounds(49, 172, 67, 16);
-        panel.add(lblNewLabel_2_1_1);
+        JLabel lbRol = new JLabel("Rol:");
+        lbRol.setForeground(Paleta.fondoPrincipal);
+        lbRol.setHorizontalAlignment(SwingConstants.LEFT);
+        lbRol.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbRol.setBounds(49, 163, 67, 16);
+        panel.add(lbRol);
         
-        JRadioButton rdbtnNewRadioButton = new JRadioButton("Regular");
-        rdbtnNewRadioButton.setBounds(122, 169, 88, 24);
-        panel.add(rdbtnNewRadioButton);
+        JRadioButton rbRegular = new JRadioButton("Regular");
+        rbRegular.setForeground(Paleta.textologin);
+        rbRegular.setBounds(125, 159, 88, 24);
+        panel.add(rbRegular);
         
-        JRadioButton rdbtnBarbero = new JRadioButton("Admin");
-        rdbtnBarbero.setBounds(222, 169, 88, 24);
-        panel.add(rdbtnBarbero);
+        JRadioButton rbAdmin = new JRadioButton("Admin");
+        rbAdmin.setForeground(Paleta.textologin);
+        rbAdmin.setBounds(222, 159, 88, 24);
+        panel.add(rbAdmin);
         
-        JLabel lblNewLabel_2_1_2 = new JLabel("Telefono: ");
-        lblNewLabel_2_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-        lblNewLabel_2_1_2.setFont(new Font("Dialog", Font.BOLD, 14));
-        lblNewLabel_2_1_2.setBounds(49, 222, 77, 16);
-        panel.add(lblNewLabel_2_1_2);
+        ButtonGroup roles = new ButtonGroup();
+        roles.add(rbAdmin);        
+        roles.add(rbRegular);
         
-        textField_2 = new JTextField();
-        textField_2.setColumns(10);
-        textField_2.setBounds(122, 216, 275, 29);
-        panel.add(textField_2);
+        JLabel lbTelefono = new JLabel("Telefono: ");
+        lbTelefono.setForeground(Paleta.fondoPrincipal);
+        lbTelefono.setHorizontalAlignment(SwingConstants.LEFT);
+        lbTelefono.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbTelefono.setBounds(49, 222, 77, 16);
+        panel.add(lbTelefono);
+        
+        tfTelefono = new JTextField();
+        tfTelefono.setOpaque(false);
+        tfTelefono.setForeground(Paleta.fondoPrincipal);
+        tfTelefono.setBackground(Paleta.menu);
+        tfTelefono.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfTelefono.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfTelefono.setColumns(10);
+        tfTelefono.setBounds(122, 216, 275, 29);
+        panel.add(tfTelefono);
+        
+        JLabel lbEstado = new JLabel("Estado:");
+        lbEstado.setForeground(Paleta.fondoPrincipal);
+        lbEstado.setHorizontalAlignment(SwingConstants.LEFT);
+        lbEstado.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbEstado.setBounds(49, 281, 77, 16);
+        panel.add(lbEstado);
+        
+        JRadioButton rbActivo = new JRadioButton("Activo");
+        rbActivo.setForeground(Paleta.textologin);
+        rbActivo.setBounds(126, 277, 77, 24);
+        panel.add(rbActivo);
+        
+        JRadioButton rbInactivo = new JRadioButton("Inactivo");
+        rbInactivo.setForeground(Paleta.textologin);
+        rbInactivo.setBounds(203, 277, 88, 24);
+        panel.add(rbInactivo);
+        
+        ButtonGroup estadoButtonGroup = new ButtonGroup();
+        estadoButtonGroup.add(rbInactivo);
+        estadoButtonGroup.add(rbActivo);
+        
+        JButton btConfirmar = new JButton("Confirmar");
+        btConfirmar.setBackground(Paleta.fondoBoton2);
+        btConfirmar.setForeground(Paleta.fondoPrincipal);
+        btConfirmar.setBounds(175, 339, 98, 26);
+        panel.add(btConfirmar);
         panelPrincipal.add(pantallaCitas, "CITAS");
         panelPrincipal.add(pantallaPagos, "PAGOS");
         
@@ -327,6 +365,11 @@ public class PantallaAdmin {
         pantallaPagos.add(lbBuscar3);
         
         tfPagos = new JTextField();
+        tfPagos.setOpaque(false);
+        tfPagos.setForeground(Paleta.menu);
+        tfPagos.setBackground(Paleta.fondo2);
+        tfPagos.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfPagos.setBorder(new Borde(5, Paleta.menu));
         tfPagos.setColumns(10);
         tfPagos.setBounds(161, 72, 501, 28);
         pantallaPagos.add(tfPagos);
@@ -359,6 +402,10 @@ public class PantallaAdmin {
         ));
         tablaPagos.getColumnModel().getColumn(2).setPreferredWidth(118);
         tablaPagos.setBackground(Paleta.headers);
+        tablaPagos.setShowGrid(true);
+        tablaPagos.setGridColor(Paleta.fondoPrincipal);
+        tablaPagos.setFillsViewportHeight(true);
+        tablaPagos.setBackground(Paleta.menu);
         
         JTableHeader header2 = tablaPagos.getTableHeader();
         tablaPagos.getTableHeader().setBackground(Paleta.headers);
@@ -380,6 +427,11 @@ public class PantallaAdmin {
         pantallaCitas.add(lbBuscar2);
         
         tfCitas = new JTextField();
+        tfCitas.setOpaque(false);
+        tfCitas.setForeground(Paleta.menu);
+        tfCitas.setBackground(Paleta.fondo2);
+        tfCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfCitas.setBorder(new Borde(10, Paleta.menu));
         tfCitas.setBounds(147, 65, 592, 28);
         pantallaCitas.add(tfCitas);
         tfCitas.setColumns(10);
@@ -396,6 +448,10 @@ public class PantallaAdmin {
         		"Fecha", "Hora", "Estado"
         	}
         ));
+        tablaCitas.setShowGrid(true);
+        tablaCitas.setGridColor(Paleta.fondoPrincipal);
+        tablaCitas.setFillsViewportHeight(true);
+        tablaCitas.setBackground(Paleta.menu);
         
         JTableHeader header3 = tablaCitas.getTableHeader();
         tablaCitas.getTableHeader().setBackground(Paleta.headers);
