@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -19,18 +20,17 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLightLaf;
-
-import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -217,6 +217,8 @@ public class PantallaPrincipal {
         
         
         tableCitas = new JTable(modeloCitas);
+        tableCitas.setRowHeight(20);
+        tableCitas.setSize(new Dimension(0, 5));
         tableCitas.getTableHeader().setBackground(Paleta.headers);
         tableCitas.getTableHeader().setForeground(Paleta.textologin2);
         tableCitas.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
@@ -228,20 +230,6 @@ public class PantallaPrincipal {
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
         scrollPane.setViewportView(tableCitas);
         
-        tableCitas.putClientProperty(
-                FlatClientProperties.STYLE,
-                "showHorizontalLines:true; "
-                + // separadores de filas
-                "showVerticalLines:true; "
-                + // con líneas verticales
-                "rowHeight:28; "
-                + // altura agradable
-                "intercellSpacing:0,1; "
-                + // grosor de 1px entre filas
-                "selectionBackground:#E6F0FF; "
-                +
-                "selectionForeground:#0A1F44; "
-        );
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBounds(-185, 10, 1407, 51);
@@ -381,19 +369,9 @@ public class PantallaPrincipal {
         crearCita.setOpaque(true);
         crearCita.setBackground(Paleta.fondoPrincipal);
         crearCita.setLayout(null);
-        
-        
-        
-        
-
        
-
-        // Cambiar fuente
         
-
-        // Crear DatePicker con la configuración
-        
-        
+     
         
         
         JLabel lblHistorialPagos_1 = new JLabel("Agregar Cita");
@@ -403,20 +381,40 @@ public class PantallaPrincipal {
         lblHistorialPagos_1.setBounds(10, 10, 241, 35);
         crearCita.add(lblHistorialPagos_1);
         
-        JPanel panel_1 = new JPanel();
-        panel_1.setBounds(10, 55, 386, 283);
-        panel_1.setBackground(Paleta.prueba);
-        crearCita.add(panel_1);
-        panel_1.setLayout(null);
+        JPanel panelFecha = new JPanel();
+        panelFecha.setBounds(623, 57, 386, 119);
+        panelFecha.setBackground(Paleta.menu);
+        crearCita.add(panelFecha);
+        panelFecha.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("Seleccionar Fecha");
+        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblNewLabel.setForeground(Paleta.textologin2);
+        lblNewLabel.setBounds(12, 12, 165, 21);
+        panelFecha.add(lblNewLabel);
+        
+        JPanel panelBarberos = new JPanel();
+        panelBarberos.setLayout(null);
+        panelBarberos.setBackground(Paleta.menu);
+        panelBarberos.setBounds(623, 200, 386, 348);
+        crearCita.add(panelBarberos);
+        
+        JPanel paneldatos = new JPanel();
+        paneldatos.setLayout(null);
+        paneldatos.setBackground(Paleta.menu);
+        paneldatos.setBounds(10, 57, 591, 491);
+        crearCita.add(paneldatos);
+        
+        JLabel lblHorariosDisponiblesDel = new JLabel("Horarios disponibles del barbero");
+        lblHorariosDisponiblesDel.setForeground(new Color(96, 165, 250));
+        lblHorariosDisponiblesDel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblHorariosDisponiblesDel.setBounds(12, 12, 292, 21);
+        paneldatos.add(lblHorariosDisponiblesDel);
         
         
         
        
 
-        
-        
-        
-        
         
        
         
