@@ -4,15 +4,17 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.DatabaseMetaData;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +28,9 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 
 
@@ -42,7 +47,38 @@ public class PantallaPrincipal {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		
+
+		try {
+
+		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+
+		if ("Nimbus".equals(info.getName())) {
+
+		UIManager.setLookAndFeel(info.getClassName());
+
+		break;
+
+		}
+
+		}
+
+		} catch (Exception e) {
+
+		// Si Nimbus no está disponible, puedes establecer otro Look and Feel.
+
+		try {
+
+		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+		} catch (Exception ex) {
+
+		// Manejo de excepción
+
+		}
+
+}
+        
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -67,7 +103,7 @@ public class PantallaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1180, 602);
+		frame.setBounds(100, 100, 1190, 602);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().setBackground(Paleta.fondo2);
@@ -90,7 +126,7 @@ public class PantallaPrincipal {
         crearCitas.setContentAreaFilled(true);
         crearCitas.setFocusPainted(false);
         crearCitas.setBorderPainted(false);
-        crearCitas.setOpaque(true);
+        crearCitas.setOpaque(false);
         crearCitas.setBackground(Paleta.fondoBoton2);
         
         JButton historialPagos = new JButton("Historial de Pagos");
@@ -101,7 +137,7 @@ public class PantallaPrincipal {
         historialPagos.setContentAreaFilled(true);
         historialPagos.setFocusPainted(false);
         historialPagos.setBorderPainted(false);
-        historialPagos.setOpaque(true);
+        historialPagos.setOpaque(false);
         historialPagos.setBackground(Paleta.fondoBoton2);
         
         JButton citas = new JButton("Citas");
@@ -116,7 +152,7 @@ public class PantallaPrincipal {
         citas.setContentAreaFilled(true);
         citas.setFocusPainted(false);
         citas.setBorderPainted(false);
-        citas.setOpaque(true);
+        citas.setOpaque(false);
         citas.setBackground(Paleta.fondoBoton2);
         
         menu.add(citas);
@@ -127,7 +163,7 @@ public class PantallaPrincipal {
         frame.getContentPane().add(menu, BorderLayout.WEST);
         
         JButton btnCerrarSesion = new JButton("Cerrar Sesion");
-        btnCerrarSesion.setOpaque(true);
+        btnCerrarSesion.setOpaque(false);
         btnCerrarSesion.setForeground(Paleta.textologin);
         btnCerrarSesion.setFont(new Font("SansSerif", Font.BOLD, 15));
         btnCerrarSesion.setFocusPainted(false);
@@ -163,7 +199,7 @@ public class PantallaPrincipal {
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setOpaque(false);
         scrollPane.setBorder(null);
-        scrollPane.setBounds(0, 72, 1013, 500);
+        scrollPane.setBounds(12, 72, 1001, 480);
         
        
         Inicio.add(scrollPane);
@@ -185,8 +221,8 @@ public class PantallaPrincipal {
         tableCitas.getTableHeader().setForeground(Paleta.textologin2);
         tableCitas.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
         tableCitas.setShowGrid(true);
-        tableCitas.setGridColor(Color.black);
-        tableCitas.setForeground(Paleta.menu);
+        tableCitas.setGridColor(Paleta.fondoPrincipal);
+        tableCitas.setForeground(Paleta.fondoPrincipal);
         tableCitas.setFillsViewportHeight(true);
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
@@ -223,12 +259,18 @@ public class PantallaPrincipal {
         panelSuperior.add(campoBuscar);
         campoBuscar.setOpaque(false);
         campoBuscar.setForeground(Paleta.menu);
-        campoBuscar.setBackground(Paleta.menu);
+        campoBuscar.setBackground(Paleta.fondo2);
         campoBuscar.setFont(new Font("SansSerif", Font.PLAIN, 13));
         campoBuscar.setBorder(new Borde(10, Paleta.menu));
         campoBuscar.setColumns(40);
         
-        JButton eliminarCita = new JButton("Eliminar Cita");
+        ImageIcon elim = new ImageIcon(getClass().getResource("/Imagenes/botonBorrar.png"));
+        Image img1 = elim.getImage();
+        Image size1 = img1.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+        ImageIcon elimIcon = new ImageIcon(size1);
+        
+        JButton eliminarCita = new JButton("Eliminar Cita", elimIcon);
+        eliminarCita.setOpaque(false);
         eliminarCita.setBorder(null);
         panelSuperior.add(eliminarCita);
         eliminarCita.setPreferredSize(new Dimension(200, 40));
@@ -236,7 +278,6 @@ public class PantallaPrincipal {
         
         eliminarCita.setBackground(Paleta.fondoBoton2);
         eliminarCita.setForeground(Paleta.textologin);
-        eliminarCita.setOpaque(true);
         
         
         PanelGestionPagos verHistorialPagos = new PanelGestionPagos();
@@ -245,7 +286,7 @@ public class PantallaPrincipal {
         verHistorialPagos.setOpaque(true);
         
         JPanel panelSuperior_1 = new JPanel();
-        panelSuperior_1.setBackground(new Color(240, 235, 220));
+        panelSuperior_1.setBackground(Paleta.fondoPrincipal);
         panelSuperior_1.setBounds(0, 10, 1023, 51);
         verHistorialPagos.add(panelSuperior_1);
         panelSuperior_1.setLayout(null);
@@ -265,7 +306,7 @@ public class PantallaPrincipal {
         buscarHistorialPagos.setFont(new Font("SansSerif", Font.PLAIN, 13));
         buscarHistorialPagos.setColumns(50);
         buscarHistorialPagos.setBorder(new Borde(10, Paleta.menu));
-        buscarHistorialPagos.setBackground(new Color(0, 0, 0, 215));
+        buscarHistorialPagos.setBackground(Paleta.fondoPrincipal);
         panelSuperior_1.add(buscarHistorialPagos);
         
         JPanel panelFiltro = new JPanel();
@@ -307,7 +348,7 @@ public class PantallaPrincipal {
         JScrollPane scrollPane_1 = new JScrollPane();
         scrollPane_1.setOpaque(false);
         scrollPane_1.setBorder(null);
-        scrollPane_1.setBounds(0, 71, 1015, 500);
+        scrollPane_1.setBounds(10, 71, 1004, 480);
         verHistorialPagos.add(scrollPane_1);
         
         String[] columnasPagos = {"Cliente", "Monto", "Metodo de pago", "Fecha de pago"};
@@ -322,8 +363,8 @@ public class PantallaPrincipal {
         tableHistorialPagos.getTableHeader().setBackground(Paleta.headers);
         tableHistorialPagos.getTableHeader().setForeground(Paleta.textologin2);
         tableHistorialPagos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 13));
-        tableHistorialPagos.setGridColor(Paleta.menu);
-        
+        tableHistorialPagos.setGridColor(Color.black);
+        tableHistorialPagos.setShowGrid(true);
         
         tableHistorialPagos.setForeground(Paleta.menu);
         tableHistorialPagos.setFillsViewportHeight(true);
@@ -332,20 +373,7 @@ public class PantallaPrincipal {
         scrollPane_1.setViewportView(tableHistorialPagos);
         
         
-        tableHistorialPagos.putClientProperty(
-                FlatClientProperties.STYLE,
-                "showHorizontalLines:true; "
-                + // separadores de filas
-                "showVerticalLines:true; "
-                + // con líneas verticales
-                "rowHeight:28; "
-                + // altura agradable
-                "intercellSpacing:0,1; "
-                + // grosor de 1px entre filas
-                "selectionBackground:#E6F0FF; "
-                +
-                "selectionForeground:#0A1F44; "
-        );
+        
         
         
         CrearCita crearCita = new CrearCita();
@@ -354,6 +382,37 @@ public class PantallaPrincipal {
         crearCita.setBackground(Paleta.fondoPrincipal);
         crearCita.setLayout(null);
         
+        
+        
+        
+
+       
+
+        // Cambiar fuente
+        
+
+        // Crear DatePicker con la configuración
+        
+        
+        
+        
+        JLabel lblHistorialPagos_1 = new JLabel("Agregar Cita");
+        lblHistorialPagos_1.setForeground(new Color(70, 150, 230));
+        lblHistorialPagos_1.setFont(new Font("SansSerif", Font.BOLD, 27));
+        lblHistorialPagos_1.setBackground(new Color(240, 235, 220));
+        lblHistorialPagos_1.setBounds(10, 10, 241, 35);
+        crearCita.add(lblHistorialPagos_1);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(10, 55, 386, 283);
+        panel_1.setBackground(Paleta.prueba);
+        crearCita.add(panel_1);
+        panel_1.setLayout(null);
+        
+        
+        
+       
+
         
         
         
@@ -367,8 +426,11 @@ public class PantallaPrincipal {
 				crearCitas.setBackground(Paleta.fondoBoton2);
 				historialPagos.setBackground(Paleta.fondoBoton2);
 				card.show(panel, "cita");
+				
+				
 			}
 		});
+        
         
         crearCitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

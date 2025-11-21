@@ -29,12 +29,14 @@ public class PantallaAdmin {
     private JTextField textField_2;
 
     public static void main(String[] args) {
+
 //    	try {
 //            UIManager.setLookAndFeel(new FlatLightLaf());
 //        } catch (Exception ex) {
 //            ex.printStackTrace();
 //        }
     	
+
     	try {
   		  
   		  for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -64,6 +66,7 @@ public class PantallaAdmin {
   		  }
   		  
   		  }
+
 
         EventQueue.invokeLater(() -> {
             try {
@@ -95,15 +98,15 @@ public class PantallaAdmin {
 
         // ---------------- SIDEBAR ----------------
         JPanel sidebar = new JPanel();
-        sidebar.setBackground(new Color(0,0,0,230));
+        sidebar.setBackground(Paleta.menu);
         sidebar.setPreferredSize(new Dimension(250, 600));
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         
 
         
         JPanel logoPanel = new JPanel();
-        logoPanel.setForeground(new Color(0,0,0,215));
-        logoPanel.setBackground(new Color(26, 26, 26));
+    
+        logoPanel.setBackground(Paleta.menu);
         logoPanel.setPreferredSize(new Dimension(250, 70));
         logoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
         
