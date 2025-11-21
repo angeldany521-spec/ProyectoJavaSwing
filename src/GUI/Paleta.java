@@ -14,7 +14,7 @@ public class Paleta {
 	    public static final Color fondoBoton = new Color(235, 75, 75);;
 	    public static final Color textologin = fondoPrincipal;
 	    public static final Color panel = new Color(0,0,0,215);
-	    public static final Color textologin2 = new Color(22, 105, 147);
+	    public static final Color textologin2 = new Color(96, 165, 250);
 	    
 	    
 	    public static final Color menu = new Color(31, 41, 55);
