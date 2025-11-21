@@ -8,7 +8,7 @@ import java.awt.Color;
 public class Paleta {
 
 	    // Fondo general de la aplicación
-	    public static final Color fondoPrincipal = new Color(240, 235, 220);
+	    public static final Color fondoPrincipal = new Color(242, 240, 235);
 	    public static final Color borde = new Color(120, 120, 120, 80);
 	    public static final Color bordeCampos = Color.white;
 	    public static final Color fondoBoton = new Color(200, 50, 42);;
@@ -25,7 +25,7 @@ public class Paleta {
 	    public static final Color headers = fondoPrincipal;
 	    public static final Color menuletras = fondoPrincipal;
 	    public static final Color fondoBoton2 = new Color(200, 50, 42);
-	    
+	    public static final Color prueba = new Color(235, 233, 228);
 	    
 	    
 	    

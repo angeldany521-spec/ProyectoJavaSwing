@@ -4,13 +4,13 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.DatabaseMetaData;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,8 +26,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.github.lgooddatepicker.components.CalendarPanel;
-
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 
 
@@ -44,10 +44,35 @@ public class PantallaPrincipal {
 	 */
 	public static void main(String[] args) {
 		try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+
+		for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+
+		if ("Nimbus".equals(info.getName())) {
+
+		UIManager.setLookAndFeel(info.getClassName());
+
+		break;
+
+		}
+
+		}
+
+		} catch (Exception e) {
+
+		// Si Nimbus no está disponible, puedes establecer otro Look and Feel.
+
+		try {
+
+		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+		} catch (Exception ex) {
+
+		// Manejo de excepción
+
+		}
+
+}
+        
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -95,7 +120,7 @@ public class PantallaPrincipal {
         crearCitas.setContentAreaFilled(true);
         crearCitas.setFocusPainted(false);
         crearCitas.setBorderPainted(false);
-        crearCitas.setOpaque(true);
+        crearCitas.setOpaque(false);
         crearCitas.setBackground(Paleta.fondoBoton2);
         
         JButton historialPagos = new JButton("Historial de Pagos");
@@ -106,7 +131,7 @@ public class PantallaPrincipal {
         historialPagos.setContentAreaFilled(true);
         historialPagos.setFocusPainted(false);
         historialPagos.setBorderPainted(false);
-        historialPagos.setOpaque(true);
+        historialPagos.setOpaque(false);
         historialPagos.setBackground(Paleta.fondoBoton2);
         
         JButton citas = new JButton("Citas");
@@ -121,7 +146,7 @@ public class PantallaPrincipal {
         citas.setContentAreaFilled(true);
         citas.setFocusPainted(false);
         citas.setBorderPainted(false);
-        citas.setOpaque(true);
+        citas.setOpaque(false);
         citas.setBackground(Paleta.fondoBoton2);
         
         menu.add(citas);
@@ -132,7 +157,7 @@ public class PantallaPrincipal {
         frame.getContentPane().add(menu, BorderLayout.WEST);
         
         JButton btnCerrarSesion = new JButton("Cerrar Sesion");
-        btnCerrarSesion.setOpaque(true);
+        btnCerrarSesion.setOpaque(false);
         btnCerrarSesion.setForeground(Paleta.textologin);
         btnCerrarSesion.setFont(new Font("SansSerif", Font.BOLD, 15));
         btnCerrarSesion.setFocusPainted(false);
@@ -228,12 +253,13 @@ public class PantallaPrincipal {
         panelSuperior.add(campoBuscar);
         campoBuscar.setOpaque(false);
         campoBuscar.setForeground(Paleta.menu);
-        campoBuscar.setBackground(Paleta.menu);
+        campoBuscar.setBackground(Paleta.fondo2);
         campoBuscar.setFont(new Font("SansSerif", Font.PLAIN, 13));
         campoBuscar.setBorder(new Borde(10, Paleta.menu));
         campoBuscar.setColumns(40);
         
         JButton eliminarCita = new JButton("Eliminar Cita");
+        eliminarCita.setOpaque(false);
         eliminarCita.setBorder(null);
         panelSuperior.add(eliminarCita);
         eliminarCita.setPreferredSize(new Dimension(200, 40));
@@ -241,7 +267,6 @@ public class PantallaPrincipal {
         
         eliminarCita.setBackground(Paleta.fondoBoton2);
         eliminarCita.setForeground(Paleta.textologin);
-        eliminarCita.setOpaque(true);
         
         
         PanelGestionPagos verHistorialPagos = new PanelGestionPagos();
@@ -359,6 +384,62 @@ public class PantallaPrincipal {
         crearCita.setBackground(Paleta.fondoPrincipal);
         crearCita.setLayout(null);
         
+        
+        DatePickerSettings settings = new DatePickerSettings();
+
+        // Cambiar colores
+        settings.setColor(DatePickerSettings.DateArea.BackgroundOverallCalendarPanel, Paleta.fondoPrincipal); // fondo calendario
+        settings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearMenuLabels, Paleta.fondoPrincipal); // fondo mes/año
+        settings.setColor(DatePickerSettings.DateArea.CalendarTextNormalDates, Paleta.textologin2); // texto normal
+        settings.setColor(DatePickerSettings.DateArea.CalendarBackgroundNormalDates,Paleta.fondoPrincipal); // fondo días
+        settings.setColor(DatePickerSettings.DateArea.BackgroundTodayLabel, Paleta.fondoPrincipal); // día actual
+        settings.setColor(DatePickerSettings.DateArea.TextTodayLabel, Paleta.textologin2); // texto día actual
+        settings.setVisibleDateTextField(false);
+        
+
+       
+
+        // Cambiar fuente
+        settings.setFontValidDate(new Font("SansSerif", Font.PLAIN, 18));
+        settings.setFontInvalidDate(new Font("SansSerif", Font.PLAIN, 16));
+        settings.setFontMonthAndYearMenuLabels(new Font("SansSerif", Font.BOLD, 20));
+
+        // Crear DatePicker con la configuración
+        DatePicker datePicker = new DatePicker(settings);
+       
+        datePicker.setBounds(0, 10,190,40);
+        
+        Component[] components = datePicker.getComponents();
+        for (Component c : components) {
+            if (c instanceof JButton) {
+                JButton button = (JButton) c;
+                button.setPreferredSize(new Dimension(200, 40));
+                button.setText("Seleccionar Fecha");
+                button.setBackground(Paleta.fondoBoton2);
+                button.setFont(new Font("SansSerif", Font.PLAIN, 18));
+                button.setForeground(Paleta.fondoPrincipal);
+            }
+        }
+        
+        
+        
+        JLabel lblHistorialPagos_1 = new JLabel("Agregar Cita");
+        lblHistorialPagos_1.setForeground(new Color(70, 150, 230));
+        lblHistorialPagos_1.setFont(new Font("SansSerif", Font.BOLD, 27));
+        lblHistorialPagos_1.setBackground(new Color(240, 235, 220));
+        lblHistorialPagos_1.setBounds(10, 10, 241, 35);
+        crearCita.add(lblHistorialPagos_1);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBounds(10, 55, 329, 234);
+        panel_1.setBackground(Paleta.prueba);
+        crearCita.add(panel_1);
+        panel_1.setLayout(null);
+        panel_1.add(datePicker);
+        
+        
+       
+
         
         
         
