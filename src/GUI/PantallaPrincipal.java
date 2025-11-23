@@ -41,6 +41,7 @@ import javax.swing.UIManager;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+import com.formdev.flatlaf.ui.FlatListCellBorder.Selected;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
@@ -816,17 +817,34 @@ public class PantallaPrincipal {
 				String telefono = campoTelefonoCliente.getText();	
 				String correo = campoCorreoCliente.getText();	
 				
-				GuardarDatos.guardarClientes(nombre, telefono, correo);
-				ConsultarDatos.refrescarcombos(comboClientes, "Clientes");
-				
 				campoNombreCliente.setText("");
 				campoTelefonoCliente.setText("");
 				campoCorreoCliente.setText("");
+				
+				GuardarDatos.guardarClientes(nombre, telefono, correo);
+				ConsultarDatos.refrescarcombos(comboClientes, "Clientes");
+				
 			}	
 		});
         
         confirmarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedCliente = comboClientes.getSelectedIndex();
+				int selectedBarbero = barberoscombo.getSelectedIndex();
+				
+				int idbarber = barberos.get(selectedBarbero).getId();
+				int idcliente = barberos.get(selectedCliente).getId();
+				
+				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
+				String hora = ""; 
+				
+				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
+		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
+		        		hora = horarioselect.getText();
+		        	}	        
+		        }
+				
+				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora);
 				
 			}	
 		});

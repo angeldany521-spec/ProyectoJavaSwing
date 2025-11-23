@@ -7,7 +7,7 @@ public class Admin extends UsuarioBase implements Usuario{
 	
 	
 	public Admin(int id, String nombre, String telefono, String correo,String user,String contraseña,String rol,int nivelAcceso) {
-		super(id, nombre, telefono, correo, user, contraseña, rol);
+		super(id, nombre, telefono, correo, user, contraseña);
 		this.nivelAcceso = nivelAcceso;
 	}
 	

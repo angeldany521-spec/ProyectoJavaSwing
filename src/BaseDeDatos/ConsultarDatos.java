@@ -25,6 +25,7 @@ import Dominio.UsuarioRegular;
 
 public class ConsultarDatos {
 	
+	
 	public static ArrayList<Barbero> obtenerBarberos() {
 		ArrayList<Barbero> listaBarberos = new ArrayList<Barbero>();
 		
@@ -69,7 +70,8 @@ public class ConsultarDatos {
 	        ResultSet rs = ps.executeQuery();
 
 	        while (rs.next()) {
-	            modelo.addElement(rs.getString("nombre"));
+	        	
+	        	modelo.addElement(rs.getString("nombre"));
 	        }
 
 	        combo.setModel(modelo);
@@ -83,6 +85,7 @@ public class ConsultarDatos {
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 		
 		
+		listaClientes.add(new Cliente(0, "", null, null));
 		String sql = "SELECT * FROM Clientes";
 	
 	try {
@@ -92,7 +95,6 @@ public class ConsultarDatos {
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
         
-        listaClientes.add(new Cliente(0, "", null, null));
         while (rs.next()) {
            Cliente c = new Cliente(
         		   rs.getInt("IDCliente"),
@@ -142,9 +144,7 @@ public class ConsultarDatos {
 	}
 	
 	catch (Exception e) {e.printStackTrace();}
-	return listaUsuarios;
-
-	
+	return listaUsuarios;	
 } 
 	
 	

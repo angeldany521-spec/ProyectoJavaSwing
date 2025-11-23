@@ -32,7 +32,7 @@ public class GuardarDatos {
 }
 	
 	public static boolean guardarCita(int idBarber, int idCliente, String servicios, Date fecha, String hora) {
-		String datos = "INSERT INTO Clientes Values(?, ?, ?, ?, ?)";
+		String datos = "INSERT INTO Citas Values(?, ?, ?, ?, ?)";
 		
 		try (Connection con = Conectar.conexion();
 				PreparedStatement ps = con.prepareStatement(datos)) {
