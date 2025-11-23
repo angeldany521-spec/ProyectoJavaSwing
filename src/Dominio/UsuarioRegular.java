@@ -1,17 +1,18 @@
 package Dominio;
 
+import java.util.ArrayList;
 
 public class UsuarioRegular extends UsuarioBase implements Usuario{
+	
 
-	public UsuarioRegular(int id, String nombre, String telefono, String correo,String user, String contraseña, String rol) {
-		super(id, nombre, telefono, correo,user,contraseña,rol);
+	public UsuarioRegular(int id, String nombre, String telefono, String correo,String user, String contraseña) {
+		super(id, nombre, telefono, correo,user,contraseña);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void registrar() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package GUI;
 
 import Imagenes.*;
+
+
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +20,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 
 import BaseDeDatos.Conectar;
+import BaseDeDatos.ConsultarDatos;
+import Dominio.Cliente;
+import Dominio.Usuario;
+import Dominio.UsuarioRegular;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -25,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -42,6 +49,35 @@ public class Login extends JFrame{
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+
+			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+
+			if ("Nimbus".equals(info.getName())) {
+
+			UIManager.setLookAndFeel(info.getClassName());
+
+			break;
+
+			}
+
+			}
+
+			} catch (Exception e) {
+
+			// Si Nimbus no está disponible, puedes establecer otro Look and Feel.
+
+			try {
+
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+			} catch (Exception ex) {
+
+			// Manejo de excepción
+
+			}
+
+	}
 		try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ex) {
@@ -77,6 +113,7 @@ public class Login extends JFrame{
 		ventanaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventanaLogin.getContentPane().setLayout(null);
 		
+		ArrayList<UsuarioRegular> usuarios = ConsultarDatos.obtenerUsuarios();
 		
 		
 		ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoBarberia-1-02.png"));
@@ -150,35 +187,44 @@ public class Login extends JFrame{
 		campoContra.setOpaque(false);
 		panel.add(campoContra);
 		
-		JLabel lblerror = new JLabel("");
+		JLabel lblerror = new JLabel("El usuario o Contraseña son incorrectos, por favor vuelva a intentarlo");
 		lblerror.setVisible(false);
 		lblerror.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		lblerror.setForeground(Paleta.fondoBoton);
-		lblerror.setBounds(34, 531, 438, 24);
+		lblerror.setBounds(22, 531, 462, 24);
 		ventanaLogin.getContentPane().add(lblerror);
 		
 		botonIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String usuario = campo_user.getText();
+				String user = campo_user.getText();
 				String contra = campoContra.getText();
 				
-				Connection con = Conectar.conexion(usuario, contra);
+				if (user.equals("administrador") &&
+					contra.equals("admin")) {
+					ventanaLogin.dispose();
 					
-				if (con == null) {
-					lblerror.setVisible(true);
-					lblerror.setText("El usuario o la contraseña son incorrectos, favor intente de nuevo");
+	        		
+					
 				}
 				
-				else {
-					PantallaAdmin.main(null);
-					ventanaLogin.dispose();
-					}
-				
-				
-				
+				for (int i=0; i<usuarios.size(); i++) {
+		        	if (usuarios.get(i).getUser().equals(user) &&
+		        		usuarios.get(i).getContraseña().equals(contra)) {
+		        		PantallaPrincipal.main(null);
+		        		ventanaLogin.dispose();
+		        		
+		        	}
+		        	
+	        	else {lblerror.setVisible(true);}
+		        	
+				}
 			}
+			
+			
+			
 		});
 	}
 	
+
 
 }
