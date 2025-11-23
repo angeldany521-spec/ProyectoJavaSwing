@@ -16,7 +16,10 @@ import java.awt.event.ActionEvent;
 public class PantallaAdmin {
 
     private JFrame frame;
+    private JButton btConfirmar;
+    private Panel panelBarbero;
     private CardLayout cardLayout;
+    private Panel panelEditEmpleado;
     private JPanel panelPrincipal;
     private JTextField tfCitas;
     private JTable tablaCitas;
@@ -27,6 +30,11 @@ public class PantallaAdmin {
     private JTextField tfNombre;
     private JTextField tfUsuario;
     private JTextField tfTelefono;
+    private JTextField tfHorario;
+    private JTable tablaGestionE;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JTextField textField_2;
 
     public static void main(String[] args) {
 
@@ -71,6 +79,7 @@ public class PantallaAdmin {
         EventQueue.invokeLater(() -> {
             try {
                 PantallaAdmin window = new PantallaAdmin();
+                window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 window.frame.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -90,7 +99,7 @@ public class PantallaAdmin {
 	private void initialize() {
 	
         frame = new JFrame();
-        frame.setBounds(100, 100, 1300, 900);
+        frame.setBounds(100, 100, 1380, 900);
         frame.setTitle("BarberPiece - Panel Administrador");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -137,8 +146,8 @@ public class PantallaAdmin {
         JLabel lblEmpleados = new JLabel("Empleados");
         lblEmpleados.setForeground(Paleta.textologin2);
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
-        lblEmpleados.setHorizontalAlignment(SwingConstants.CENTER);
-        lblEmpleados.setBounds(432, 23, 170, 35);
+        lblEmpleados.setHorizontalAlignment(SwingConstants.LEFT);
+        lblEmpleados.setBounds(71, 22, 170, 35);
         pantallaEmpleados.add(lblEmpleados);
 
         // Pantalla Citas
@@ -163,9 +172,9 @@ public class PantallaAdmin {
         lbPagos.setHorizontalAlignment(SwingConstants.CENTER);
         pantallaPagos.add(lbPagos);
         
-        JPanel pantallaAgregar = new JPanel();
-        pantallaAgregar.setBackground(Paleta.fondo2);
-        pantallaAgregar.setLayout(null);
+        JPanel pantallaGestion = new JPanel();
+        pantallaGestion.setBackground(Paleta.fondo2);
+        pantallaGestion.setLayout(null);
        
         
         
@@ -185,46 +194,61 @@ public class PantallaAdmin {
         tfEmpleados.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tfEmpleados.setBorder(new Borde(10, Paleta.menu));
         tfEmpleados.setColumns(10);
-        tfEmpleados.setBounds(141, 70, 513, 28);
+        tfEmpleados.setBounds(141, 70, 549, 28);
         pantallaEmpleados.add(tfEmpleados);
         
         JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(72, 110, 889, 303);
+        scrollPane_1.setBounds(83, 110, 947, 540);
         pantallaEmpleados.add(scrollPane_1);
         
         tablaEmpleado = new JTable();
+        tablaEmpleado.setShowGrid(true);
+        tablaEmpleado.setGridColor(Paleta.fondoPrincipal);
+        tablaEmpleado.setForeground(Paleta.fondoPrincipal);
+        tablaEmpleado.setFillsViewportHeight(true);
         tablaEmpleado.setModel(new DefaultTableModel(
             new Object[][] {},
             new String[] {
-                "Id", "Nombre", "Usuario", "Rol", "Telefono", "Estado"
+                "Id", "Nombre", "Usuario", "Rol", "Telefono"
             }
         ));
+        DefaultTableModel model = (DefaultTableModel) tablaEmpleado.getModel();
+        model.addRow(new Object[]{1, "Juan Perez", "jperez", "Barbero", "555-1234"});
+        model.addRow(new Object[]{1, "Juan Perez", "jperez", "Barbero", "555-1234"});
+        model.addRow(new Object[]{1, "Juan Perez", "jperez", "Barbero", "555-1234"});
         tablaEmpleado.setFillsViewportHeight(true);
-        tablaEmpleado.setBackground(Paleta.menu);
+        tablaEmpleado.setBackground(Paleta.table);
         
         JTableHeader header = tablaEmpleado.getTableHeader();
         header.setOpaque(true);
         header.setBackground(Paleta.headers);
         tablaEmpleado.getTableHeader().setForeground(Paleta.textologin2);
-        
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        
         scrollPane_1.setViewportView(tablaEmpleado);
+       
+        
         
         ImageIcon agg = new ImageIcon(getClass().getResource("/Imagenes/botonAgregar.png"));
-        
         Image img = agg.getImage();
         Image size = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         ImageIcon aggIcon = new ImageIcon(size);
         			
         
         JButton btnAgregarEmpleado = new JButton("Agregar ",aggIcon);
+        btnAgregarEmpleado.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	
+        	
+        		cardLayout.show(panelPrincipal, "AGREGAR");
+				
+			}
+        });
         btnAgregarEmpleado.setHorizontalTextPosition(SwingConstants.RIGHT);
         btnAgregarEmpleado.setIconTextGap(3);
         btnAgregarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnAgregarEmpleado.setForeground(Paleta.textologin);
-        btnAgregarEmpleado.setBackground(Paleta.fondoBoton2);
-        btnAgregarEmpleado.setBounds(664, 67, 145, 35);
+        btnAgregarEmpleado.setBackground(Paleta.textologin2);
+        btnAgregarEmpleado.setBounds(723, 67, 145, 35);
         pantallaEmpleados.add(btnAgregarEmpleado);
         
         ImageIcon elim = new ImageIcon(getClass().getResource("/Imagenes/botonBorrar.png"));
@@ -234,52 +258,63 @@ public class PantallaAdmin {
         ImageIcon elimIcon = new ImageIcon(size1);
         
         JButton btEliminarEmpleado = new JButton("Eliminar",elimIcon);
+        btEliminarEmpleado.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		DefaultTableModel model = (DefaultTableModel) tablaEmpleado.getModel();
+				int selectedRow = tablaEmpleado.getSelectedRow();
+				if (selectedRow != -1) {
+					model.removeRow(selectedRow);
+				} else {
+					JOptionPane.showMessageDialog(frame, "Por favor, seleccione un empleado para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+        	
+        	}
+        });
         btEliminarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btEliminarEmpleado.setForeground(Paleta.textologin);
         btEliminarEmpleado.setBackground(Paleta.fondoBoton2);
-        btEliminarEmpleado.setBounds(821, 67, 139, 35);
+        btEliminarEmpleado.setBounds(891, 67, 139, 35);
         pantallaEmpleados.add(btEliminarEmpleado);
         panelPrincipal.add(pantallaEmpleados, "EMPLEADOS");
-        panelPrincipal.add(pantallaAgregar,"AGREGAR");
+        panelPrincipal.add(pantallaGestion,"AGREGAR");
         
-        JLabel lblAgregarEmpleado = new JLabel("Agregar Empleado");
+        JLabel lblAgregarEmpleado = new JLabel("Gestion Empleados");
         lblAgregarEmpleado.setForeground(Paleta.textologin2);
-        lblAgregarEmpleado.setHorizontalAlignment(SwingConstants.CENTER);
+        lblAgregarEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
         lblAgregarEmpleado.setFont(new Font("SansSerif", Font.BOLD, 27));
-        lblAgregarEmpleado.setBounds(394, 31, 246, 35);
-        pantallaAgregar.add(lblAgregarEmpleado);
+        lblAgregarEmpleado.setBounds(41, 39, 305, 35);
+        pantallaGestion.add(lblAgregarEmpleado);
         
-        JPanel panel = new JPanel();
-        panel.setBorder(new Borde(10,Paleta.menu));
-        panel.setBackground(Paleta.menu);
-        panel.setBounds(293, 99, 449, 422);
-        pantallaAgregar.add(panel);
-        panel.setLayout(null);
+        Panel panelAggEmpleado = new Panel(15, 0, Paleta.borde);
+        panelAggEmpleado.setBackground(Paleta.menu);
+        panelAggEmpleado.setBounds(41, 84, 449, 378);
+        pantallaGestion.add(panelAggEmpleado);
+        panelAggEmpleado.setLayout(null);
         
         JLabel lbNombre = new JLabel("Nombre:");
         lbNombre.setForeground(Paleta.fondoPrincipal);
         lbNombre.setFont(new Font("Dialog", Font.BOLD, 14));
         lbNombre.setHorizontalAlignment(SwingConstants.LEFT);
-        lbNombre.setBounds(49, 45, 77, 16);
-        panel.add(lbNombre);
+        lbNombre.setBounds(31, 59, 77, 16);
+        panelAggEmpleado.add(lbNombre);
         
         tfNombre = new JTextField();
         tfNombre.setOpaque(false);
         tfNombre.setForeground(Paleta.fondoPrincipal);
         tfNombre.setBackground(Paleta.menu);
         tfNombre.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        tfNombre.setBorder(new Borde(10, Paleta.fondoPrincipal));
-        tfNombre.setBounds(122, 39, 275, 29);
+        tfNombre.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfNombre.setBounds(31, 85, 387, 29);
         tfNombre.setColumns(10);
-        panel.add(tfNombre);
+        panelAggEmpleado.add(tfNombre);
         
         JLabel lbUsuario = new JLabel("Usuario:");
         lbUsuario.setForeground(Paleta.fondoPrincipal);
         lbUsuario.setHorizontalAlignment(SwingConstants.LEFT);
         lbUsuario.setFont(new Font("Dialog", Font.BOLD, 14));
         lbUsuario.setForeground(Paleta.fondoPrincipal);
-        lbUsuario.setBounds(49, 104, 77, 16);
-        panel.add(lbUsuario);
+        lbUsuario.setBounds(31, 124, 77, 16);
+        panelAggEmpleado.add(lbUsuario);
         
         tfUsuario = new JTextField();
         tfUsuario.setOpaque(false);
@@ -288,36 +323,49 @@ public class PantallaAdmin {
         tfUsuario.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tfUsuario.setBorder(new Borde(5, Paleta.fondoPrincipal));
         tfUsuario.setColumns(10);
-        tfUsuario.setBounds(122, 98, 275, 29);
-        panel.add(tfUsuario);
+        tfUsuario.setBounds(31, 150, 387, 29);
+        panelAggEmpleado.add(tfUsuario);
         
         JLabel lbRol = new JLabel("Rol:");
         lbRol.setForeground(Paleta.fondoPrincipal);
         lbRol.setHorizontalAlignment(SwingConstants.LEFT);
         lbRol.setFont(new Font("Dialog", Font.BOLD, 14));
-        lbRol.setBounds(49, 163, 67, 16);
-        panel.add(lbRol);
+        lbRol.setBounds(31, 189, 67, 16);
+        panelAggEmpleado.add(lbRol);
         
-        JRadioButton rbRegular = new JRadioButton("Regular");
-        rbRegular.setForeground(Paleta.textologin);
-        rbRegular.setBounds(125, 159, 88, 24);
-        panel.add(rbRegular);
+        JRadioButton rbBarbero = new JRadioButton("Barbero");
+        rbBarbero.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		panelBarbero.setVisible(true);
+        		
+        	}
+        });
+        rbBarbero.setForeground(Paleta.textologin);
+        rbBarbero.setBounds(31, 215, 88, 24);
+        panelAggEmpleado.add(rbBarbero);
         
-        JRadioButton rbAdmin = new JRadioButton("Admin");
-        rbAdmin.setForeground(Paleta.textologin);
-        rbAdmin.setBounds(222, 159, 88, 24);
-        panel.add(rbAdmin);
+        JRadioButton rbRecepcionista = new JRadioButton("Recepcionista");
+        rbRecepcionista.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		btConfirmar.setEnabled(true);
+        		panelBarbero.setVisible(false);
+        	}
+        });
+        rbRecepcionista.setForeground(Paleta.textologin);
+        rbRecepcionista.setBounds(136, 215, 106, 24);
+        panelAggEmpleado.add(rbRecepcionista);
         
         ButtonGroup roles = new ButtonGroup();
-        roles.add(rbAdmin);        
-        roles.add(rbRegular);
+        roles.add(rbRecepcionista);        
+        roles.add(rbBarbero);
         
         JLabel lbTelefono = new JLabel("Telefono: ");
         lbTelefono.setForeground(Paleta.fondoPrincipal);
         lbTelefono.setHorizontalAlignment(SwingConstants.LEFT);
         lbTelefono.setFont(new Font("Dialog", Font.BOLD, 14));
-        lbTelefono.setBounds(49, 222, 77, 16);
-        panel.add(lbTelefono);
+        lbTelefono.setBounds(31, 249, 77, 16);
+        panelAggEmpleado.add(lbTelefono);
         
         tfTelefono = new JTextField();
         tfTelefono.setOpaque(false);
@@ -326,42 +374,305 @@ public class PantallaAdmin {
         tfTelefono.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tfTelefono.setBorder(new Borde(5, Paleta.fondoPrincipal));
         tfTelefono.setColumns(10);
-        tfTelefono.setBounds(122, 216, 275, 29);
-        panel.add(tfTelefono);
-        
-        JLabel lbEstado = new JLabel("Estado:");
-        lbEstado.setForeground(Paleta.fondoPrincipal);
-        lbEstado.setHorizontalAlignment(SwingConstants.LEFT);
-        lbEstado.setFont(new Font("Dialog", Font.BOLD, 14));
-        lbEstado.setBounds(49, 281, 77, 16);
-        panel.add(lbEstado);
-        
-        JRadioButton rbActivo = new JRadioButton("Activo");
-        rbActivo.setForeground(Paleta.textologin);
-        rbActivo.setBounds(126, 277, 77, 24);
-        panel.add(rbActivo);
-        
-        JRadioButton rbInactivo = new JRadioButton("Inactivo");
-        rbInactivo.setForeground(Paleta.textologin);
-        rbInactivo.setBounds(203, 277, 88, 24);
-        panel.add(rbInactivo);
+        tfTelefono.setBounds(31, 275, 387, 29);
+        panelAggEmpleado.add(tfTelefono);
         
         ButtonGroup estadoButtonGroup = new ButtonGroup();
-        estadoButtonGroup.add(rbInactivo);
-        estadoButtonGroup.add(rbActivo);
         
-        JButton btConfirmar = new JButton("Confirmar");
-        btConfirmar.setBackground(Paleta.fondoBoton2);
+        btConfirmar = new JButton("Confirmar");
+        btConfirmar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		String nombre = tfNombre.getText();
+        		String usuario = tfUsuario.getText();
+        		String telefono = tfTelefono.getText();
+        		String rol = "";
+        		if (rbBarbero.isSelected()) {
+					rol = "Barbero";
+				} else if (rbRecepcionista.isSelected()) {
+					rol = "Recepcionista";
+				}
+        		if (nombre.isEmpty() || usuario.isEmpty() || telefono.isEmpty() || rol.isEmpty()) {
+        			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        		} else {
+        			DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
+					model.addRow(new Object[]{model.getRowCount() + 1, nombre, usuario, rol, telefono});
+        		
+				}
+				
+				// Limpiar los campos después de agregar
+				tfNombre.setText("");
+				tfUsuario.setText("");
+				tfTelefono.setText("");
+				roles.clearSelection();
+				panelBarbero.setVisible(false);
+        	}
+        });
+        btConfirmar.setBackground(Paleta.textologin2);
         btConfirmar.setForeground(Paleta.fondoPrincipal);
-        btConfirmar.setBounds(175, 339, 98, 26);
-        panel.add(btConfirmar);
+        btConfirmar.setBounds(31, 326, 387, 26);
+        panelAggEmpleado.add(btConfirmar);
+        
+        JLabel lblAgregarEmpleado_1 = new JLabel("Agregar Empleado");
+        lblAgregarEmpleado_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lblAgregarEmpleado_1.setForeground(new Color(96, 165, 250));
+        lblAgregarEmpleado_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblAgregarEmpleado_1.setBounds(25, 12, 246, 35);
+        panelAggEmpleado.add(lblAgregarEmpleado_1);
+        
+        
+        panelBarbero = new Panel(15, 0, Paleta.borde);
+        panelBarbero.setVisible(false);
+        panelBarbero.setLayout(null);
+        panelBarbero.setBorder(new Borde(10,Paleta.menu));
+        panelBarbero.setBackground(new Color(31, 41, 55));
+        panelBarbero.setBounds(41, 492, 449, 179);
+        pantallaGestion.add(panelBarbero);
+        
+        JLabel lblAgregarEmpleado_1_1 = new JLabel("Barbero");
+        lblAgregarEmpleado_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lblAgregarEmpleado_1_1.setForeground(new Color(96, 165, 250));
+        lblAgregarEmpleado_1_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblAgregarEmpleado_1_1.setBounds(25, 12, 246, 35);
+        panelBarbero.add(lblAgregarEmpleado_1_1);
+        
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setForeground(Paleta.textologin2);
+        btnCancelar.setBackground(Paleta.fondoPrincipal);
+        btnCancelar.setBounds(339, 141, 98, 26);
+        panelBarbero.add(btnCancelar);
+        
+        JLabel lblTurno = new JLabel("Turno");
+        lblTurno.setHorizontalAlignment(SwingConstants.LEFT);
+        lblTurno.setForeground(new Color(242, 240, 235));
+        lblTurno.setFont(new Font("Dialog", Font.BOLD, 14));
+        lblTurno.setBounds(25, 61, 77, 16);
+        panelBarbero.add(lblTurno);
+        
+        JLabel lblHorario = new JLabel("Horario");
+        lblHorario.setHorizontalAlignment(SwingConstants.LEFT);
+        lblHorario.setForeground(new Color(242, 240, 235));
+        lblHorario.setFont(new Font("Dialog", Font.BOLD, 14));
+        lblHorario.setBounds(225, 59, 77, 16);
+        panelBarbero.add(lblHorario);
+        
+        tfHorario = new JTextField();
+        tfHorario.setOpaque(false);
+        tfHorario.setForeground(Paleta.textologin);
+        tfHorario.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tfHorario.setColumns(10);
+        tfHorario.setBorder(new Borde(5, Color.WHITE));
+        tfHorario.setBackground(new Color(31, 41, 55));
+        tfHorario.setBounds(225, 82, 212, 29);
+        panelBarbero.add(tfHorario);
+        
+        JRadioButton rbMañana = new JRadioButton("Mañana");
+        rbMañana.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		tfHorario.setText("");
+        		tfHorario.setText("9:00AM - 1:00PM");
+        	
+        	}
+        });
+        rbMañana.setForeground(new Color(242, 240, 235));
+        rbMañana.setBounds(25, 85, 88, 24);
+        panelBarbero.add(rbMañana);
+        
+        JRadioButton rbTarde = new JRadioButton("Tarde");
+        rbTarde.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		tfHorario.setText("");
+        		tfHorario.setText("1:00PM - 6:00PM");
+        	}
+        });
+        rbTarde.setForeground(new Color(242, 240, 235));
+        rbTarde.setBounds(122, 85, 88, 24);
+        panelBarbero.add(rbTarde);
+        
+        ButtonGroup turnos = new ButtonGroup();
+        turnos.add(rbTarde);
+        turnos.add(rbMañana);
+        
+        JScrollPane scrollPane_1_1 = new JScrollPane();
+        scrollPane_1_1.setBounds(526, 84, 558, 378);
+        pantallaGestion.add(scrollPane_1_1);
+        tablaGestionE = new JTable();
+        tablaGestionE.setModel(new DefaultTableModel(
+                new Object[][] {},
+                new String[] {
+                    "Id", "Nombre", "Usuario", "Rol", "Telefono"
+                }
+            ));
+        tablaGestionE.setShowGrid(true);
+        tablaGestionE.setGridColor(Paleta.fondoPrincipal);
+        tablaGestionE.setForeground(Paleta.fondoPrincipal);
+        model = (DefaultTableModel) tablaGestionE.getModel();
+        model.addRow(new Object[]{1, "Ana Gomez", "agomez", "Recepcionista", "555-5678"});
+        model.addRow(new Object[]{1, "Ana Gomez", "agomez", "Recepcionista", "555-5678"});
+        model.addRow(new Object[]{1, "Ana Gomez", "agomez", "Recepcionista", "555-5678"});
+        tablaGestionE.setFillsViewportHeight(true);
+        tablaGestionE.setBackground(Paleta.table);
+        JTableHeader header1 = tablaGestionE.getTableHeader();
+        header1.setOpaque(true);
+        header1.setBackground(Paleta.headers);
+        tablaGestionE.getTableHeader().setForeground(Paleta.textologin2);
+        header1.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        scrollPane_1_1.setViewportView(tablaGestionE);
+       
+        
+        ImageIcon edit = new ImageIcon(getClass().getResource("/Imagenes/botonEditar.png"));
+        Image img2 = edit.getImage();
+        Image size3 = img2.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+       
+        ImageIcon editIcon = new ImageIcon(size3);
+        
+        
+        JButton btEditar = new JButton("Editar", editIcon);
+        btEditar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	
+        		if (tablaGestionE.getSelectedRow() == -1) {
+        		JOptionPane.showMessageDialog(frame, "Por favor, seleccione un empleado para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+        		} else {
+        			panelEditEmpleado.setVisible(true);
+        		}
+        		
+        		
+			}
+        });
+        btEditar.setIconTextGap(6);
+        btEditar.setHorizontalTextPosition(SwingConstants.RIGHT);
+        btEditar.setForeground(new Color(242, 240, 235));
+        btEditar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btEditar.setBackground(Paleta.menu);
+        btEditar.setBounds(939, 39, 145, 35);
+        pantallaGestion.add(btEditar);
+        
+        panelEditEmpleado = new Panel(15, 0, new Color(120, 120, 120, 80));
+        panelEditEmpleado.setVisible(false);
+        panelEditEmpleado.setLayout(null);
+        panelEditEmpleado.setBackground(new Color(31, 41, 55));
+        panelEditEmpleado.setBounds(526, 489, 558, 184);
+        pantallaGestion.add(panelEditEmpleado);
+        
+        JLabel lbNombre_1 = new JLabel("Nombre:");
+        lbNombre_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbNombre_1.setForeground(new Color(242, 240, 235));
+        lbNombre_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbNombre_1.setBounds(31, 12, 77, 16);
+        panelEditEmpleado.add(lbNombre_1);
+        
+        textField = new JTextField();
+        textField.setOpaque(false);
+        textField.setForeground(new Color(242, 240, 235));
+        textField.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        textField.setColumns(10);
+        textField.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        textField.setBackground(new Color(31, 41, 55));
+        textField.setBounds(31, 38, 245, 29);
+        panelEditEmpleado.add(textField);
+        
+        JLabel lbUsuario_1 = new JLabel("Usuario:");
+        lbUsuario_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbUsuario_1.setForeground(new Color(242, 240, 235));
+        lbUsuario_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbUsuario_1.setBounds(31, 77, 77, 16);
+        panelEditEmpleado.add(lbUsuario_1);
+        
+        textField_1 = new JTextField();
+        textField_1.setOpaque(false);
+        textField_1.setForeground(new Color(242, 240, 235));
+        textField_1.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        textField_1.setColumns(10);
+        textField_1.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        textField_1.setBackground(new Color(31, 41, 55));
+        textField_1.setBounds(31, 103, 245, 29);
+        panelEditEmpleado.add(textField_1);
+        
+        JLabel lbRol_1 = new JLabel("Rol:");
+        lbRol_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbRol_1.setForeground(new Color(242, 240, 235));
+        lbRol_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbRol_1.setBounds(301, 12, 67, 16);
+        panelEditEmpleado.add(lbRol_1);
+        
+        JRadioButton rbBarbero_1 = new JRadioButton("Barbero");
+        rbBarbero_1.setForeground(new Color(242, 240, 235));
+        rbBarbero_1.setBounds(301, 40, 88, 24);
+        panelEditEmpleado.add(rbBarbero_1);
+        
+        JRadioButton rbRecepcionista_1 = new JRadioButton("Recepcionista");
+        rbRecepcionista_1.setForeground(new Color(242, 240, 235));
+        rbRecepcionista_1.setBounds(402, 40, 106, 24);
+        panelEditEmpleado.add(rbRecepcionista_1);
+        
+        JLabel lbTelefono_1 = new JLabel("Telefono: ");
+        lbTelefono_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbTelefono_1.setForeground(new Color(242, 240, 235));
+        lbTelefono_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbTelefono_1.setBounds(301, 77, 77, 16);
+        panelEditEmpleado.add(lbTelefono_1);
+        
+        textField_2 = new JTextField();
+        textField_2.setOpaque(false);
+        textField_2.setForeground(new Color(242, 240, 235));
+        textField_2.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        textField_2.setColumns(10);
+        textField_2.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        textField_2.setBackground(new Color(31, 41, 55));
+        textField_2.setBounds(301, 103, 245, 29);
+        panelEditEmpleado.add(textField_2);
+        
+        JButton btnCancelar_1 = new JButton("Cancelar");
+        btnCancelar_1.setForeground(new Color(96, 165, 250));
+        btnCancelar_1.setBackground(new Color(242, 240, 235));
+        btnCancelar_1.setBounds(338, 146, 98, 26);
+        panelEditEmpleado.add(btnCancelar_1);
+        
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	
+        	
+        		panelEditEmpleado.setVisible(false);
+        		
+        		if (textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
+					 int selectedRow = tablaGestionE.getSelectedRow();
+					 model.setValueAt(textField.getText(), selectedRow, 1);
+					 model.setValueAt(textField_1.getText(), selectedRow, 2);
+					 model.setValueAt(textField_2.getText(), selectedRow, 4);
+					 String rol = "";
+					 if (rbBarbero_1.isSelected()) {
+							rol = "Barbero";
+						} else if (rbRecepcionista_1.isSelected()) {
+							rol = "Recepcionista";
+						}
+					 model.setValueAt(rol, selectedRow, 3);
+					
+					textField.setText("");
+					textField_1.setText("");
+					textField_2.setText("");
+					roles.clearSelection();
+					
+					
+				}
+        		
+			}
+        });
+        btnEditar.setForeground(new Color(242, 240, 235));
+        btnEditar.setBackground(new Color(96, 165, 250));
+        btnEditar.setBounds(448, 146, 98, 26);
+        panelEditEmpleado.add(btnEditar);
         panelPrincipal.add(pantallaCitas, "CITAS");
         panelPrincipal.add(pantallaPagos, "PAGOS");
         
         JLabel lbBuscar3 = new JLabel("Buscar: ");
         lbBuscar3.setForeground(Paleta.textologin2);
         lbBuscar3.setFont(new Font("SansSerif", Font.BOLD, 16));
-        lbBuscar3.setBounds(91, 72, 81, 28);
+        lbBuscar3.setBounds(72, 70, 81, 28);
         pantallaPagos.add(lbBuscar3);
         
         tfPagos = new JTextField();
@@ -371,17 +682,17 @@ public class PantallaAdmin {
         tfPagos.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tfPagos.setBorder(new Borde(5, Paleta.menu));
         tfPagos.setColumns(10);
-        tfPagos.setBounds(161, 72, 501, 28);
+        tfPagos.setBounds(140, 72, 598, 28);
         pantallaPagos.add(tfPagos);
         
         JRadioButton rbMetodoPago = new JRadioButton("Metodos de Pago");
         rbMetodoPago.setForeground(Paleta.fondoBoton2);
-        rbMetodoPago.setBounds(819, 75, 123, 23);
+        rbMetodoPago.setBounds(896, 75, 123, 23);
         pantallaPagos.add(rbMetodoPago);
         
         JRadioButton rbFecha = new JRadioButton("Fecha");
         rbFecha.setForeground(Paleta.fondoBoton2);
-        rbFecha.setBounds(742, 75, 73, 23);
+        rbFecha.setBounds(823, 75, 81, 23);
         pantallaPagos.add(rbFecha);
         
         ButtonGroup filtros = new ButtonGroup();
@@ -389,7 +700,7 @@ public class PantallaAdmin {
         filtros.add(rbMetodoPago);
         
         JScrollPane scrollPane_2 = new JScrollPane();
-        scrollPane_2.setBounds(91, 122, 851, 517);
+        scrollPane_2.setBounds(72, 110, 947, 540);
         pantallaPagos.add(scrollPane_2);
         
         tablaPagos = new JTable();
@@ -416,7 +727,7 @@ public class PantallaAdmin {
         
         JLabel lblNewLabel_1 = new JLabel("Filtrar por: ");
         lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 12));
-        lblNewLabel_1.setBounds(680, 78, 69, 16);
+        lblNewLabel_1.setBounds(756, 78, 69, 16);
         pantallaPagos.add(lblNewLabel_1);
         
         
@@ -437,7 +748,7 @@ public class PantallaAdmin {
         tfCitas.setColumns(10);
         
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(76, 119, 881, 554);
+        scrollPane.setBounds(72, 110, 947, 540);
         pantallaCitas.add(scrollPane);
         
         tablaCitas = new JTable();
@@ -480,7 +791,7 @@ public class PantallaAdmin {
         pantallaCitas.add(lblNewLabel);
 
         // ---------------- BOTONES DEL SIDEBAR ----------------
-        sidebar.add(createMenuButton("Gestion Empleados", () -> {
+        sidebar.add(createMenuButton("Empleados", () -> {
             cardLayout.show(panelPrincipal, "EMPLEADOS");
         }));
         sidebar.add(createMenuButton("Agregar Empleado", () -> {
