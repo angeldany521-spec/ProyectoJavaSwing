@@ -829,22 +829,27 @@ public class PantallaPrincipal {
         
         confirmarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedCliente = comboClientes.getSelectedIndex();
-				int selectedBarbero = barberoscombo.getSelectedIndex();
+//				int selectedCliente = comboClientes.getSelectedIndex();
+//				int selectedBarbero = barberoscombo.getSelectedIndex();
+//				int cuenta = 0;
+//				
+//				int idbarber = barberos.get(selectedBarbero).getId();
+//				int idcliente = barberos.get(selectedCliente).getId();
+//				
+//				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
+//				String hora = ""; 
+//				
+//				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
+//		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
+//		        		hora = horarioselect.getText();
+//		        	}	        
+//		        }
 				
-				int idbarber = barberos.get(selectedBarbero).getId();
-				int idcliente = barberos.get(selectedCliente).getId();
+				for (JCheckBox servicio : servicescheck) {
+					if (servicio.isSelected() ) {System.out.println(servicio.getText());}
+				}
 				
-				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
-				String hora = ""; 
-				
-				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
-		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
-		        		hora = horarioselect.getText();
-		        	}	        
-		        }
-				
-				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora);
+//				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora);
 				
 			}	
 		});
