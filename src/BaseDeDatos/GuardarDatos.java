@@ -31,8 +31,8 @@ public class GuardarDatos {
 		}
 }
 	
-	public static boolean guardarCita(int idBarber, int idCliente, String servicios, Date fecha, String hora) {
-		String datos = "INSERT INTO Citas Values(?, ?, ?, ?, ?)";
+	public static boolean guardarCita(int idBarber, int idCliente, String servicios, Date fecha, String hora, int monto) {
+		String datos = "INSERT INTO Citas Values(?, ?, ?, ?, ?, ?)";
 		
 		try (Connection con = Conectar.conexion();
 				PreparedStatement ps = con.prepareStatement(datos)) {
@@ -42,6 +42,7 @@ public class GuardarDatos {
 			ps.setString(3, servicios);
 			ps.setDate(4, fecha);
 			ps.setString(5, hora);
+			ps.setInt(6, monto);
 			
 			
 			ps.executeUpdate();
@@ -52,7 +53,7 @@ public class GuardarDatos {
 		
 		catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Datos no ingresados");
+            System.out.println("ERROR");
             return false;
 		}
 }

@@ -261,19 +261,16 @@ public class PantallaPrincipal {
        
         Inicio.add(scrollPane);
         
-        String[] columnasCitas = {"Cliente", "Barber", "Fecha", "Servicio", "Precio"};
+        
         
         		
         
-        DefaultTableModel modeloCitas = new DefaultTableModel(columnasCitas, 0);
-        modeloCitas.addRow(new String[]{"Cliente", "Barbero", "Fecha", "Servicio", "Precio"});
-        modeloCitas.addRow(new String[]{"Cliente", "Barbero", "Fecha", "Servicio", "Precio"});
-        modeloCitas.addRow(new String[]{"Cliente", "Barbero", "Fecha", "Servicio", "Precio"});
-        modeloCitas.addRow(new String[]{"Cliente", "Barbero", "Fecha", "Servicio", "Precio"});
         
         
         
-        tableCitas = new JTable(modeloCitas);
+        
+        
+        tableCitas = new JTable(ConsultarDatos.cargar_citas());
         tableCitas.setRowHeight(20);
         tableCitas.setSize(new Dimension(0, 5));
         tableCitas.getTableHeader().setBackground(Paleta.headers);
@@ -829,27 +826,29 @@ public class PantallaPrincipal {
         
         confirmarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				int selectedCliente = comboClientes.getSelectedIndex();
-//				int selectedBarbero = barberoscombo.getSelectedIndex();
-//				int cuenta = 0;
-//				
-//				int idbarber = barberos.get(selectedBarbero).getId();
-//				int idcliente = barberos.get(selectedCliente).getId();
-//				
-//				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
-//				String hora = ""; 
-//				
-//				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
-//		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
-//		        		hora = horarioselect.getText();
-//		        	}	        
-//		        }
+				int selectedCliente = comboClientes.getSelectedIndex();
+				int selectedBarbero = barberoscombo.getSelectedIndex();
+				int cuenta = 0;
 				
-				for (JCheckBox servicio : servicescheck) {
-					if (servicio.isSelected() ) {System.out.println(servicio.getText());}
-				}
+				int idbarber = barberos.get(selectedBarbero).getId();
+				int idcliente = barberos.get(selectedCliente).getId();
 				
-//				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora);
+				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
+				String hora = ""; 
+				
+				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
+		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
+		        		hora = horarioselect.getText();
+		        	}	        
+		        }
+				
+//				for (JCheckBox servicio : servicescheck) {
+//					if (servicio.isSelected() ) {System.out.println(servicio.getText());}
+//				}
+				
+				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora, 100);
+				
+				tableCitas.setModel(ConsultarDatos.cargar_citas());
 				
 			}	
 		});

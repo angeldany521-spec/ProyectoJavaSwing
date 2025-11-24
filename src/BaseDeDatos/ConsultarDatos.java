@@ -21,14 +21,12 @@ import Dominio.UsuarioRegular;
 
 
 
-
-
 public class ConsultarDatos {
 	
 	
 	public static ArrayList<Barbero> obtenerBarberos() {
 		ArrayList<Barbero> listaBarberos = new ArrayList<Barbero>();
-		
+		String horal;
 		
 		String sql = "SELECT * FROM Barberos";
 	
@@ -60,6 +58,36 @@ public class ConsultarDatos {
 
 	
 }  
+	public static DefaultTableModel cargar_citas() {
+		String [] columns = {"Cliente", "Barbero", "Fecha", "Servicio", "Precio"};
+		DefaultTableModel modelo = new DefaultTableModel(null, columns);
+		String sql = "SELECT * FROM vw_citas";
+	
+	try {
+        Connection con = Conectar.conexion();
+        
+
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        
+        while (rs.next()) {
+            Object fila [] = new Object[columns.length];
+            
+            fila[0] = rs.getString("Cliente");
+            fila[1] = rs.getString("Barbero");
+            fila[2] = rs.getDate("Fecha");
+            fila[3] = rs.getString("Servicios");
+            fila[4] = rs.getInt("monto");
+            
+            modelo.addRow(fila);
+        }
+       con.close();  
+	}
+	
+	catch (Exception e) {e.printStackTrace();}
+
+	return modelo;
+}
 	
 	public static void refrescarcombos(JComboBox<String> combo, String tabla) {
 	    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
