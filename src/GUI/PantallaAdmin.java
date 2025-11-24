@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,10 +20,13 @@ public class PantallaAdmin {
     private JButton btConfirmar;
     private JRadioButton rbMañana_1;
     private JRadioButton rbTarde_1;
+    private JRadioButton rbBarbero_1;
+    private JRadioButton rbRecepcionista_1;
     private JLabel lbHorario_1;
+    private JLabel lbUsuario_1;
     private ButtonGroup turnos;
     private ButtonGroup turnos2;
-    private ButtonGroup rol;
+    private ButtonGroup roles1;
     private CardLayout cardLayout;
     private Panel panelBarbero;
     private Panel panelEditEmpleado;
@@ -34,15 +36,16 @@ public class PantallaAdmin {
     private JTable tablaPagos;
     private JTable tablaGestionE;
     private JTextField tfCitas;
+    private JTextField tfHorarioEdit;
     private JTextField tfEmpleados;
     private JTextField tfNombre;
     private JTextField tfPagos;
     private JTextField tfUsuario;
     private JTextField tfTelefono;
     private JTextField tfHorario;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
+    private JTextField tfNombreEdit;
+    private JTextField tfUsuarioEdit;
+    private JTextField tfTelefonoEdit;
 
     public static void main(String[] args) {
 
@@ -155,7 +158,7 @@ public class PantallaAdmin {
         lblEmpleados.setForeground(Paleta.textologin2);
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.LEFT);
-        lblEmpleados.setBounds(71, 22, 170, 35);
+        lblEmpleados.setBounds(81, 22, 170, 35);
         pantallaEmpleados.add(lblEmpleados);
 
         // Pantalla Citas
@@ -192,7 +195,7 @@ public class PantallaAdmin {
         JLabel lbBuscar = new JLabel("Buscar: ");
         lbBuscar.setForeground(Paleta.textologin2);
         lbBuscar.setFont(new Font("SansSerif", Font.BOLD, 16));
-        lbBuscar.setBounds(71, 70, 80, 28);
+        lbBuscar.setBounds(81, 69, 80, 28);
         pantallaEmpleados.add(lbBuscar);
         
         tfEmpleados = new JTextField();
@@ -202,7 +205,7 @@ public class PantallaAdmin {
         tfEmpleados.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tfEmpleados.setBorder(new Borde(10, Paleta.menu));
         tfEmpleados.setColumns(10);
-        tfEmpleados.setBounds(141, 70, 549, 28);
+        tfEmpleados.setBounds(151, 69, 549, 28);
         pantallaEmpleados.add(tfEmpleados);
         
         JScrollPane scrollPane_1 = new JScrollPane();
@@ -256,7 +259,7 @@ public class PantallaAdmin {
         btnAgregarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnAgregarEmpleado.setForeground(Paleta.textologin);
         btnAgregarEmpleado.setBackground(Paleta.textologin2);
-        btnAgregarEmpleado.setBounds(723, 67, 145, 35);
+        btnAgregarEmpleado.setBounds(723, 66, 145, 35);
         pantallaEmpleados.add(btnAgregarEmpleado);
         
         ImageIcon elim = new ImageIcon(getClass().getResource("/Imagenes/botonBorrar.png"));
@@ -281,7 +284,7 @@ public class PantallaAdmin {
         btEliminarEmpleado.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btEliminarEmpleado.setForeground(Paleta.textologin);
         btEliminarEmpleado.setBackground(Paleta.fondoBoton2);
-        btEliminarEmpleado.setBounds(891, 67, 139, 35);
+        btEliminarEmpleado.setBounds(891, 66, 139, 35);
         pantallaEmpleados.add(btEliminarEmpleado);
         panelPrincipal.add(pantallaEmpleados, "EMPLEADOS");
         panelPrincipal.add(pantallaGestion,"AGREGAR");
@@ -549,6 +552,11 @@ public class PantallaAdmin {
         		"Id", "Nombre", "Usuario", "Rol", "Telefono"
         	}
         ));
+        tablaGestionE.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                llenarCamposEditar();
+            }
+        });
         tablaGestionE.getColumnModel().getColumn(0).setPreferredWidth(35);
         tablaGestionE.getColumnModel().getColumn(4).setPreferredWidth(100);
         tablaGestionE.setShowGrid(true);
@@ -583,6 +591,7 @@ public class PantallaAdmin {
         		JOptionPane.showMessageDialog(frame, "Por favor, seleccione un empleado para editar.", "Error", JOptionPane.ERROR_MESSAGE);
         		} else {
         			panelEditEmpleado.setVisible(true);
+        			
         		}
         		
         		
@@ -610,32 +619,44 @@ public class PantallaAdmin {
         lbNombre_1.setBounds(31, 12, 77, 16);
         panelEditEmpleado.add(lbNombre_1);
         
-        textField = new JTextField();
-        textField.setOpaque(false);
-        textField.setForeground(new Color(242, 240, 235));
-        textField.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        textField.setColumns(10);
-        textField.setBorder(new Borde(5, Paleta.fondoPrincipal));
-        textField.setBackground(new Color(31, 41, 55));
-        textField.setBounds(31, 38, 245, 29);
-        panelEditEmpleado.add(textField);
+        tfNombreEdit = new JTextField();
+        tfNombreEdit.setOpaque(false);
+        tfNombreEdit.setForeground(new Color(242, 240, 235));
+        tfNombreEdit.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfNombreEdit.setColumns(10);
+        tfNombreEdit.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfNombreEdit.setBackground(new Color(31, 41, 55));
+        tfNombreEdit.setBounds(31, 38, 245, 29);
+        panelEditEmpleado.add(tfNombreEdit);
         
-        JLabel lbUsuario_1 = new JLabel("Usuario:");
+        lbUsuario_1 = new JLabel("Usuario:");
         lbUsuario_1.setHorizontalAlignment(SwingConstants.LEFT);
         lbUsuario_1.setForeground(new Color(242, 240, 235));
         lbUsuario_1.setFont(new Font("Dialog", Font.BOLD, 14));
         lbUsuario_1.setBounds(301, 12, 77, 16);
         panelEditEmpleado.add(lbUsuario_1);
         
-        textField_1 = new JTextField();
-        textField_1.setOpaque(false);
-        textField_1.setForeground(new Color(242, 240, 235));
-        textField_1.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        textField_1.setColumns(10);
-        textField_1.setBorder(new Borde(5, Paleta.fondoPrincipal));
-        textField_1.setBackground(new Color(31, 41, 55));
-        textField_1.setBounds(301, 38, 245, 29);
-        panelEditEmpleado.add(textField_1);
+        tfUsuarioEdit = new JTextField();
+        tfUsuarioEdit.setOpaque(false);
+        tfUsuarioEdit.setForeground(new Color(242, 240, 235));
+        tfUsuarioEdit.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfUsuarioEdit.setColumns(10);
+        tfUsuarioEdit.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfUsuarioEdit.setBackground(new Color(31, 41, 55));
+        tfUsuarioEdit.setBounds(301, 38, 245, 29);
+        panelEditEmpleado.add(tfUsuarioEdit);
+        
+        tfHorarioEdit = new JTextField();
+        tfHorarioEdit.setOpaque(false);
+        tfHorarioEdit.setForeground(new Color(242, 240, 235));
+        tfHorarioEdit.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfHorarioEdit.setColumns(10);
+        tfHorarioEdit.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfHorarioEdit.setBackground(new Color(31, 41, 55));
+        tfHorarioEdit.setBounds(370, 38, 175, 29);
+        tfHorarioEdit.setEditable(false); 
+        tfHorarioEdit.setVisible(false);
+        panelEditEmpleado.add(tfHorarioEdit);
         
         JLabel lbRol_1 = new JLabel("Rol:");
         lbRol_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -644,7 +665,7 @@ public class PantallaAdmin {
         lbRol_1.setBounds(31, 80, 67, 16);
         panelEditEmpleado.add(lbRol_1);
         
-        JRadioButton rbBarbero_1 = new JRadioButton("Barbero");
+        rbBarbero_1 = new JRadioButton("Barbero");
         rbBarbero_1.addChangeListener(new ChangeListener() {
         	public void stateChanged(ChangeEvent e) {
         	
@@ -652,14 +673,14 @@ public class PantallaAdmin {
         			lbUsuario_1.setText("Turno:");
         			rbMañana_1.setVisible(true);
         			rbTarde_1.setVisible(true);
+        			tfUsuarioEdit.setVisible(false);
+        			tfHorarioEdit.setVisible(true);
         			lbHorario_1 = new JLabel("Horario:");
         	        lbHorario_1.setHorizontalAlignment(SwingConstants.LEFT);
-        	        lbHorario_1.setForeground(new Color(242, 240, 235));
+        	        lbHorario_1.setForeground(Paleta.textologin);
         	        lbHorario_1.setFont(new Font("Dialog", Font.BOLD, 14));
         	        lbHorario_1.setBounds(301, 42, 77, 16);
         	        panelEditEmpleado.add(lbHorario_1);
-        	        textField_1.setBounds(370, 38, 175, 29);
-        	        textField_1.setEditable(false);        	        
         		}
         	
         	}
@@ -668,26 +689,25 @@ public class PantallaAdmin {
         rbBarbero_1.setBounds(31, 108, 88, 24);
         panelEditEmpleado.add(rbBarbero_1);
         
-        JRadioButton rbRecepcionista_1 = new JRadioButton("Recepcionista");
+        rbRecepcionista_1 = new JRadioButton("Recepcionista");
         rbRecepcionista_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
         		lbUsuario_1.setText("Usuario:");
+        		tfHorarioEdit.setVisible(false);
+        		tfUsuarioEdit.setVisible(true);
         		lbHorario_1.setVisible(false);
 				rbMañana_1.setVisible(false);
 				rbTarde_1.setVisible(false);
-				textField_1.setBounds(301, 38, 245, 29);
-				textField_1.setEditable(true);
-				textField_1.setText("");
 			}
         });
         rbRecepcionista_1.setForeground(new Color(242, 240, 235));
         rbRecepcionista_1.setBounds(132, 108, 106, 24);
         panelEditEmpleado.add(rbRecepcionista_1);
         
-        rol = new ButtonGroup();
-        turnos.add(rbRecepcionista_1);
-        turnos.add(rbBarbero_1);
+        roles1 = new ButtonGroup();
+        roles1.add(rbRecepcionista_1);
+        roles1.add(rbBarbero_1);
         
         JLabel lbTelefono_1 = new JLabel("Telefono: ");
         lbTelefono_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -696,22 +716,22 @@ public class PantallaAdmin {
         lbTelefono_1.setBounds(301, 77, 77, 16);
         panelEditEmpleado.add(lbTelefono_1);
         
-        textField_2 = new JTextField();
-        textField_2.setOpaque(false);
-        textField_2.setForeground(new Color(242, 240, 235));
-        textField_2.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        textField_2.setColumns(10);
-        textField_2.setBorder(new Borde(5, Paleta.fondoPrincipal));
-        textField_2.setBackground(new Color(31, 41, 55));
-        textField_2.setBounds(301, 103, 245, 29);
-        panelEditEmpleado.add(textField_2);
+        tfTelefonoEdit = new JTextField();
+        tfTelefonoEdit.setOpaque(false);
+        tfTelefonoEdit.setForeground(new Color(242, 240, 235));
+        tfTelefonoEdit.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfTelefonoEdit.setColumns(10);
+        tfTelefonoEdit.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfTelefonoEdit.setBackground(new Color(31, 41, 55));
+        tfTelefonoEdit.setBounds(301, 103, 245, 29);
+        panelEditEmpleado.add(tfTelefonoEdit);
         
         JButton btnCancelar_1 = new JButton("Cancelar");
         btnCancelar_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
         		turnos2.clearSelection();
-        		rol.clearSelection();
+        		roles1.clearSelection();
         		panelEditEmpleado.setVisible(false);
         		
         	}
@@ -724,33 +744,70 @@ public class PantallaAdmin {
         JButton btnEditar = new JButton("Editar");
         btnEditar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        	
-        		panelEditEmpleado.setVisible(false);
         		
-        		if (textField.getText().isEmpty() || textField_1.getText().isEmpty() || textField_2.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-				} else {
-					 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
-					 int selectedRow = tablaGestionE.getSelectedRow();
-					 model.setValueAt(textField.getText(), selectedRow, 1);
-					 model.setValueAt(textField_1.getText(), selectedRow, 2);
-					 model.setValueAt(textField_2.getText(), selectedRow, 4);
-					 String rol = "";
-					 if (rbBarbero_1.isSelected()) {
-							rol = "Barbero";
-							model.setValueAt("Inecesario", selectedRow, 3);
-						} else if (rbRecepcionista_1.isSelected()) {
-							rol = "Recepcionista";
-							model.setValueAt(rol, selectedRow, 3);
-						}
-					 
-					 
+        		
+        		
+        		if(rbRecepcionista_1.isSelected()) {
+	        		if (tfNombreEdit.getText().isEmpty() || tfUsuarioEdit.getText().isEmpty() || tfTelefonoEdit.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+					} else {
+						 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
+						 int selectedRow = tablaGestionE.getSelectedRow();
+						 model.setValueAt(tfNombreEdit.getText(), selectedRow, 1);
+						 model.setValueAt(tfUsuarioEdit.getText(), selectedRow, 2);
+						 model.setValueAt(tfTelefonoEdit.getText(), selectedRow, 4);
+						 String rol = "Recepcionista";
+						 model.setValueAt(rol, selectedRow, 3);
+						 
+						 panelEditEmpleado.setVisible(false);
+						
+						turnos2.clearSelection();
+		        		roles1.clearSelection();
+		    			lbUsuario_1.setText("Usuario:");
+		        		tfHorarioEdit.setVisible(false);
+		        		tfUsuarioEdit.setVisible(true);
+		        		lbHorario_1.setVisible(false);
+						rbMañana_1.setVisible(false);
+						rbTarde_1.setVisible(false);
+						tfUsuarioEdit.setText(""); 
+						tfNombreEdit.setText("");
+						tfUsuarioEdit.setText("");
+						tfHorarioEdit.setText("");
+						tfTelefonoEdit.setText("");
+						roles.clearSelection();
+						tablaGestionE.clearSelection();
+						
+					}
+        		} else if (rbBarbero_1.isSelected()) {
 					
-					textField.setText("");
-					textField_1.setText("");
-					textField_2.setText("");
-					roles.clearSelection();
-					
+					if (tfNombreEdit.getText().isEmpty() || tfTelefonoEdit.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+					} else {
+						 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
+						 int selectedRow = tablaGestionE.getSelectedRow();
+						 model.setValueAt(tfNombreEdit.getText(), selectedRow, 1);
+						 model.setValueAt("Inecesario", selectedRow, 2);
+						 model.setValueAt(tfTelefonoEdit.getText(), selectedRow, 4);
+						 String rol = "Barbero";
+						 model.setValueAt(rol, selectedRow, 3);
+						 
+						turnos2.clearSelection();
+		        		roles1.clearSelection();
+		    			lbUsuario_1.setText("Usuario:");
+		        		tfHorarioEdit.setVisible(false);
+		        		tfUsuarioEdit.setVisible(true);
+		        		lbHorario_1.setVisible(false);
+						rbMañana_1.setVisible(false);
+						rbTarde_1.setVisible(false);
+						tfUsuarioEdit.setText("");
+						tfNombreEdit.setText("");
+						tfUsuarioEdit.setText("");
+						tfHorarioEdit.setText("");
+						tfTelefonoEdit.setText("");
+						panelEditEmpleado.setVisible(false);
+						tablaGestionE.clearSelection();
+						
+					}
 					
 				}
         		
@@ -766,7 +823,7 @@ public class PantallaAdmin {
         rbMañana_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
-        		textField_1.setText("9:00AM - 1:00PM");
+        		tfHorarioEdit.setText("9:00AM - 1:00PM");
         	}
         });
         rbMañana_1.setForeground(new Color(242, 240, 235));
@@ -778,7 +835,7 @@ public class PantallaAdmin {
         rbTarde_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
-        		textField_1.setText("1:00PM - 6:00PM");
+        		tfHorarioEdit.setText("1:00PM - 6:00PM");
 			}
         });
         rbTarde_1.setForeground(new Color(242, 240, 235));
@@ -877,11 +934,15 @@ public class PantallaAdmin {
         tablaCitas = new JTable();
         tablaCitas.setModel(new DefaultTableModel(
         	new Object[][] {
+        		{null, null, null, null},
         	},
         	new String[] {
-        		"Fecha", "Hora", "Estado"
+        		"Id", "Cliente", "Fecha", "Hora"
         	}
         ));
+        tablaCitas.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tablaCitas.getColumnModel().getColumn(1).setPreferredWidth(133);
+        tablaCitas.getColumnModel().getColumn(2).setPreferredWidth(202);
         tablaCitas.setShowGrid(true);
         tablaCitas.setGridColor(Paleta.fondoPrincipal);
         tablaCitas.setFillsViewportHeight(true);
@@ -891,7 +952,6 @@ public class PantallaAdmin {
         tablaCitas.getTableHeader().setBackground(Paleta.headers);
         tablaCitas.getTableHeader().setForeground(Paleta.textologin2);
         header3.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        tablaCitas.getColumnModel().getColumn(0).setPreferredWidth(202);
         scrollPane.setViewportView(tablaCitas);
         
         JRadioButton rbFechaC = new JRadioButton("Fecha");
@@ -981,5 +1041,26 @@ public class PantallaAdmin {
 	    });
 
 	    return btn;
+	}
+	private void llenarCamposEditar() {
+	    int selectedRow = tablaGestionE.getSelectedRow();
+	    if (selectedRow != -1) {
+	        String nombre = (String) tablaGestionE.getValueAt(selectedRow, 1);
+	        String usuario = (String) tablaGestionE.getValueAt(selectedRow, 2);
+	        String rol = (String) tablaGestionE.getValueAt(selectedRow, 3);
+	        String telefono = (String) tablaGestionE.getValueAt(selectedRow, 4);
+
+	        tfNombreEdit.setText(nombre);
+	        tfUsuarioEdit.setText(usuario);
+	        tfTelefonoEdit.setText(telefono);
+
+	        if (rol.equals("Barbero")) {
+	            rbBarbero_1.setSelected(true);
+	        } else if (rol.equals("Recepcionista")) {
+	            rbRecepcionista_1.setSelected(true);
+	            
+	        }
+	        
+	    }
 	}
 }
