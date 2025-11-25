@@ -17,10 +17,12 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.foreign.AddressLayout;
+import java.security.PublicKey;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ForkJoinPool;
@@ -30,6 +32,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
@@ -142,7 +145,7 @@ public class PantallaPrincipal {
 		ArrayList<Cliente> clientes = ConsultarDatos.obtenerClientes();
 		
 		
-		Servicio[] servicios = {new Servicio(0, "Cerquillo", 100),
+		Servicio[] listservicios = {new Servicio(0, "Cerquillo", 100),
 								new Servicio(1, "Corte regular", 300),
 								new Servicio(2, "Corte Moderno", 500),
 								new Servicio(3, "Tintado de pelo", 400),
@@ -150,10 +153,6 @@ public class PantallaPrincipal {
 								new Servicio(5, "Depilacion de cejas", 150),
 								new Servicio(6, "Barba", 150),
 								new Servicio(7, "Facial", 100)};
-		
-		
-		
-		
 		
         JPanel menu = new JPanel();
         menu.setPreferredSize(new Dimension(150, 0));
@@ -280,8 +279,14 @@ public class PantallaPrincipal {
         tableCitas.setGridColor(Paleta.fondoPrincipal);
         tableCitas.setForeground(Paleta.fondoPrincipal);
         tableCitas.setFillsViewportHeight(true);
+        tableCitas.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(1).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(2).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(5);
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        
         scrollPane.setViewportView(tableCitas);
         
         panelAgregarCliente panelAgregarCliente = new panelAgregarCliente();
@@ -551,7 +556,7 @@ public class PantallaPrincipal {
         lblNewLabel_1_2_2.setBounds(12, 45, 76, 16);
         panelBarberos.add(lblNewLabel_1_2_2);
         
-        JComboBox barberoscombo = new JComboBox();
+        JComboBox<String> barberoscombo = new JComboBox<>();
         barberoscombo.setBounds(12, 73, 442, 34);
         barberoscombo.setBackground(Paleta.menu);
         barberoscombo.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
@@ -582,7 +587,7 @@ public class PantallaPrincipal {
         lblNewLabel_1_2_2_1_1_1_1.setBounds(474, 45, 70, 16);
         panelBarberos.add(lblNewLabel_1_2_2_1_1_1_1);
         
-        JComboBox comboClientes = new JComboBox();
+        JComboBox<String> comboClientes = new JComboBox<>();
         comboClientes.setOpaque(false);
         comboClientes.setForeground(new Color(242, 240, 235));
         comboClientes.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -692,7 +697,7 @@ public class PantallaPrincipal {
         JCheckBox[] servicescheck = {service1, service2, service3, service4, service5, service6, service7, service8};
         
         for (int i=0; i<8; i++) {
-        	servicescheck[i].setText(servicios[i].getNombre());
+        	servicescheck[i].setText(listservicios[i].getNombre());
         	servicescheck[i].setBackground(Paleta.menu);
         	servicescheck[i].setForeground(Paleta.textologin);
         	servicescheck[i].setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -708,6 +713,7 @@ public class PantallaPrincipal {
         fecha.setBounds(12, 40, 352, 30);
         fecha.setBackground(Paleta.menu);
         fecha.setForeground(Paleta.textologin2);
+        ((JTextField) fecha.getDateEditor().getUiComponent()).setEditable(false);
         panelFecha.add(fecha);
         
         
@@ -725,7 +731,7 @@ public class PantallaPrincipal {
 			if (barberos.get(selected).getId() != 0) {
 			for (int i=0; i<barberos.size(); i++) {
 	        	 panelHorarios.add(barberos.get(selected).getBotones()[i]);
-	        	 System.out.println(barberos.get(selected).getId());
+	        	 
 			}
 				
 			
@@ -826,46 +832,61 @@ public class PantallaPrincipal {
         
         confirmarCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<String> servicioSelected = new ArrayList<String>();
 				int selectedCliente = comboClientes.getSelectedIndex();
 				int selectedBarbero = barberoscombo.getSelectedIndex();
+				
 				int cuenta = 0;
-				
 				int idbarber = barberos.get(selectedBarbero).getId();
-				int idcliente = barberos.get(selectedCliente).getId();
-				
+				int idcliente = clientes.get(selectedCliente).getId();
+				String servicios = null;
+				String hora = null; 
 				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
-				String hora = ""; 
 				
+					
 				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
 		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
 		        		hora = horarioselect.getText();
 		        	}	        
 		        }
+
+				for (int i=0; i<servicescheck.length; i++) {
+					if (servicescheck[i].isSelected()) {
+						servicioSelected.add(servicescheck[i].getText()); 
+						cuenta += listservicios[i].getPrecio();
+					}
+				}
+				servicios = (servicioSelected.isEmpty()) ? null : servicios.join(", ", servicioSelected);
+				System.out.println(servicios + "" + "" + idbarber + "" + idcliente + "" + hora);                    
 				
-//				for (JCheckBox servicio : servicescheck) {
-//					if (servicio.isSelected() ) {System.out.println(servicio.getText());}
-//				}
-				
-				GuardarDatos.guardarCita(idbarber, idcliente, "", date, hora, 100);
-				
+				if (hora != null &&
+					servicios != null &&
+					cuenta != 0 &&
+					idbarber > 0 &&
+					idcliente > 0) {
+				GuardarDatos.guardarCita(idbarber, idcliente, servicios, date, hora, cuenta);
 				tableCitas.setModel(ConsultarDatos.cargar_citas());
+				table_widhts(tableCitas);
+				}
+				else {errores("Campos vacios", "Debes rellenar todos los campos para confirmar");}
 				
-			}	
-		});
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+				
+				
+				}
+        	});      
+		}
+	public void table_widhts(JTable tabla) {
+		tableCitas.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(1).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(2).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(300);
+        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(5);
+	}
+	
+	public void errores(String tema, String error) {
+		JOptionPane.showMessageDialog(null, tema, error, JOptionPane.ERROR_MESSAGE);
+	}
 }
 
 

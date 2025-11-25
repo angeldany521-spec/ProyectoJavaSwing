@@ -61,6 +61,7 @@ public class ConsultarDatos {
 	public static DefaultTableModel cargar_citas() {
 		String [] columns = {"Cliente", "Barbero", "Fecha", "Servicio", "Precio"};
 		DefaultTableModel modelo = new DefaultTableModel(null, columns);
+		
 		String sql = "SELECT * FROM vw_citas";
 	
 	try {
