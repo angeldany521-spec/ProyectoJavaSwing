@@ -13,7 +13,33 @@ import Dominio.UsuarioRegular;
 public class GuardarDatos {
 	
 	
-	public static boolean guardarUsuarios( int id ,String nombre, String telefono, String correo,String usuario,String contraseña) {
+	public static boolean guardarBarberos(String nombre, String telefono, String correo,String turno) {
+		String datos = "INSERT INTO Barberos (Nombre, Telefono, Correo,Turno) VALUES (?, ?, ?, ?)";
+		
+		try (Connection con = Conectar.conexion();
+				PreparedStatement ps = con.prepareStatement(datos)) {
+			
+			ps.setString(1, nombre);
+			ps.setString(2, telefono);
+			ps.setString(3, correo);
+			ps.setString(4, turno);
+			
+			
+			ps.executeUpdate();
+			return true;
+			
+
+		}
+		
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Datos no ingresados a la tabla barbero", "Error", JOptionPane.ERROR_MESSAGE);
+			System.out.println("Datos no ingresados");
+			return false;
+		}
+	}
+	public static boolean guardarUsuarios(String nombre, String telefono, String correo,String usuario,String contraseña) {
 		String datos = "INSERT INTO Usuarios (Nombre, Telefono, Correo, Usuario, Contraseña) VALUES (?, ?, ?, ?, ?)";
 		
 		try (Connection con = Conectar.conexion();
@@ -31,10 +57,9 @@ public class GuardarDatos {
 			
 		}
 		
-		
 		catch (Exception e) {
 			e.printStackTrace();
-//			JOptionPane.showMessageDialog(null, "Datos no ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Datos no ingresados", "Error", JOptionPane.ERROR_MESSAGE);
 			System.out.println("Datos no ingresados");
 			return false;
 		}
@@ -58,12 +83,12 @@ public class GuardarDatos {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-//			JOptionPane.showMessageDialog(null, "Datos no ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Datos no actualizador", "Error", JOptionPane.ERROR_MESSAGE);
 			System.out.println("Datos no ingresados");
 			return false;
 		}
 	}
-	
+
 	public static void eliminarDato(String tabla, String campo, int id) {
 		String datos = "DELETE FROM " + tabla + " WHERE ID"+campo+ " = ?";
 		
@@ -76,7 +101,7 @@ public class GuardarDatos {
 			
 		}catch (Exception e) {
 			e.printStackTrace();
-//			JOptionPane.showMessageDialog(null, "Datos no ingresados", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Datos no eliminados", "Error", JOptionPane.ERROR_MESSAGE);
 			System.out.println("Datos no ingresados");
 			
 		}

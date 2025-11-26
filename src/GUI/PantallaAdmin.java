@@ -5,16 +5,21 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.prefs.NodeChangeListener;
 import BaseDeDatos.ConsultarDatos;
 import BaseDeDatos.GuardarDatos;
+import GUI.PantallaPrincipal;
 import Dominio.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ChangeEvent;
 
 
@@ -24,19 +29,23 @@ public class PantallaAdmin {
     private JFrame frame;
     private JButton btConfirmar;
     private JLabel lbUsuario_1;
+    private JRadioButton rbTarde;
+    private JRadioButton rbTarde_1;
+    private JRadioButton rbMañana;
+    private JRadioButton rbMañana_1;
+    private JRadioButton rbBarberoFiltro;
+    private JRadioButton rbUsuarioFiltro;
     private ButtonGroup turnos;
-    private ButtonGroup turnos2;
-    private ButtonGroup roles1;
     private CardLayout cardLayout;
     private Panel panelBarbero;
     private Panel panelEditEmpleado;
+    private Panel panelEditBarbero;
     private JPanel panelPrincipal;
     private JTable tablaCitas;
     private JTable tablaEmpleado;
     private JTable tablaPagos;
     private JTable tablaGestionE;
     private JTextField tfCitas;
-    private JTextField tfHorarioEdit;
     private JTextField tfEmpleados;
     private JTextField tfNombre;
     private JTextField tfPagos;
@@ -46,17 +55,21 @@ public class PantallaAdmin {
     private JTextField tfNombreEdit;
     private JTextField tfUsuarioEdit;
     private JTextField tfTelefonoEdit;
+    private DefaultTableModel model;
     private JTextField tfTelefono;
     private JTextField tfCorreoEdit;
-
+    private TableRowSorter<DefaultTableModel> sorter;
+    ArrayList<Barbero> barberos = ConsultarDatos.obtenerBarberos();
+	ArrayList<Cliente> clientes = ConsultarDatos.obtenerClientes();
+	private JTable tablaBarberos;
+	private JTextField textField;
+	private JTable tablaGestionBarbero;
+	private JTextField tfNombreBarbero;
+	private JTextField tfHorarioBarbero;
+	private JTextField tfTelefonoBarbero;
+	private JTextField tfCorreoBarbero;
+	
     public static void main(String[] args) {
-
-//    	try {
-//            UIManager.setLookAndFeel(new FlatLightLaf());
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-    	
 
     	try {
   		  
@@ -103,26 +116,22 @@ public class PantallaAdmin {
 
     public PantallaAdmin() {
         initialize();
+        cargarUsuariosEnTabla();
+        cargarBarberosEnTabla();
     }
-
-
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
+    
 	private void initialize() {
 	
         frame = new JFrame();
-        frame.setBounds(100, 100, 1380, 900);
+        frame.setBounds(100, 100, 1422, 895);
         frame.setTitle("BarberPiece - Panel Administrador");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setLayout(new BorderLayout());
-        
-        if (frame.isActive()) {
-        	cargarUsuariosEnTabla();
-        	
-        }
         
 
         // ---------------- SIDEBAR ----------------
@@ -136,17 +145,25 @@ public class PantallaAdmin {
         JPanel logoPanel = new JPanel();
         logoPanel.setBackground(Paleta.menu);
         logoPanel.setPreferredSize(new Dimension(250, 70));
-        logoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 10));
+        logoPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
      
+        ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoTipografica.png"));
+        Image imglogo = logo.getImage();
+        Image sizelogo = imglogo.getScaledInstance(180, 140, Image.SCALE_SMOOTH);
+        ImageIcon logoIcon = new ImageIcon(sizelogo);
         
-        JLabel title = new JLabel("BarberPiece");
-        title.setBounds(10, 11, 102, 25);
-        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        title.setForeground(Paleta.textologin);
+//        
+//        JLabel lbLogo = new JLabel(logoIcon);
+//        logoPanel.add(lbLogo);
+        JLabel title = new JLabel(logoIcon);
+        title.setHorizontalTextPosition(SwingConstants.CENTER);
+        title.setBounds(0, 100, 102, 25);
+//        title.setFont(new Font("Segoe UI", Font.BOLD, 18));
+//        title.setForeground(Paleta.textologin);
         logoPanel.add(title);
 
         sidebar.add(logoPanel);
-        sidebar.add(Box.createVerticalStrut(30));
+//        sidebar.add(Box.createVerticalStrut(30));
 
         // ---------------- PANTALLAS CON CARDLAYOUT ----------------
         cardLayout = new CardLayout();
@@ -158,13 +175,24 @@ public class PantallaAdmin {
         pantallaEmpleados.setLayout(null);
         pantallaEmpleados.setBackground(Paleta.fondoPrincipal);
         
-        
-        JLabel lblEmpleados = new JLabel("Usuarios / Empleados");
+        JLabel lblEmpleados = new JLabel("Usuarios ");
         lblEmpleados.setForeground(Paleta.textologin2);
         lblEmpleados.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblEmpleados.setHorizontalAlignment(SwingConstants.LEFT);
         lblEmpleados.setBounds(81, 22, 322, 35);
         pantallaEmpleados.add(lblEmpleados);
+        
+        JPanel pantallaPrueba = new JPanel();
+        pantallaPrueba.setBackground(Paleta.fondo2);
+        pantallaPrueba.setBackground(Paleta.fondoPrincipal);
+        pantallaPrueba.setLayout(null);
+        JLabel lbPrueba = new JLabel("Bienvenido a nuestro programa");
+        lbPrueba.setHorizontalAlignment(SwingConstants.CENTER);
+        lbPrueba.setFont(new Font("Dialog", Font.BOLD, 35));
+        lbPrueba.setBounds(289, 306, 541, 136);
+        pantallaPrueba.add(lbPrueba);
+        
+        
 
         // Pantalla Citas
         JPanel pantallaCitas = new JPanel();
@@ -202,33 +230,62 @@ public class PantallaAdmin {
         lbBuscar.setBounds(81, 69, 80, 28);
         pantallaEmpleados.add(lbBuscar);
         
+        
         tfEmpleados = new JTextField();
+        tfEmpleados.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(javax.swing.event.DocumentEvent e) {
+				
+				String text = tfEmpleados.getText();
+
+					sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 1));
+					
+				}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				String text = tfEmpleados.getText();
+				sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 1));
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				}
+			
+			
+			});
+		
         tfEmpleados.setOpaque(false);
         tfEmpleados.setForeground(Paleta.menu);
         tfEmpleados.setBackground(Paleta.fondo2);
         tfEmpleados.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        tfEmpleados.setBorder(new Borde(10, Paleta.menu));
+        tfEmpleados.setBorder(new Borde(5, Paleta.menu));
         tfEmpleados.setColumns(10);
         tfEmpleados.setBounds(151, 69, 549, 28);
         pantallaEmpleados.add(tfEmpleados);
         
         JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(83, 110, 947, 540);
+        scrollPane_1.setBounds(83, 110, 947, 228);
         pantallaEmpleados.add(scrollPane_1);
         
         tablaEmpleado = new JTable();
+        tablaEmpleado.setLocation(81, 0);
         tablaEmpleado.setShowGrid(true);
         tablaEmpleado.setGridColor(Paleta.fondoPrincipal);
         tablaEmpleado.setForeground(Paleta.fondoPrincipal);
         tablaEmpleado.setFillsViewportHeight(true);
         tablaEmpleado.setModel(new DefaultTableModel(
-            new Object[][] {},
-            new String[] {
-            		"ID", "Nombre", "Telefono", "Correo", "Usuario", "Contraseña"
-            }
+        	new Object[][] {
+        		{null, null, null, null, null, null},
+        	},
+        	new String[] {
+        		"ID", "Nombre", "Telefono", "Correo", "Usuario", "Contrase\u00F1a"
+        	}
         ));
+        tablaEmpleado.getColumnModel().getColumn(0).setPreferredWidth(25);
+        tablaEmpleado.getColumnModel().getColumn(3).setPreferredWidth(100);
         
-        DefaultTableModel model = (DefaultTableModel) tablaEmpleado.getModel();
         tablaEmpleado.setFillsViewportHeight(true);
         tablaEmpleado.setBackground(Paleta.table);
         
@@ -277,8 +334,67 @@ public class PantallaAdmin {
         btEliminarEmpleado.setBackground(Paleta.fondoBoton2);
         btEliminarEmpleado.setBounds(891, 66, 139, 35);
         pantallaEmpleados.add(btEliminarEmpleado);
-        panelPrincipal.add(pantallaEmpleados, "EMPLEADOS");
-        panelPrincipal.add(pantallaGestion,"AGREGAR");
+        
+        
+        JScrollPane scrollPane_1_2 = new JScrollPane();
+        scrollPane_1_2.setBounds(81, 470, 947, 182);
+        pantallaEmpleados.add(scrollPane_1_2);
+        
+        tablaBarberos = new JTable();
+        tablaBarberos.setModel(new DefaultTableModel(
+        	new Object[][] {
+        	},
+        	new String[] {
+        		"Id", "Nombre", "Telefono", "Correo"
+        	}
+        ));
+        tablaBarberos.setShowGrid(true);
+        tablaBarberos.setGridColor(new Color(242, 240, 235));
+        tablaBarberos.setForeground(new Color(242, 240, 235));
+        tablaBarberos.setFillsViewportHeight(true);
+        tablaBarberos.setBackground(new Color(31, 41, 55));
+        scrollPane_1_2.setViewportView(tablaBarberos);
+        
+        JLabel lbBarberos = new JLabel("Barberos");
+        lbBarberos.setHorizontalAlignment(SwingConstants.LEFT);
+        lbBarberos.setForeground(new Color(96, 165, 250));
+        lbBarberos.setFont(new Font("SansSerif", Font.BOLD, 27));
+        lbBarberos.setBounds(81, 387, 145, 35);
+        pantallaEmpleados.add(lbBarberos);
+        
+        JLabel lbBuscar_1 = new JLabel("Buscar: ");
+        lbBuscar_1.setForeground(new Color(96, 165, 250));
+        lbBuscar_1.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lbBuscar_1.setBounds(81, 430, 80, 28);
+        pantallaEmpleados.add(lbBuscar_1);
+        
+        textField = new JTextField();
+        textField.setOpaque(false);
+        textField.setForeground(new Color(31, 41, 55));
+        textField.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        textField.setColumns(10);
+        textField.setBorder(new Borde(5, Paleta.menu));
+        textField.setBackground(new Color(242, 240, 235));
+        textField.setBounds(151, 430, 549, 28);
+        pantallaEmpleados.add(textField);
+        
+        JButton btnAgregarEmpleado_1 = new JButton("Agregar ", aggIcon);
+        btnAgregarEmpleado_1.setIconTextGap(3);
+        btnAgregarEmpleado_1.setHorizontalTextPosition(SwingConstants.RIGHT);
+        btnAgregarEmpleado_1.setForeground(new Color(242, 240, 235));
+        btnAgregarEmpleado_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnAgregarEmpleado_1.setBackground(new Color(96, 165, 250));
+        btnAgregarEmpleado_1.setBounds(723, 423, 145, 35);
+        pantallaEmpleados.add(btnAgregarEmpleado_1);
+        
+        JButton btEliminarEmpleado_1 = new JButton("Eliminar", elimIcon);
+        btEliminarEmpleado_1.addActionListener(e -> eliminarBarbero());
+        btEliminarEmpleado_1.setForeground(new Color(242, 240, 235));
+        btEliminarEmpleado_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btEliminarEmpleado_1.setBackground(Paleta.fondoBoton2);
+        btEliminarEmpleado_1.setBounds(891, 423, 139, 35);
+        pantallaEmpleados.add(btEliminarEmpleado_1);
+       
         
         JLabel lblAgregarEmpleado = new JLabel("Gestion Empleados");
         lblAgregarEmpleado.setForeground(Paleta.textologin2);
@@ -401,46 +517,49 @@ public class PantallaAdmin {
         		String usuario = tfUsuario.getText();
         		String telefono = tfTelefono.getText();
         		String correo = tfCorreo.getText();
+        		String contraseña = usuario + 123;
         		String rol = "";
+        		String turno = "";
         		
+        		
+        		if(rbMañana.isSelected()) {
+        			turno = "Mañana";
+        		}else if (rbTarde.isSelected()) {
+					turno = "Tarde";
+				}
         		
         		
         		if (rbBarbero.isSelected()) {
 					rol = "Barbero";
+					usuario = "No hablilitado";
+					contraseña = "No hablilitado";
+					
 				} else if (rbRecepcionista.isSelected()) {
 					rol = "Recepcionista";
 				}
+	        	
+        		if(rol.isEmpty()) {
+        			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
+        			
+        		}
         		
         		if (rol.equals("Barbero")) {
-	        		if (nombre.isEmpty() || telefono.isEmpty()) {
+	        		if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty() ||turno.isEmpty()) {
 	        			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
 	        		} else {
-	        			DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
-//						model.addRow(new Object[]{model.getRowCount() + 1, nombre, "Inecesario", rol, telefono});
-							if (GuardarDatos.guardarUsuarios(model.getRowCount() + 1,nombre, telefono, correo, "Inecesario", usuario+"123")) {
-			        	        JOptionPane.showMessageDialog(null, "Empleado guardado");
-			        	        cargarUsuariosEnTabla();
+							if (GuardarDatos.guardarBarberos(nombre, telefono, correo, turno)) {
+								JOptionPane.showMessageDialog(null, "Barbero guardado");
+			        	        cargarBarberosEnTabla();
 			        	    } else {
 			        	        JOptionPane.showMessageDialog(null, "Error al guardar");
-			        	        cargarUsuariosEnTabla();
 			        	    }
-						
-							tfNombre.setText("");
-							tfUsuario.setText("");
-							tfUsuario.setEnabled(true);
-							lbUsuario.setEnabled(true);
-							tfCorreo.setText("");
-							roles.clearSelection();
-							panelBarbero.setVisible(false);
 					}
 				
 	        	} else if (rol.equals("Recepcionista")) {
-						if (nombre.isEmpty() || usuario.isEmpty() || telefono.isEmpty() || usuario.isEmpty()) {
+						if (nombre.isEmpty() || usuario.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
 		        			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos requeridos.", "Error", JOptionPane.ERROR_MESSAGE);
 		        		} else {
-		        			DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
-//		        			model.addRow(new Object[]{model.getRowCount() + 1, nombre, usuario, rol, telefono});
-			        			if (GuardarDatos.guardarUsuarios(model.getRowCount() + 1,nombre, telefono, correo, usuario, usuario+ "123")) {
+			        			if (GuardarDatos.guardarUsuarios(nombre, telefono, correo, usuario, contraseña)) {
 			            	        JOptionPane.showMessageDialog(null, "Empleado guardado");
 			            	        cargarUsuariosEnTabla();
 			            	    } else {
@@ -449,8 +568,17 @@ public class PantallaAdmin {
 		        			
 		        		}
         		}
-				
         		
+        		tfNombre.setText("");
+        		tfUsuario.setText("");
+        		tfCorreo.setText("");
+        		tfTelefono.setText("");
+        		tfUsuario.setEnabled(true);
+        		lbUsuario.setEnabled(true);
+        		roles.clearSelection();
+        		panelBarbero.setVisible(false);
+        		panelAggEmpleado.setBounds(41, 84, 449, 444);
+        		btConfirmar.setBounds(31, 383, 387, 40);
         	}
         });
         btConfirmar.setBackground(Paleta.textologin2);
@@ -536,7 +664,7 @@ public class PantallaAdmin {
         tfHorario.setBounds(225, 47, 196, 29);
         panelBarbero.add(tfHorario);
         
-        JRadioButton rbMañana = new JRadioButton("Mañana");
+        rbMañana = new JRadioButton("Mañana");
         rbMañana.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		tfHorario.setText("");
@@ -548,7 +676,7 @@ public class PantallaAdmin {
         rbMañana.setBounds(31, 50, 88, 24);
         panelBarbero.add(rbMañana);
         
-        JRadioButton rbTarde = new JRadioButton("Tarde");
+        rbTarde = new JRadioButton("Tarde");
         rbTarde.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		tfHorario.setText("");
@@ -563,19 +691,20 @@ public class PantallaAdmin {
         turnos.add(rbTarde);
         turnos.add(rbMañana);
         
-        JScrollPane scrollPane_1_1 = new JScrollPane();
-        scrollPane_1_1.setBounds(526, 84, 558, 378);
-        pantallaGestion.add(scrollPane_1_1);
+        JScrollPane scrollGestionEmpleados = new JScrollPane();
+        scrollGestionEmpleados.setBounds(526, 84, 558, 378);
+        pantallaGestion.add(scrollGestionEmpleados);
         tablaGestionE = new JTable();
         tablaGestionE.setModel(new DefaultTableModel(
         	new Object[][] {
+        		{null, null, null, null, null, null},
         	},
         	new String[] {
         		"ID", "Nombre", "Telefono", "Correo", "Usuario", "Contrase\u00F1a"
         	}
         ));
-        tablaGestionE.getColumnModel().getColumn(0).setPreferredWidth(35);
-        tablaGestionE.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tablaGestionE.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tablaGestionE.getColumnModel().getColumn(3).setPreferredWidth(125);
         tablaGestionE.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 llenarCamposEditar();
@@ -594,7 +723,7 @@ public class PantallaAdmin {
         header1.setBackground(Paleta.headers);
         tablaGestionE.getTableHeader().setForeground(Paleta.textologin2);
         header1.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        scrollPane_1_1.setViewportView(tablaGestionE);
+        scrollGestionEmpleados.setViewportView(tablaGestionE);
        
         
         ImageIcon edit = new ImageIcon(getClass().getResource("/Imagenes/botonEditar.png"));
@@ -608,12 +737,21 @@ public class PantallaAdmin {
         btEditar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
+        	if(rbUsuarioFiltro.isSelected()) {	
         		if (tablaGestionE.getSelectedRow() == -1) {
-        		JOptionPane.showMessageDialog(frame, "Por favor, seleccione un empleado para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+        			JOptionPane.showMessageDialog(frame, "Por favor, seleccione un usuario para editar.", "Error", JOptionPane.ERROR_MESSAGE);
         		} else {
         			panelEditEmpleado.setVisible(true);
         			
         		}
+        	}else if (rbBarberoFiltro.isSelected()) {
+				if (tablaGestionBarbero.getSelectedRow() == -1) {
+        		JOptionPane.showMessageDialog(frame, "Por favor, seleccione un barbero para editar.", "Error", JOptionPane.ERROR_MESSAGE);
+        		} else {
+        			panelEditBarbero.setVisible(true);
+        			
+        		}
+			}
         		
         		
 			}
@@ -623,14 +761,14 @@ public class PantallaAdmin {
         btEditar.setForeground(new Color(242, 240, 235));
         btEditar.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btEditar.setBackground(Paleta.menu);
-        btEditar.setBounds(939, 39, 145, 35);
+        btEditar.setBounds(526, 39, 145, 35);
         pantallaGestion.add(btEditar);
         
         panelEditEmpleado = new Panel(15, 0, new Color(120, 120, 120, 80));
         panelEditEmpleado.setVisible(false);
         panelEditEmpleado.setLayout(null);
         panelEditEmpleado.setBackground(new Color(31, 41, 55));
-        panelEditEmpleado.setBounds(526, 489, 558, 184);
+        panelEditEmpleado.setBounds(526, 480, 558, 184);
         pantallaGestion.add(panelEditEmpleado);
         
         JLabel lbNombre_1 = new JLabel("Nombre:");
@@ -690,9 +828,8 @@ public class PantallaAdmin {
         btnCancelar_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         	
-        		turnos2.clearSelection();
-        		roles1.clearSelection();
         		panelEditEmpleado.setVisible(false);
+        		tablaGestionE.clearSelection();
         		
         	}
         });
@@ -706,82 +843,47 @@ public class PantallaAdmin {
         	public void actionPerformed(ActionEvent e) {
         		
         		int fila = tablaGestionE.getSelectedRow();
-        		
         		if(fila == -1 ) {
         			JOptionPane.showMessageDialog(null, "Selecciona un usuario");
         			return;
         		}
         		
-        		int id = (int)tablaGestionE.getValueAt(fila, 0);
-        		String contraseña = tablaGestionE.getValueAt(fila,5).toString();
+        		if (tfNombreEdit.getText().isEmpty() || tfUsuarioEdit.getText().isEmpty() || tfTelefonoEdit.getText().isEmpty() || tfCorreoEdit.getText().isEmpty()) {
+        			JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        		}else { 
+	        		int id = (int)tablaGestionE.getValueAt(fila, 0);
+	        		String contraseña = tablaGestionE.getValueAt(fila,5).toString();
+	        		
+	        		
+	        		UsuarioRegular u = new UsuarioRegular(
+	        		        id,
+	        		        tfNombreEdit.getText(),
+	        		        tfTelefonoEdit.getText(),
+	        		        tfCorreoEdit.getText(),
+	        		        tfUsuarioEdit.getText(),
+	        		        contraseña
+	        		);
+	        		
+	        		if(GuardarDatos.actualizarUsuarios(u)) {
+	        			JOptionPane.showMessageDialog(null, "Usuario actualizado");
+	        	        cargarUsuariosEnTabla();
+	        	        
+	        	        tfUsuarioEdit.setText(""); 
+	        	        tfNombreEdit.setText("");
+	        	        tfUsuarioEdit.setText("");
+	        	        tfTelefonoEdit.setText("");
+		    			panelEditEmpleado.setVisible(false);
+						tablaGestionE.clearSelection();	
+	        	        
+	        		}else {
+	        	        JOptionPane.showMessageDialog(null, "Error al actualizar");
+	        	    }
         		
-        		
-        		UsuarioRegular u = new UsuarioRegular(
-        		        id,
-        		        tfNombreEdit.getText(),
-        		        tfTelefonoEdit.getText(),
-        		        tfCorreoEdit.getText(),
-        		        tfUsuarioEdit.getText(),
-        		        contraseña
-        		);
-        		
-        		if(GuardarDatos.actualizarUsuarios(u)) {
-        			JOptionPane.showMessageDialog(null, "Usuario actualizado");
-        	        cargarUsuariosEnTabla();
-        		}else {
-        	        JOptionPane.showMessageDialog(null, "Error al actualizar");
-        	    }
-        		
-        		
-	        		if (tfNombreEdit.getText().isEmpty() || tfUsuarioEdit.getText().isEmpty() || tfTelefonoEdit.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-					} else {
-						 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
-						 int selectedRow = tablaGestionE.getSelectedRow();
-						 model.setValueAt(tfNombreEdit.getText(), selectedRow, 1);
-						 model.setValueAt(tfUsuarioEdit.getText(), selectedRow, 2);
-						 model.setValueAt(tfTelefonoEdit.getText(), selectedRow, 4);
-						 
-						 panelEditEmpleado.setVisible(false);
+        		}
+		    			
 						
-						
-		    			lbUsuario_1.setText("Usuario:");
-		        		tfHorarioEdit.setVisible(false);
-		        		tfUsuarioEdit.setVisible(true);
-						tfUsuarioEdit.setText(""); 
-						tfNombreEdit.setText("");
-						tfUsuarioEdit.setText("");
-						tfTelefonoEdit.setText("");
-						tablaGestionE.clearSelection();
-						
-					}
-        		
-					
-					if (tfNombreEdit.getText().isEmpty() || tfTelefonoEdit.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(frame, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
-					} else {
-						 DefaultTableModel model = (DefaultTableModel) tablaGestionE.getModel();
-						 int selectedRow = tablaGestionE.getSelectedRow();
-						 model.setValueAt(tfNombreEdit.getText(), selectedRow, 1);
-						 model.setValueAt("Inecesario", selectedRow, 2);
-						 model.setValueAt(tfTelefonoEdit.getText(), selectedRow, 4);
-						 
-						
-		    			lbUsuario_1.setText("Usuario:");
-		        		tfHorarioEdit.setVisible(false);
-		        		tfUsuarioEdit.setVisible(true);
-						tfUsuarioEdit.setText("");
-						tfNombreEdit.setText("");
-						tfUsuarioEdit.setText("");
-						tfTelefonoEdit.setText("");
-						panelEditEmpleado.setVisible(false);
-						tablaGestionE.clearSelection();
-						
-					}
-					
-				
-        		
 			}
+        	
         });
         btnEditar.setForeground(new Color(242, 240, 235));
         btnEditar.setBackground(new Color(96, 165, 250));
@@ -805,8 +907,190 @@ public class PantallaAdmin {
         tfCorreoEdit.setBounds(31, 105, 245, 29);
         panelEditEmpleado.add(tfCorreoEdit);
         
-//        turnos2 = new ButtonGroup();
+        rbUsuarioFiltro = new JRadioButton("Usuario");
+        rbUsuarioFiltro.setSelected(true);
+        rbUsuarioFiltro.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		panelEditBarbero.setVisible(false);
+        		scrollGestionEmpleados.setVisible(true);
+        		
+        	}
+        });
+        rbUsuarioFiltro.setForeground(new Color(200, 50, 42));
+        rbUsuarioFiltro.setBounds(694, 42, 97, 28);
+        pantallaGestion.add(rbUsuarioFiltro);
         
+        rbBarberoFiltro = new JRadioButton("Barbero");
+        rbBarberoFiltro.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	panelEditEmpleado.setVisible(false);	
+        	scrollGestionEmpleados.setVisible(false);
+        	
+        	}
+        });
+        rbBarberoFiltro.setForeground(new Color(200, 50, 42));
+        rbBarberoFiltro.setBounds(795, 42, 81, 28);
+        pantallaGestion.add(rbBarberoFiltro);
+        
+        ButtonGroup filtroEdit = new ButtonGroup();
+        filtroEdit.add(rbBarberoFiltro);
+        filtroEdit.add(rbUsuarioFiltro);
+        
+        panelPrincipal.add(pantallaPrueba,"PRUEBA");
+        panelPrincipal.add(pantallaEmpleados, "EMPLEADOS");
+        
+        JScrollPane scrollGestionBarberos = new JScrollPane();
+        scrollGestionBarberos.setBounds(526, 84, 558, 378);
+        pantallaGestion.add(scrollGestionBarberos);
+        
+        tablaGestionBarbero = new JTable();
+        tablaGestionBarbero.setModel(new DefaultTableModel(
+        	new Object[][] {
+        	},
+        	new String[] {
+        		"Id", "Nombre", "Telefono", "Correo", "Turno"
+        	}
+        ));
+        tablaGestionBarbero.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                llenarCamposEditar();
+            }
+        });
+        tablaGestionBarbero.setShowGrid(true);
+        tablaGestionBarbero.setGridColor(new Color(242, 240, 235));
+        tablaGestionBarbero.setForeground(new Color(242, 240, 235));
+        tablaGestionBarbero.setFillsViewportHeight(true);
+        tablaGestionBarbero.setBackground(new Color(31, 41, 55));
+        scrollGestionBarberos.setViewportView(tablaGestionBarbero);
+        
+        panelEditBarbero = new Panel(15, 0, new Color(120, 120, 120, 80));
+        panelEditBarbero.setVisible(false);
+        panelEditBarbero.setLayout(null);
+        panelEditBarbero.setBackground(new Color(31, 41, 55));
+        panelEditBarbero.setBounds(526, 480, 558, 184);
+        pantallaGestion.add(panelEditBarbero);
+        
+        JLabel lbNombre_1_1 = new JLabel("Nombre:");
+        lbNombre_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbNombre_1_1.setForeground(new Color(242, 240, 235));
+        lbNombre_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbNombre_1_1.setBounds(31, 12, 77, 16);
+        panelEditBarbero.add(lbNombre_1_1);
+        
+        tfNombreBarbero = new JTextField();
+        tfNombreBarbero.setOpaque(false);
+        tfNombreBarbero.setForeground(new Color(242, 240, 235));
+        tfNombreBarbero.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfNombreBarbero.setColumns(10);
+        tfNombreBarbero.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfNombreBarbero.setBackground(new Color(31, 41, 55));
+        tfNombreBarbero.setBounds(31, 38, 245, 29);
+        panelEditBarbero.add(tfNombreBarbero);
+        
+        JLabel lbUsuario_1_1 = new JLabel("Turno:");
+        lbUsuario_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbUsuario_1_1.setForeground(new Color(242, 240, 235));
+        lbUsuario_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbUsuario_1_1.setBounds(301, 12, 77, 16);
+        panelEditBarbero.add(lbUsuario_1_1);
+        
+        tfHorarioBarbero = new JTextField();
+        tfHorarioBarbero.setEditable(false);
+        tfHorarioBarbero.setOpaque(false);
+        tfHorarioBarbero.setForeground(new Color(242, 240, 235));
+        tfHorarioBarbero.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tfHorarioBarbero.setColumns(10);
+        tfHorarioBarbero.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfHorarioBarbero.setBackground(new Color(31, 41, 55));
+        tfHorarioBarbero.setBounds(373, 38, 173, 29);
+        panelEditBarbero.add(tfHorarioBarbero);
+        
+        JLabel lbTelefono_1_1 = new JLabel("Telefono: ");
+        lbTelefono_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbTelefono_1_1.setForeground(new Color(242, 240, 235));
+        lbTelefono_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbTelefono_1_1.setBounds(301, 77, 77, 16);
+        panelEditBarbero.add(lbTelefono_1_1);
+        
+        tfTelefonoBarbero = new JTextField();
+        tfTelefonoBarbero.setOpaque(false);
+        tfTelefonoBarbero.setForeground(new Color(242, 240, 235));
+        tfTelefonoBarbero.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfTelefonoBarbero.setColumns(10);
+        tfTelefonoBarbero.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfTelefonoBarbero.setBackground(new Color(31, 41, 55));
+        tfTelefonoBarbero.setBounds(301, 103, 245, 29);
+        panelEditBarbero.add(tfTelefonoBarbero);
+        
+        JButton btnCancelar_1_1 = new JButton("Cancelar");
+        btnCancelar_1_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		panelEditBarbero.setVisible(false);
+        		tablaGestionBarbero.clearSelection();
+        	}
+        });
+        btnCancelar_1_1.setForeground(new Color(96, 165, 250));
+        btnCancelar_1_1.setBackground(new Color(242, 240, 235));
+        btnCancelar_1_1.setBounds(338, 146, 98, 26);
+        panelEditBarbero.add(btnCancelar_1_1);
+        
+        JButton btnEditar_1 = new JButton("Editar");
+        btnEditar_1.setForeground(new Color(242, 240, 235));
+        btnEditar_1.setBackground(new Color(96, 165, 250));
+        btnEditar_1.setBounds(448, 146, 98, 26);
+        panelEditBarbero.add(btnEditar_1);
+        
+        JLabel lbCorreo_1_1 = new JLabel("Correo:");
+        lbCorreo_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbCorreo_1_1.setForeground(new Color(242, 240, 235));
+        lbCorreo_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbCorreo_1_1.setBounds(31, 79, 77, 16);
+        panelEditBarbero.add(lbCorreo_1_1);
+        
+        tfCorreoBarbero = new JTextField();
+        tfCorreoBarbero.setOpaque(false);
+        tfCorreoBarbero.setForeground(new Color(242, 240, 235));
+        tfCorreoBarbero.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfCorreoBarbero.setColumns(10);
+        tfCorreoBarbero.setBorder(new Borde(5, Paleta.fondoPrincipal));
+        tfCorreoBarbero.setBackground(new Color(31, 41, 55));
+        tfCorreoBarbero.setBounds(31, 105, 245, 29);
+        panelEditBarbero.add(tfCorreoBarbero);
+        
+        JLabel lbUsuario_1_1_1 = new JLabel("Horario:");
+        lbUsuario_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+        lbUsuario_1_1_1.setForeground(new Color(242, 240, 235));
+        lbUsuario_1_1_1.setFont(new Font("Dialog", Font.BOLD, 14));
+        lbUsuario_1_1_1.setBounds(301, 44, 77, 16);
+        panelEditBarbero.add(lbUsuario_1_1_1);
+        
+        rbTarde_1 = new JRadioButton("Tarde");
+        rbTarde_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	tfHorarioBarbero.setText("1:00PM - 6:00PM");
+        	
+        	}
+        });
+        rbTarde_1.setForeground(new Color(242, 240, 235));
+        rbTarde_1.setBounds(458, 8, 88, 24);
+        panelEditBarbero.add(rbTarde_1);
+        
+        rbMañana_1 = new JRadioButton("Mañana");
+        rbMañana_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	
+        		tfHorarioBarbero.setText("9:00AM - 1:00PM");
+        	}
+        });
+        rbMañana_1.setForeground(new Color(242, 240, 235));
+        rbMañana_1.setBounds(366, 8, 88, 24);
+        panelEditBarbero.add(rbMañana_1);
+        
+        ButtonGroup turno2 = new ButtonGroup();
+        turno2.add(rbTarde_1);
+        turno2.add(rbMañana_1);
+        
+        panelPrincipal.add(pantallaGestion,"AGREGAR");
         panelPrincipal.add(pantallaCitas, "CITAS");
         panelPrincipal.add(pantallaPagos, "PAGOS");
         
@@ -815,16 +1099,6 @@ public class PantallaAdmin {
         lbBuscar3.setFont(new Font("SansSerif", Font.BOLD, 16));
         lbBuscar3.setBounds(72, 70, 81, 28);
         pantallaPagos.add(lbBuscar3);
-        
-        tfPagos = new JTextField();
-        tfPagos.setOpaque(false);
-        tfPagos.setForeground(Paleta.menu);
-        tfPagos.setBackground(Paleta.fondo2);
-        tfPagos.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        tfPagos.setBorder(new Borde(5, Paleta.menu));
-        tfPagos.setColumns(10);
-        tfPagos.setBounds(140, 72, 598, 28);
-        pantallaPagos.add(tfPagos);
         
         JRadioButton rbMetodoPago = new JRadioButton("Metodos de Pago");
         rbMetodoPago.setForeground(Paleta.fondoBoton2);
@@ -839,6 +1113,42 @@ public class PantallaAdmin {
         ButtonGroup filtros = new ButtonGroup();
         filtros.add(rbFecha);
         filtros.add(rbMetodoPago);
+        
+        
+        tfPagos = new JTextField();
+		tfPagos.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(javax.swing.event.DocumentEvent e) {
+				String text = tfPagos.getText();
+				if (rbMetodoPago.isSelected()) {
+					sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 1));
+				} else if (rbFecha.isSelected()) {
+					sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 2));
+				} else {
+					sorter.setRowFilter(null);
+				}
+			}
+			public void removeUpdate(javax.swing.event.DocumentEvent e) {
+				String text = tfPagos.getText();
+				if (rbMetodoPago.isSelected()) {
+					sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 1));
+				} else if (rbFecha.isSelected()) {
+					sorter.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 2));
+				} else {
+					sorter.setRowFilter(null);
+				}
+			}
+			public void changedUpdate(javax.swing.event.DocumentEvent e) {
+				
+			}
+		});
+        tfPagos.setOpaque(false);
+        tfPagos.setForeground(Paleta.menu);
+        tfPagos.setBackground(Paleta.fondo2);
+        tfPagos.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tfPagos.setBorder(new Borde(5, Paleta.menu));
+        tfPagos.setColumns(10);
+        tfPagos.setBounds(140, 72, 577, 28);
+        pantallaPagos.add(tfPagos);
         
         JScrollPane scrollPane_2 = new JScrollPane();
         scrollPane_2.setBounds(72, 110, 947, 540);
@@ -867,15 +1177,16 @@ public class PantallaAdmin {
         scrollPane_2.setViewportView(tablaPagos);
         
         JLabel lblNewLabel_1 = new JLabel("Filtrar por: ");
-        lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 12));
-        lblNewLabel_1.setBounds(756, 78, 69, 16);
+        lblNewLabel_1.setForeground(Paleta.textologin2);
+        lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblNewLabel_1.setBounds(725, 78, 98, 16);
         pantallaPagos.add(lblNewLabel_1);
         
         
         JLabel lbBuscar2 = new JLabel("Buscar: ");
         lbBuscar2.setForeground(Paleta.textologin2);
         lbBuscar2.setFont(new Font("SansSerif", Font.BOLD, 16));
-        lbBuscar2.setBounds(76, 65, 69, 28);
+        lbBuscar2.setBounds(71, 70, 69, 28);
         pantallaCitas.add(lbBuscar2);
         
         tfCitas = new JTextField();
@@ -883,8 +1194,8 @@ public class PantallaAdmin {
         tfCitas.setForeground(Paleta.menu);
         tfCitas.setBackground(Paleta.fondo2);
         tfCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        tfCitas.setBorder(new Borde(10, Paleta.menu));
-        tfCitas.setBounds(147, 65, 592, 28);
+        tfCitas.setBorder(new Borde(5, Paleta.menu));
+        tfCitas.setBounds(142, 70, 647, 28);
         pantallaCitas.add(tfCitas);
         tfCitas.setColumns(10);
         
@@ -895,7 +1206,6 @@ public class PantallaAdmin {
         tablaCitas = new JTable();
         tablaCitas.setModel(new DefaultTableModel(
         	new Object[][] {
-        		{null, null, null, null},
         	},
         	new String[] {
         		"Id", "Cliente", "Fecha", "Hora"
@@ -916,13 +1226,13 @@ public class PantallaAdmin {
         scrollPane.setViewportView(tablaCitas);
         
         JRadioButton rbFechaC = new JRadioButton("Fecha");
-        rbFechaC.setForeground(Paleta.fondoBoton);
-        rbFechaC.setBounds(827, 70, 69, 23);
+        rbFechaC.setForeground(Paleta.fondoBoton2);
+        rbFechaC.setBounds(886, 70, 69, 28);
         pantallaCitas.add(rbFechaC);
         
         JRadioButton rbHoraC = new JRadioButton("Hora");
         rbHoraC.setForeground(Paleta.fondoBoton2);
-        rbHoraC.setBounds(900, 70, 57, 23);
+        rbHoraC.setBounds(959, 70, 57, 28);
         pantallaCitas.add(rbHoraC);
         
         ButtonGroup filtroCitas = new ButtonGroup();
@@ -930,11 +1240,17 @@ public class PantallaAdmin {
         filtroCitas.add(rbHoraC);
         
         JLabel lblNewLabel = new JLabel("Filtrar por: ");
-        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 12));
-        lblNewLabel.setBounds(758, 73, 69, 16);
+        lblNewLabel.setForeground(Paleta.textologin2);
+        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblNewLabel.setBounds(795, 70, 90, 28);
         pantallaCitas.add(lblNewLabel);
+        
 
         // ---------------- BOTONES DEL SIDEBAR ----------------
+//        sidebar.add(createMenuButton("Prueba", () -> {
+//        	cardLayout.show(panelPrincipal, "PRUEBA");
+//        }));
+        
         sidebar.add(createMenuButton("Empleados", () -> {
             cardLayout.show(panelPrincipal, "EMPLEADOS");
             cargarUsuariosEnTabla();
@@ -942,7 +1258,6 @@ public class PantallaAdmin {
         sidebar.add(createMenuButton("Agregar Empleado", () -> {
         	cardLayout.show(panelPrincipal, "AGREGAR");
         }));
-
        
         sidebar.add(createMenuButton("Historial de Citas", () -> {
         	cardLayout.show(panelPrincipal, "CITAS");
@@ -952,7 +1267,7 @@ public class PantallaAdmin {
         }));
         
          
-        sidebar.add(Box.createVerticalStrut(310));
+        sidebar.add(Box.createVerticalStrut(230));
         sidebar.add(createMenuButton("Cerrar Sesión", () -> {
 			frame.dispose();
 			Login.main(null);
@@ -962,32 +1277,26 @@ public class PantallaAdmin {
 
         sidebar.add(Box.createVerticalStrut(400));
 
-        // Añadir todo al frame
         frame.getContentPane().add(sidebar, BorderLayout.WEST);
         frame.getContentPane().add(panelPrincipal, BorderLayout.CENTER);
         
         
     }
 
-    // ---- Método para crear botones con acción ----
 	private JButton createMenuButton(String text, Runnable action) {
 
 	    JButton btn = new JButton(text);
-	   
 	    btn.setFont(new Font("Segoe UI", Font.BOLD, 15));
 	    btn.setForeground(Paleta.textologin);
 	    btn.setBackground(Paleta.fondoBoton2);
-
 	    btn.setFocusPainted(false);
 	    btn.setBorderPainted(false);
 	    btn.setHorizontalAlignment(SwingConstants.LEFT);
 	    btn.setPreferredSize(new Dimension(750, 105));
 	    btn.setMinimumSize(new Dimension(Integer.MAX_VALUE, 55));
 	    btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
-
-	  
-	    btn.addActionListener(e -> action.run());
 	    
+	    btn.addActionListener(e -> action.run());
 	    btn.addMouseListener(new java.awt.event.MouseAdapter() {
 	        @Override
 	        public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -997,9 +1306,7 @@ public class PantallaAdmin {
 	        @Override
 	        public void mouseExited(java.awt.event.MouseEvent evt) {
 	            btn.setBackground(Paleta.fondoBoton2);
-	            
 	        }
-	          
 	    	
 	    });
 
@@ -1007,6 +1314,7 @@ public class PantallaAdmin {
 	}
 	private void llenarCamposEditar() {
 	    int selectedRow = tablaGestionE.getSelectedRow();
+	    
 	    if (selectedRow != -1) {
 	        String nombre = (String) tablaGestionE.getValueAt(selectedRow, 1);
 	        String usuario = (String) tablaGestionE.getValueAt(selectedRow, 4);
@@ -1017,15 +1325,40 @@ public class PantallaAdmin {
 	        tfCorreoEdit.setText(correo);
 	        tfUsuarioEdit.setText(usuario);
 	        tfTelefonoEdit.setText(telefono);
-
-	        
 	    }
+	     
+	    
+	    int fila = tablaGestionBarbero.getSelectedRow();
+	     
+	    if(fila != -1) {   
+	        
+	        String nombre1 = (String) tablaGestionBarbero.getValueAt(fila, 1);
+	        String correo1 = (String) tablaGestionBarbero.getValueAt(fila, 3);
+	        String telefono1 = (String) tablaGestionBarbero.getValueAt(fila, 2);
+	        String turno = (String) tablaGestionBarbero.getValueAt(fila, 4);
+	        String horario1 =""; 
+	        if(turno.equals("Mañana")) {
+	        	rbMañana_1.setSelected(true);
+	        	horario1 = "9:00AM - 1:00PM";
+	        }else if(turno.equals("Tarde")) {
+	        	rbTarde_1.setSelected(true);
+	        	horario1 = "1:00PM - 6:00PM";
+	        }
+	        
+	        tfNombreBarbero.setText(nombre1);
+	        tfCorreoBarbero.setText(correo1);
+	        tfTelefonoBarbero.setText(telefono1);
+	        tfHorarioBarbero.setText(horario1);
+	     }
+	        
+	    
 	}
 	
 	private void cargarUsuariosEnTabla() {
 	    String[] columnas = {"ID", "Nombre", "Telefono", "Correo", "Usuario", "Contraseña"};
 
 	    DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+	    DefaultTableModel modelo1 = new DefaultTableModel(null, columnas);
 
 	    ArrayList<UsuarioRegular> lista = ConsultarDatos.obtenerUsuarios();
 
@@ -1039,58 +1372,95 @@ public class PantallaAdmin {
 	            u.getContraseña()
 	        };
 	        modelo.addRow(fila);
-	    }
-	    String[] columnas1 = {"ID", "Nombre", "Telefono", "Correo", "Usuario", "Contraseña"};
-	    
-	    DefaultTableModel modelo1 = new DefaultTableModel(null, columnas);
-	    
-	    for (UsuarioRegular u : lista) {
-	    	Object[] fila = {
-	    			u.getId(),
-	    			u.getNombre(),
-	    			u.getTelefono(),
-	    			u.getCorreo(),
-	    			u.getUser(),
-	    			u.getContraseña()
-	    	};
-	    	modelo1.addRow(fila);
+	        modelo1.addRow(fila);
 	    }
 
-	    
-	    
 	    tablaGestionE.setModel(modelo);
 	    tablaEmpleado.setModel(modelo1);
+	    
+	    sorter = new TableRowSorter<DefaultTableModel>(modelo1);
+		tablaEmpleado.setRowSorter(sorter);
+		
+	}
+	
+	private void cargarBarberosEnTabla() {
+		String[] columnas = {"ID", "Nombre", "Telefono", "Correo", "Turno"};
+		
+		DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+		DefaultTableModel modelo1 = new DefaultTableModel(null, columnas);
+		
+		ArrayList<Barbero> barberos = ConsultarDatos.obtenerBarberos();
+		
+		for (Barbero u : barberos) {
+			Object[] fila = {
+					u.getId(),
+					u.getNombre(),
+					u.getTelefono(),
+					u.getCorreo(),
+					u.getTurno()
+			};
+			modelo.addRow(fila);
+			modelo1.addRow(fila);
+		}
+		if(modelo.getRowCount()>0) {
+			modelo.removeRow(0);
+			modelo1.removeRow(0);
+		}
+		tablaBarberos.setModel(modelo);
+		tablaGestionBarbero.setModel(modelo1);
+		
+//		sorter = new TableRowSorter<DefaultTableModel>(modelo1);
+//		tablaBarberos.setRowSorter(sorter);
+		
 	}
 	
 	public void eliminarEmpleado() {
-		int fila = tablaEmpleado.getSelectedRow();
-		
-		if(fila == -1) {
-			JOptionPane.showMessageDialog(null, "Selecciona un empleado para eliminar.");
-			return;
-		}
-	
-		int id = Integer.parseInt(tablaEmpleado.getValueAt(fila, 0).toString());
-		
-//		int id = Integer.parseInt(tablaEmpleado.getValueAt(fila, 0).toString());
-		
-		int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este empleado?",
+	    int fila = tablaEmpleado.getSelectedRow();
+	    
+	    if (fila == -1) {
+	        JOptionPane.showMessageDialog(null, "Selecciona un empleado para eliminar.");
+	        return;
+	    }
+
+	    int id = Integer.parseInt(tablaEmpleado.getValueAt(fila, 0).toString());
+	    int confirmacion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas eliminar este empleado?",
 	            "Confirmación",
-	            JOptionPane.YES_NO_OPTION);
-		
-		
-		if(confirmacion == JOptionPane.YES_OPTION) {
-			GuardarDatos.eliminarDato("Usuarios", "Usuario", id); 
-			JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
-				cargarUsuariosEnTabla();
-			}else {
-				 JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
-			}
-		
-		
-		cargarUsuariosEnTabla();
-		
+	            JOptionPane.YES_NO_OPTION
+	    );
+
+	    if (confirmacion == JOptionPane.YES_OPTION) {
+	        GuardarDatos.eliminarDato("Usuarios", "Usuario", id); 
+	        JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
+	        cargarUsuariosEnTabla();
+	    } else {
+	        JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
-	
-	
+
+	public void eliminarBarbero() {
+	    int filaBarbero = tablaBarberos.getSelectedRow();
+
+	    if (filaBarbero == -1) {
+	        JOptionPane.showMessageDialog(null, "Selecciona un barbero para eliminar.");
+	        return;
+	    }
+
+	    int idB = Integer.parseInt(tablaBarberos.getValueAt(filaBarbero, 0).toString());
+	    int confirmacion1 = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas eliminar este barbero?",
+	            "Confirmación",
+	            JOptionPane.YES_NO_OPTION
+	    );
+
+	    if (confirmacion1 == JOptionPane.YES_OPTION) {
+	        GuardarDatos.eliminarDato("Barberos", "Barbero", idB); 
+	        JOptionPane.showMessageDialog(null, "Barbero eliminado correctamente.");
+	        cargarBarberosEnTabla();
+	    } else {
+	        JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
+	    }
+	}
 }

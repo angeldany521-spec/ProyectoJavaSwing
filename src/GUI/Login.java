@@ -74,8 +74,11 @@ public class Login extends JFrame{
 		ArrayList<UsuarioRegular> usuarios = ConsultarDatos.obtenerUsuarios();
 		
 		
-		ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoBarberia-1-02.png"));
-		Image img = logo.getImage().getScaledInstance(220, 180, Image.SCALE_SMOOTH);
+		ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoTipografica.png"));
+		Image img = logo.getImage().getScaledInstance(260, 220, Image.SCALE_SMOOTH);
+		
+//		ImageIcon logo = new ImageIcon(getClass().getResource("/Imagenes/LogoBarberia-1-02.png"));
+//		Image img = logo.getImage().getScaledInstance(220, 180, Image.SCALE_SMOOTH);
 		
 		
 		JLabel lbllogo = new JLabel(new ImageIcon(img));

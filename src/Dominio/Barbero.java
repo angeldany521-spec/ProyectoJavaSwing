@@ -29,17 +29,16 @@ public class Barbero extends Persona{
 				? new String[] {"9:00AM","9:30AM", "10:00AM", "10:30AM", "11:00AM", "11:30AM", "12:00AM", "1:00PM" } 
 				: new String[]  {"2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM", "4:30PM", "5:00PM", "6:00PM"};
 		
+		
 		for (int i = 0; i < botones.length; i++) {
+			if (id > 0) {
 		    botones[i] = new JButton(mostrarHorarios()[i]);
 		    botones[i].setFont(new Font("Sansserif", Font.BOLD, 15));
         	botones[i].setBackground(Paleta.menu);
         	botones[i].setForeground(Paleta.fondoPrincipal);
         	botones[i].setOpaque(false);
-    
-
-             
-
         	}
+		}
         	
         for (JButton b : botones) {
         		b.addActionListener(new ActionListener() {
@@ -54,6 +53,9 @@ public class Barbero extends Persona{
 				});
         	}
 		}
+	public Barbero(int id, String nombre, String telefono, String correo) {
+		super(id, nombre, telefono, correo);
+	}
 	
 	
 

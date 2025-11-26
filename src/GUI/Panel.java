@@ -28,22 +28,36 @@ public class Panel extends JPanel {
         int width = getWidth();
         int height = getHeight();
 
-        // --- Sombra ---
-        g2.setColor(shadowColor);
-        g2.fillRoundRect(
-                shadowSize,               // mover un poco la sombra
-                shadowSize,
-                width - shadowSize * 2,
-                height - shadowSize * 2,
-                radius,
-                radius
-        );
+        // --------------------------
+        // SOMBRA menos difuminada
+        // --------------------------
+        for (int i = shadowSize; i > 0; i--) {
+            int alpha = (int) (80 * (i / (float) shadowSize)); // sombra más fuerte (antes era 20)
 
-        // --- Fondo del panel ---
+            g2.setColor(new Color(
+                    shadowColor.getRed(),
+                    shadowColor.getGreen(),
+                    shadowColor.getBlue(),
+                    alpha
+            ));
+
+            g2.fillRoundRect(
+                    i, 
+                    i,
+                    width - (i * 2),
+                    height - (i * 2),
+                    radius,
+                    radius
+            );
+        }
+
+        // --------------------------
+        // PANEL principal
+        // --------------------------
         g2.setColor(getBackground());
         g2.fillRoundRect(
-                0,
-                0,
+                shadowSize,
+                shadowSize,
                 width - shadowSize * 2,
                 height - shadowSize * 2,
                 radius,
@@ -51,4 +65,3 @@ public class Panel extends JPanel {
         );
     }
 }
-

@@ -38,7 +38,7 @@ public class ConsultarDatos {
         Statement st = con.createStatement();
         ResultSet rs = st.executeQuery(sql);
         
-        listaBarberos.add(new Barbero(0, "", null, null, ""));
+        listaBarberos.add(new Barbero(0, "", null, null));
         while (rs.next()) {
            Barbero b = new Barbero(
         		   rs.getInt("IDBarbero"),
@@ -176,6 +176,11 @@ public class ConsultarDatos {
 	        ex.printStackTrace();
 	    }
 	    return false;
+
+	
+	
+	
+	
 
 	}
 }
