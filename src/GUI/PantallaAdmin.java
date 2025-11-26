@@ -1415,49 +1415,52 @@ public class PantallaAdmin {
 	}
 	
 	public void eliminarEmpleado() {
-		int fila = tablaEmpleado.getSelectedRow();
-		
-		if(fila == -1) {
-			JOptionPane.showMessageDialog(null, "Selecciona un empleado para eliminar.");
-			return;
-		}
-	
-		int id = Integer.parseInt(tablaEmpleado.getValueAt(fila, 0).toString());
-		int confirmacion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este empleado?",
-	            "Confirmación",
-	            JOptionPane.YES_NO_OPTION);
-		
-		if(confirmacion == JOptionPane.YES_OPTION) {
-			GuardarDatos.eliminarDato("Usuarios", "Usuario", id); 
-			JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
-				cargarUsuariosEnTabla();
-			}else {
-				 JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
-			}
-		
+	    int fila = tablaEmpleado.getSelectedRow();
+	    
+	    if (fila == -1) {
+	        JOptionPane.showMessageDialog(null, "Selecciona un empleado para eliminar.");
+	        return;
+	    }
 
+	    int id = Integer.parseInt(tablaEmpleado.getValueAt(fila, 0).toString());
+	    int confirmacion = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas eliminar este empleado?",
+	            "Confirmación",
+	            JOptionPane.YES_NO_OPTION
+	    );
+
+	    if (confirmacion == JOptionPane.YES_OPTION) {
+	        GuardarDatos.eliminarDato("Usuarios", "Usuario", id); 
+	        JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
+	        cargarUsuariosEnTabla();
+	    } else {
+	        JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
+
 	public void eliminarBarbero() {
-		int filaBarbero = tablaBarberos.getSelectedRow();
-		
-		if(filaBarbero == -1) {
-			JOptionPane.showMessageDialog(null, "Selecciona un barbero para eliminar.");
-			return;
-		}
-		
-		int idB = Integer.parseInt(tablaBarberos.getValueAt(filaBarbero, 0).toString());
-		int confirmacion1 = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar este barbero?",
-				"Confirmación",
-				JOptionPane.YES_NO_OPTION);
-		
-		if(confirmacion1 == JOptionPane.YES_OPTION) {
-			GuardarDatos.eliminarDato("Barberos", "Barbero", idB); 
-			JOptionPane.showMessageDialog(null, "Barbero eliminado correctamente.");
-			cargarBarberosEnTabla();;
-		}else {
-			JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
-		}
-		
-		
+	    int filaBarbero = tablaBarberos.getSelectedRow();
+
+	    if (filaBarbero == -1) {
+	        JOptionPane.showMessageDialog(null, "Selecciona un barbero para eliminar.");
+	        return;
+	    }
+
+	    int idB = Integer.parseInt(tablaBarberos.getValueAt(filaBarbero, 0).toString());
+	    int confirmacion1 = JOptionPane.showConfirmDialog(
+	            null,
+	            "¿Deseas eliminar este barbero?",
+	            "Confirmación",
+	            JOptionPane.YES_NO_OPTION
+	    );
+
+	    if (confirmacion1 == JOptionPane.YES_OPTION) {
+	        GuardarDatos.eliminarDato("Barberos", "Barbero", idB); 
+	        JOptionPane.showMessageDialog(null, "Barbero eliminado correctamente.");
+	        cargarBarberosEnTabla();
+	    } else {
+	        JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
+	    }
 	}
 }

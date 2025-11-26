@@ -77,8 +77,6 @@ public class Barbero extends Persona{
 		
 	}
 	
-	public void actualizarDisponibilidad() {
-		
-	}
+	
 	
 }

@@ -1,6 +1,5 @@
 
 package GUI;
-import GUI.PantallaAdmin.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -28,6 +27,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ForkJoinPool;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,6 +61,8 @@ import java.awt.List;
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
+import javax.swing.JSeparator;
+import javax.swing.table.TableModel;
 
 
 
@@ -74,6 +76,7 @@ public class PantallaPrincipal {
 	private JTextField campoNombreCliente;
 	private JTextField campoTelefonoCliente;
 	private JTextField campoCorreoCliente;
+	private JTable tableClientes;
 
 	/**
 	 * Launch the application.
@@ -116,6 +119,7 @@ public class PantallaPrincipal {
 				try {
 					PantallaPrincipal window = new PantallaPrincipal();
 					window.frame.setVisible(true);
+					window.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -145,6 +149,10 @@ public class PantallaPrincipal {
 		ArrayList<Cliente> clientes = ConsultarDatos.obtenerClientes();
 		
 		
+		
+		
+		
+		
 		Servicio[] listservicios = {new Servicio(0, "Cerquillo", 100),
 								new Servicio(1, "Corte regular", 300),
 								new Servicio(2, "Corte Moderno", 500),
@@ -155,7 +163,7 @@ public class PantallaPrincipal {
 								new Servicio(7, "Facial", 100)};
 		
         JPanel menu = new JPanel();
-        menu.setPreferredSize(new Dimension(150, 0));
+        menu.setPreferredSize(new Dimension(250, 0));
         menu.setBackground(Paleta.menu);
         menu.setOpaque(true);
         menu.setLayout(null);
@@ -165,7 +173,7 @@ public class PantallaPrincipal {
         JButton crearCitas = new JButton("Crear Cita");
         crearCitas.setFont(new Font("SansSerif", Font.BOLD, 15));
         crearCitas.setBorder(null);
-        crearCitas.setBounds(0, 143, 150, 46);
+        crearCitas.setBounds(0, 206, 250, 46);
         crearCitas.setForeground(Paleta.textologin);
         crearCitas.setContentAreaFilled(true);
         crearCitas.setFocusPainted(false);
@@ -176,7 +184,7 @@ public class PantallaPrincipal {
         JButton historialPagos = new JButton("Historial de Pagos");
         historialPagos.setFont(new Font("SansSerif", Font.BOLD, 15));
         historialPagos.setBorder(null);
-        historialPagos.setBounds(0, 188, 150, 46);
+        historialPagos.setBounds(0, 251, 250, 46);
         historialPagos.setForeground(Paleta.textologin);
         historialPagos.setContentAreaFilled(true);
         historialPagos.setFocusPainted(false);
@@ -191,7 +199,7 @@ public class PantallaPrincipal {
         });
         citas.setFont(new Font("SansSerif", Font.BOLD, 15));
         citas.setBorder(null);
-        citas.setBounds(0, 97, 150, 46);
+        citas.setBounds(0, 160, 250, 46);
         citas.setForeground(Paleta.textologin);
         citas.setContentAreaFilled(true);
         citas.setFocusPainted(false);
@@ -215,7 +223,7 @@ public class PantallaPrincipal {
         btnCerrarSesion.setBorderPainted(false);
         btnCerrarSesion.setBorder(null);
         btnCerrarSesion.setBackground(Paleta.fondoBoton2);
-        btnCerrarSesion.setBounds(0, 432, 150, 46);
+        btnCerrarSesion.setBounds(0, 560, 250, 46);
         menu.add(btnCerrarSesion);
         
         JLabel lblbarber = new JLabel("BarberPiece\r\n");
@@ -233,7 +241,7 @@ public class PantallaPrincipal {
         aggCliente.setBorderPainted(false);
         aggCliente.setBorder(null);
         aggCliente.setBackground(new Color(200, 50, 42));
-        aggCliente.setBounds(0, 233, 150, 46);
+        aggCliente.setBounds(0, 296, 250, 46);
         menu.add(aggCliente);
         
         CardLayout card = new CardLayout();
@@ -294,8 +302,8 @@ public class PantallaPrincipal {
         panel.add(panelAgregarCliente, "agregarcliente");
         panelAgregarCliente.setLayout(null);
         
-        Panel panelDatosCliente = new Panel(15, 2, Paleta.borde);
-        panelDatosCliente.setBounds(260, 120, 501, 442);
+        Panel panelDatosCliente = new Panel(15, 1, Paleta.textologin2);
+        panelDatosCliente.setBounds(12, 105, 452, 526);
         panelDatosCliente.setBackground(Paleta.menu);
         panelAgregarCliente.add(panelDatosCliente);
         panelDatosCliente.setLayout(null);
@@ -307,7 +315,7 @@ public class PantallaPrincipal {
         lblInformacionDeLa_1.setFont(new Font("SansSerif", Font.BOLD, 18));
         
         campoNombreCliente = new JTextField();
-        campoNombreCliente.setBounds(12, 76, 477, 35);
+        campoNombreCliente.setBounds(12, 77, 428, 35);
         panelDatosCliente.add(campoNombreCliente);
         campoNombreCliente.setForeground(new Color(242, 240, 235));
         campoNombreCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -316,13 +324,13 @@ public class PantallaPrincipal {
         campoNombreCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-        lblNewLabel_1_2.setBounds(12, 52, 65, 16);
+        lblNewLabel_1_2.setBounds(12, 53, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_2);
         lblNewLabel_1_2.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoTelefonoCliente = new JTextField();
-        campoTelefonoCliente.setBounds(12, 172, 477, 35);
+        campoTelefonoCliente.setBounds(12, 195, 428, 35);
         panelDatosCliente.add(campoTelefonoCliente);
         campoTelefonoCliente.setForeground(new Color(242, 240, 235));
         campoTelefonoCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -331,13 +339,13 @@ public class PantallaPrincipal {
         campoTelefonoCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_1_2 = new JLabel("Telefono");
-        lblNewLabel_1_1_2.setBounds(12, 148, 65, 16);
+        lblNewLabel_1_1_2.setBounds(12, 171, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_1_2);
         lblNewLabel_1_1_2.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoCorreoCliente = new JTextField();
-        campoCorreoCliente.setBounds(12, 268, 477, 35);
+        campoCorreoCliente.setBounds(12, 315, 428, 35);
         panelDatosCliente.add(campoCorreoCliente);
         campoCorreoCliente.setForeground(new Color(242, 240, 235));
         campoCorreoCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -346,26 +354,37 @@ public class PantallaPrincipal {
         campoCorreoCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_1_1_1 = new JLabel("Correo");
-        lblNewLabel_1_1_1_1.setBounds(12, 244, 65, 16);
+        lblNewLabel_1_1_1_1.setBounds(12, 289, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_1_1_1);
         lblNewLabel_1_1_1_1.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_1_1_1.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         ImageIcon agg = new ImageIcon(getClass().getResource("/Imagenes/botonAgregar.png"));
         Image img = agg.getImage();
-        Image size = img.getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+        Image size = img.getScaledInstance(13, 13, Image.SCALE_SMOOTH);
         ImageIcon aggIcon = new ImageIcon(size);
         
         JButton agregarCliente = new JButton("Agregar", aggIcon);
-        agregarCliente.setBounds(55, 350, 391, 41);
+        agregarCliente.setBounds(245, 408, 173, 41);
         panelDatosCliente.add(agregarCliente);
         agregarCliente.setForeground(new Color(242, 240, 235));
-        agregarCliente.setFont(new Font("SansSerif", Font.BOLD, 16));
+        agregarCliente.setFont(new Font("SansSerif", Font.BOLD, 18));
         agregarCliente.setFocusPainted(false);
         agregarCliente.setContentAreaFilled(true);
         agregarCliente.setBorderPainted(false);
         agregarCliente.setBorder(null);
         agregarCliente.setBackground(new Color(96, 165, 250));
+        
+        JButton cancelarCliente = new JButton("Cancelar", null);
+        cancelarCliente.setForeground(Paleta.textologin2);
+        cancelarCliente.setFont(new Font("SansSerif", Font.BOLD, 18));
+        cancelarCliente.setFocusPainted(false);
+        cancelarCliente.setContentAreaFilled(true);
+        cancelarCliente.setBorderPainted(false);
+        cancelarCliente.setBorder(null);
+        cancelarCliente.setBackground(Paleta.fondoPrincipal);
+        cancelarCliente.setBounds(30, 408, 173, 41);
+        panelDatosCliente.add(cancelarCliente);
         
         
         JLabel lblAgregarCliente = new JLabel("Agregar Cliente");
@@ -374,6 +393,33 @@ public class PantallaPrincipal {
         lblAgregarCliente.setBackground(new Color(242, 240, 235));
         lblAgregarCliente.setBounds(12, 12, 210, 35);
         panelAgregarCliente.add(lblAgregarCliente);
+        
+        JLabel lblClientes = new JLabel("Clientes");
+        lblClientes.setForeground(new Color(96, 165, 250));
+        lblClientes.setFont(new Font("SansSerif", Font.BOLD, 27));
+        lblClientes.setBackground(new Color(242, 240, 235));
+        lblClientes.setBounds(538, 12, 210, 35);
+        panelAgregarCliente.add(lblClientes);
+        
+        JScrollPane scrollPane_2 = new JScrollPane();
+        scrollPane_2.setBounds(476, 105, 802, 526);
+        panelAgregarCliente.add(scrollPane_2);
+        
+        
+        DefaultTableModel modeloClientes = new DefaultTableModel();
+        
+        tableClientes = new JTable(modeloClientes);
+        tableClientes.setSize(new Dimension(0, 5));
+        tableClientes.setShowGrid(true);
+        tableClientes.setRowHeight(20);
+        tableClientes.setBorder(new Borde(10, Paleta.textologin2));
+        tableClientes.setGridColor(new Color(242, 240, 235));
+        tableClientes.setForeground(new Color(242, 240, 235));
+        tableClientes.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tableClientes.setFillsViewportHeight(true);
+        tableClientes.setBackground(new Color(31, 41, 55));
+        tableClientes.setOpaque(true);
+        scrollPane_2.setViewportView(tableClientes);
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBounds(12, 12, 1001, 51);
@@ -530,11 +576,11 @@ public class PantallaPrincipal {
         lblHistorialPagos_1.setForeground(new Color(70, 150, 230));
         lblHistorialPagos_1.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblHistorialPagos_1.setBackground(new Color(240, 235, 220));
-        lblHistorialPagos_1.setBounds(15, 10, 241, 35);
+        lblHistorialPagos_1.setBounds(31, 22, 241, 35);
         crearCita.add(lblHistorialPagos_1);
         
         Panel panelFecha = new Panel(20,1, Paleta.textologin2);
-        panelFecha.setBounds(15, 50, 376, 128);
+        panelFecha.setBounds(31, 69, 375, 152);
         panelFecha.setBackground(Paleta.menu);
         crearCita.add(panelFecha);
         panelFecha.setLayout(null);
@@ -545,10 +591,10 @@ public class PantallaPrincipal {
         lblNewLabel.setBounds(12, 12, 165, 21);
         panelFecha.add(lblNewLabel);
         
-        Panel panelBarberos = new Panel(20,1, Paleta.textologin2);
+        Panel panelBarberos = new Panel(25,1, Paleta.textologin2);
         panelBarberos.setLayout(null);
         panelBarberos.setBackground(Paleta.menu);
-        panelBarberos.setBounds(15, 204, 995, 380);
+        panelBarberos.setBounds(31, 265, 1228, 490);
         crearCita.add(panelBarberos);
         
         JLabel lblNewLabel_1_2_2 = new JLabel("Barbero");
@@ -558,7 +604,7 @@ public class PantallaPrincipal {
         panelBarberos.add(lblNewLabel_1_2_2);
         
         JComboBox<String> barberoscombo = new JComboBox<>();
-        barberoscombo.setBounds(12, 73, 442, 34);
+        barberoscombo.setBounds(12, 73, 440, 34);
         barberoscombo.setBackground(Paleta.menu);
         barberoscombo.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
         barberoscombo.setForeground(Paleta.fondoPrincipal);
@@ -573,7 +619,7 @@ public class PantallaPrincipal {
         	barberoscombo.addItem(barberos.get(i).getNombre());
         }
         
-        JLabel lblSeleccionarBarbero = new JLabel("Seleccionar Barbero y Servicios");
+        JLabel lblSeleccionarBarbero = new JLabel("Seleccionar Barbero");
         lblSeleccionarBarbero.setForeground(new Color(96, 165, 250));
         lblSeleccionarBarbero.setFont(new Font("SansSerif", Font.BOLD, 18));
         lblSeleccionarBarbero.setBounds(12, 12, 283, 21);
@@ -585,27 +631,25 @@ public class PantallaPrincipal {
         JLabel lblNewLabel_1_2_2_1_1_1_1 = new JLabel("Cliente");
         lblNewLabel_1_2_2_1_1_1_1.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_2_2_1_1_1_1.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblNewLabel_1_2_2_1_1_1_1.setBounds(474, 45, 70, 16);
+        lblNewLabel_1_2_2_1_1_1_1.setBounds(13, 237, 70, 16);
         panelBarberos.add(lblNewLabel_1_2_2_1_1_1_1);
-        
-        JComboBox<String> comboClientes = new JComboBox<>();
+      
+        JComboBox<String> comboClientes = new JComboBox<String>(cargarModeloClientes());
         comboClientes.setOpaque(false);
         comboClientes.setForeground(new Color(242, 240, 235));
         comboClientes.setFont(new Font("SansSerif", Font.PLAIN, 14));
         comboClientes.setBackground(new Color(31, 41, 55));
-        comboClientes.setBounds(474, 73, 442, 34);
+        comboClientes.setBounds(13, 265, 440, 34);
         panelBarberos.add(comboClientes);
         
-        
-        for (int i=0; i<clientes.size(); i++) {
-        	comboClientes.addItem(clientes.get(i).getNombre());
-        }
-        
         JPanel panelServicios = new JPanel();
-        panelServicios.setBounds(12, 171, 904, 93);
+        panelServicios.setBounds(620, 75, 555, 263);
+        panelServicios.setBackground(Paleta.fondoPrincipal);
+        panelServicios.setOpaque(false);
         panelBarberos.add(panelServicios);
+        
         panelServicios.setBackground(new Color(31, 41, 55));
-        panelServicios.setLayout(new GridLayout(2, 3, 25, 40));
+        panelServicios.setLayout(new GridLayout(4, 2, 50, 15));
         
         JCheckBox service1 = new JCheckBox("New check box");
         panelServicios.add(service1);
@@ -634,52 +678,51 @@ public class PantallaPrincipal {
         JLabel lblSeleccionarCliente = new JLabel("Seleccionar Cliente");
         lblSeleccionarCliente.setForeground(new Color(96, 165, 250));
         lblSeleccionarCliente.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblSeleccionarCliente.setBounds(473, 16, 283, 21);
+        lblSeleccionarCliente.setBounds(12, 204, 283, 21);
         panelBarberos.add(lblSeleccionarCliente);
         
         JLabel lblSeleccionarServicios = new JLabel("Seleccionar Servicios");
         lblSeleccionarServicios.setForeground(new Color(96, 165, 250));
         lblSeleccionarServicios.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblSeleccionarServicios.setBounds(12, 138, 283, 21);
+        lblSeleccionarServicios.setBounds(734, 12, 283, 21);
         panelBarberos.add(lblSeleccionarServicios);
         
         
-        JButton confirmarCita = new JButton("Confirmar Cita");
-        confirmarCita.setBounds(178, 307, 638, 41);
+        JButton confirmarCita = new JButton("Confirmar");
+        confirmarCita.setBounds(638, 400, 500, 41);
         panelBarberos.add(confirmarCita);
         confirmarCita.setOpaque(false);
         confirmarCita.setForeground(new Color(242, 240, 235));
-        confirmarCita.setFont(new Font("SansSerif", Font.BOLD, 16));
+        confirmarCita.setFont(new Font("SansSerif", Font.BOLD, 18));
         confirmarCita.setFocusPainted(false);
         confirmarCita.setContentAreaFilled(true);
         confirmarCita.setBorderPainted(false);
         confirmarCita.setBorder(null);
         confirmarCita.setBackground(Paleta.textologin2);
         
-        confirmarCita.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int selected = barberoscombo.getSelectedIndex();
-				int idbarber = barberos.get(selected).getId();
-				
-				
-						
-			
-				
-				for (JButton select : barberos.get(selected).getBotones()) {
-					if (select.getBackground() == Paleta.fondoBoton) {
-						select.setEnabled(false);
-					}
-				}
-		
-		
-//				GuardarDatos.guardarClientes(nombre, telefono, correo);
-		}
-		});
+        JButton cancelar = new JButton("Cancelar");
+        cancelar.setOpaque(false);
+        cancelar.setForeground(Paleta.textologin2);
+        cancelar.setFont(new Font("SansSerif", Font.BOLD, 18));
+        cancelar.setFocusPainted(false);
+        cancelar.setContentAreaFilled(true);
+        cancelar.setBorderPainted(false);
+        cancelar.setBorder(null);
+        cancelar.setBackground(Paleta.fondoPrincipal);
+        cancelar.setBounds(45, 400, 500, 41);
+        panelBarberos.add(cancelar);
+        
+        JSeparator separator = new JSeparator();
+        separator.setForeground(Color.RED);
+        separator.setBounds(0, 360, 1228, 2);
+        separator.setBackground(Paleta.fondoBoton);
+        separator.setOpaque(false);
+        panelBarberos.add(separator);
         
         Panel paneldatos = new Panel(20,1, Paleta.textologin2);
         paneldatos.setLayout(null);
         paneldatos.setBackground(Paleta.menu);
-        paneldatos.setBounds(419, 50, 591, 128);
+        paneldatos.setBounds(455, 69, 804, 152);
         crearCita.add(paneldatos);
         
         JLabel lblHorariosDisponiblesDel = new JLabel("Horarios disponibles del barbero");
@@ -689,7 +732,7 @@ public class PantallaPrincipal {
         paneldatos.add(lblHorariosDisponiblesDel);
         
         JPanel panelHorarios = new JPanel();
-        panelHorarios.setBounds(12, 40, 567, 76);
+        panelHorarios.setBounds(12, 45, 780, 97);
         panelHorarios.setBackground(Paleta.menu);
         paneldatos.add(panelHorarios);
         panelHorarios.setLayout(new GridLayout(0, 4, 10, 10));
@@ -827,12 +870,13 @@ public class PantallaPrincipal {
 				campoCorreoCliente.setText("");
 				
 				GuardarDatos.guardarClientes(nombre, telefono, correo);
-				ConsultarDatos.refrescarcombos(comboClientes, "Clientes");
 				
+				comboClientes.setModel(cargarModeloClientes());
 			}	
 		});
         
         confirmarCita.addActionListener(new ActionListener() {
+<<<<<<< HEAD
 			public void actionPerformed(ActionEvent e) {
 				
 				ArrayList<String> servicioSelected = new ArrayList<String>();
@@ -858,17 +902,101 @@ public class PantallaPrincipal {
 		        		
 		        	}	        
 		        }
+=======
+            public void actionPerformed(ActionEvent e) {
+                
+                ArrayList<String> servicioSelected = new ArrayList<String>();
+                int selectedCliente = comboClientes.getSelectedIndex();
+                int selectedBarbero = barberoscombo.getSelectedIndex();
+                
+                int cuenta = 0;
+                int idbarber = barberos.get(selectedBarbero).getId();
+                int idcliente = clientes.get(selectedCliente).getId();
+                String servicios = null;
+                String hora = null; 
+                java.sql.Date date = null;
+                
+                if (fecha.getDate() != null) {
+                    date = new java.sql.Date(fecha.getDate().getTime());
+                } else {
+                    errores("Debes seleccionar una fecha para confirmar", "Selecciona una fecha");
+                }
+>>>>>>> branch 'master' of https://github.com/angeldany521-spec/ProyectoJavaSwing.git
 
-				for (int i=0; i<servicescheck.length; i++) {
-					if (servicescheck[i].isSelected()) {
-						servicioSelected.add(servicescheck[i].getText()); 
-						cuenta += listservicios[i].getPrecio();
-					}
+                for (JButton horarioselect : barberos.get(selectedBarbero).getBotones()) {
+                    if (horarioselect.getBackground() == Paleta.fondoBoton) {
+                        hora = horarioselect.getText();
+                    }
+                }
+
+                for (int i = 0; i < servicescheck.length; i++) {
+                    if (servicescheck[i].isSelected()) {
+                        servicioSelected.add(servicescheck[i].getText()); 
+                        cuenta += listservicios[i].getPrecio();
+                    }
+                }
+
+                servicios = (servicioSelected.isEmpty()) ? null : servicios.join(", ", servicioSelected);
+
+                
+                if (ConsultarDatos.horaOcupada(idbarber, date, hora)) {
+                    errores("Esa fecha y hora ya está ocupada para ese barbero.", "Horario no disponible");
+                    return; 
+                }
+
+                if (hora != null &&
+                    servicios != null &&
+                    cuenta > 0 &&
+                    idbarber > 0 &&
+                    idcliente > 0) {
+
+                    GuardarDatos.guardarCita(idbarber, idcliente, servicios, date, hora, cuenta);
+                    tableCitas.setModel(ConsultarDatos.cargar_citas());
+                    table_widhts();
+                    
+                    confirmaciones("Cita Agragada correctamente!");
+
+                    hora = null;
+                    servicios = null;
+                    cuenta = 0;
+                    comboClientes.setSelectedIndex(0); 
+                    barberoscombo.setSelectedIndex(0); 
+                    ((JTextField) fecha.getDateEditor().getUiComponent()).setText("");
+                    for (int i = 0; i < servicescheck.length; i++) {
+                            servicescheck[i].setSelected(false);
+                            barberos.get(selectedBarbero).getBotones()[i].setBackground(Paleta.menu);
+ 
+                    }   
+                } 
+                else {errores("Debes rellenar todos los campos para confirmar", "Campos vacíos");}
+                    
+                
+            }
+        });
+        
+        cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
+				int selectedBarbero = barberoscombo.getSelectedIndex();
+				int selectedCliente = comboClientes.getSelectedIndex();
+				
+				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones()) {
+                    horarioselect.setBackground(Paleta.menu);
+                        
+                    }
+				
+				for (JCheckBox servicio : servicescheck) {
+					servicio.setSelected(false);
 				}
+<<<<<<< HEAD
 				
 				servicios = (servicioSelected.isEmpty()) ? null : servicios.join(", ", servicioSelected);
 				                  
+=======
+        
+>>>>>>> branch 'master' of https://github.com/angeldany521-spec/ProyectoJavaSwing.git
 				
+<<<<<<< HEAD
 				if (hora != null &&
 					servicios != null &&
 					cuenta != 0 &&
@@ -926,6 +1054,32 @@ public class PantallaPrincipal {
         
 		}
 	public void table_widhts(JTable tabla) {
+=======
+                comboClientes.setSelectedIndex(0); 
+                barberoscombo.setSelectedIndex(0); 
+                ((JTextField) fecha.getDateEditor().getUiComponent()).setText("");
+						
+			}
+		});
+        
+        eliminarCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					int row = tableCitas.getSelectedRow();
+					
+					if (row == -1) {errores("Debes seleccionar una fila a eliminar", "Error");}
+					
+					int IDcita = Integer.parseInt(tableCitas.getValueAt(row, 0).toString());
+					
+					
+					GuardarDatos.eliminarDato("Citas", "Cita", IDcita);
+					tableCitas.setModel(ConsultarDatos.cargar_citas());
+					table_widhts();	
+			}
+		});
+	}
+	
+	public void table_widhts() {
+>>>>>>> branch 'master' of https://github.com/angeldany521-spec/ProyectoJavaSwing.git
 		tableCitas.getColumnModel().getColumn(0).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(1).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(2).setPreferredWidth(5);
@@ -937,6 +1091,29 @@ public class PantallaPrincipal {
 	public void errores(String tema, String error) {
 		JOptionPane.showMessageDialog(null, tema, error, JOptionPane.ERROR_MESSAGE);
 	}
+	
+	public void confirmaciones(String confirmacion) {
+		JOptionPane.showMessageDialog(null, confirmacion);
+	}
+	
+	public static DefaultComboBoxModel<String> cargarModeloClientes() {
+	    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+	    for (Cliente c : ConsultarDatos.obtenerClientes()) {
+	        model.addElement(c.getNombre());
+	    }
+	    return model;
+	}
+	
+	public static DefaultComboBoxModel<String> cargartabla() {
+	    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+	    for (Cliente c : ConsultarDatos.obtenerClientes()) {
+	        model.addElement(c.getNombre());
+	    }
+	    return model;
+	}
+	
 }
 
 

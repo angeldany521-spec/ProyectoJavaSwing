@@ -88,7 +88,11 @@ public class GuardarDatos {
 			return false;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> branch 'master' of https://github.com/angeldany521-spec/ProyectoJavaSwing.git
 	public static void eliminarDato(String tabla, String campo, int id) {
 		String datos = "DELETE FROM " + tabla + " WHERE ID"+campo+ " = ?";
 		
@@ -150,7 +154,6 @@ public class GuardarDatos {
 			
 			ps.executeUpdate();
 			return true;
-
 		}
 	
 		

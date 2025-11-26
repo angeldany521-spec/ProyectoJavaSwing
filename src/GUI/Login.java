@@ -1,41 +1,27 @@
 package GUI;
 
-import Imagenes.*;
-
-
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
-import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
-
 import com.formdev.flatlaf.FlatLightLaf;
 
 
-import BaseDeDatos.Conectar;
 import BaseDeDatos.ConsultarDatos;
-import Dominio.Cliente;
-import Dominio.Usuario;
 import Dominio.UsuarioRegular;
 
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.attribute.UserDefinedFileAttributeView;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import java.awt.Canvas;
 
 
 
@@ -49,35 +35,7 @@ public class Login extends JFrame{
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-
-			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-
-			if ("Nimbus".equals(info.getName())) {
-
-			UIManager.setLookAndFeel(info.getClassName());
-
-			break;
-
-			}
-
-			}
-
-			} catch (Exception e) {
-
-			// Si Nimbus no está disponible, puedes establecer otro Look and Feel.
-
-			try {
-
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
-			} catch (Exception ex) {
-
-			// Manejo de excepción
-
-			}
-
-	}
+		
 		try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ex) {

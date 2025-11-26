@@ -4,6 +4,7 @@ import java.lang.invoke.StringConcatFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -175,9 +176,29 @@ public class ConsultarDatos {
 	
 	catch (Exception e) {e.printStackTrace();}
 	return listaUsuarios;	
-} 
+}
+	
+	public static boolean horaOcupada(int idBarbero, java.sql.Date fecha, String hora) {
+	    try {
+	        Connection conn = Conectar.conexion();
+	        PreparedStatement ps = conn.prepareStatement(
+	            "SELECT COUNT(*) FROM citas WHERE IDBarbero = ? AND Fecha = ? AND Hora = ?"
+	        );
+	        ps.setInt(1, idBarbero);
+	        ps.setDate(2, fecha);
+	        ps.setString(3, hora);
+
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+	    } catch (SQLException ex) {
+	        ex.printStackTrace();
+	    }
+	    return false;
 	
 	
 	
 	
+	}
 	}
