@@ -205,17 +205,15 @@ public class Login extends JFrame{
 				if (user.equals("administrador") &&
 					contra.equals("admin")) {
 					ventanaLogin.dispose();
-					
-	        		
-					
+					PantallaAdmin.main(null);
 				}
+				
 				
 				for (int i=0; i<usuarios.size(); i++) {
 		        	if (usuarios.get(i).getUser().equals(user) &&
 		        		usuarios.get(i).getContraseña().equals(contra)) {
 		        		PantallaPrincipal.main(null);
-		        		ventanaLogin.dispose();
-		        		
+		        		ventanaLogin.dispose();	
 		        	}
 		        	
 	        	else {lblerror.setVisible(true);}

@@ -282,8 +282,9 @@ public class PantallaPrincipal {
         tableCitas.getColumnModel().getColumn(0).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(1).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(2).setPreferredWidth(5);
-        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(330);
+        tableCitas.getColumnModel().getColumn(5).setPreferredWidth(5);
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 13));
         
@@ -802,6 +803,7 @@ public class PantallaPrincipal {
         btnCerrarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
+				Login.main(null);
 			}
 		});
         
@@ -842,12 +844,18 @@ public class PantallaPrincipal {
 				int idcliente = clientes.get(selectedCliente).getId();
 				String servicios = null;
 				String hora = null; 
-				java.sql.Date date = new java.sql.Date(fecha.getDate().getTime());
+				java.sql.Date date = null;
+				
+				if (fecha.getDate() != null) {date = new java.sql.Date(fecha.getDate().getTime());}
+				else {errores("Debes rellenar todos los campos para confirmar", "Campos vacios");}
 				
 					
 				for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
 		        	if (horarioselect.getBackground() == Paleta.fondoBoton) {
 		        		hora = horarioselect.getText();
+		        		
+		        		
+		        		
 		        	}	        
 		        }
 
@@ -857,31 +865,73 @@ public class PantallaPrincipal {
 						cuenta += listservicios[i].getPrecio();
 					}
 				}
+				
 				servicios = (servicioSelected.isEmpty()) ? null : servicios.join(", ", servicioSelected);
-				System.out.println(servicios + "" + "" + idbarber + "" + idcliente + "" + hora);                    
+				                  
 				
 				if (hora != null &&
 					servicios != null &&
 					cuenta != 0 &&
 					idbarber > 0 &&
 					idcliente > 0) {
+					for (JButton horarioselect : barberos.get(selectedBarbero).getBotones() ) {
+						if (horarioselect.getBackground() == Paleta.fondoBoton) {
+							horarioselect.setEnabled(false);
+						}	        
+					}
+				System.out.println("Hora1 "+hora);			
 				GuardarDatos.guardarCita(idbarber, idcliente, servicios, date, hora, cuenta);
 				tableCitas.setModel(ConsultarDatos.cargar_citas());
 				table_widhts(tableCitas);
+
+				hora = null;
+				servicios = null;
+				cuenta = 0;
+				comboClientes.setSelectedIndex(0); 
+				barberoscombo.setSelectedIndex(0); 
+				((JTextField) fecha.getDateEditor().getUiComponent()).setText("");
+			}
+				
+				else {errores("Debes rellenar todos los campos para confirmar", "Campos vacios");}
+				System.out.println("Hora2 "+hora);
 				}
-				else {errores("Campos vacios", "Debes rellenar todos los campos para confirmar");}
 				
-				
-				
-				}
-        	});      
+        	}); 
+        
+        eliminarCita.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					int row = tableCitas.getSelectedRow();
+					
+					if (row == -1) {errores("Debes seleccionar una fila a eliminar", "Error");}
+					
+					int IDcita = Integer.parseInt(tableCitas.getValueAt(row, 0).toString());
+					
+					
+					GuardarDatos.eliminarDato("Citas", "Cita", IDcita);
+					tableCitas.setModel(ConsultarDatos.cargar_citas());
+					table_widhts(tableCitas);
+					
+			}
+		});
+        
+        
+        
+        
+        
+        
+        
+        
+      
+        
+        
 		}
 	public void table_widhts(JTable tabla) {
 		tableCitas.getColumnModel().getColumn(0).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(1).setPreferredWidth(5);
         tableCitas.getColumnModel().getColumn(2).setPreferredWidth(5);
-        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(3).setPreferredWidth(5);
+        tableCitas.getColumnModel().getColumn(4).setPreferredWidth(330);
+        tableCitas.getColumnModel().getColumn(5).setPreferredWidth(5);
 	}
 	
 	public void errores(String tema, String error) {

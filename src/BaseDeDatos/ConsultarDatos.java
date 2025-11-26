@@ -59,7 +59,7 @@ public class ConsultarDatos {
 	
 }  
 	public static DefaultTableModel cargar_citas() {
-		String [] columns = {"Cliente", "Barbero", "Fecha", "Servicio", "Precio"};
+		String [] columns = {"ID", "Cliente", "Barbero", "Fecha", "Servicios", "monto"};
 		DefaultTableModel modelo = new DefaultTableModel(null, columns);
 		
 		String sql = "SELECT * FROM vw_citas";
@@ -74,11 +74,12 @@ public class ConsultarDatos {
         while (rs.next()) {
             Object fila [] = new Object[columns.length];
             
-            fila[0] = rs.getString("Cliente");
-            fila[1] = rs.getString("Barbero");
-            fila[2] = rs.getDate("Fecha");
-            fila[3] = rs.getString("Servicios");
-            fila[4] = rs.getInt("monto");
+            fila[0] = rs.getInt("ID");
+            fila[1] = rs.getString("Cliente");
+            fila[2] = rs.getString("Barbero");
+            fila[3] = rs.getDate("Fecha");
+            fila[4] = rs.getString("Servicios");
+            fila[5] = rs.getInt("monto");
             
             modelo.addRow(fila);
         }
@@ -175,6 +176,7 @@ public class ConsultarDatos {
 	catch (Exception e) {e.printStackTrace();}
 	return listaUsuarios;	
 } 
+	
 	
 	
 	

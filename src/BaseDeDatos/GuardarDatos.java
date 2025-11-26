@@ -88,27 +88,25 @@ public class GuardarDatos {
 			return false;
 		}
 	}
-	
-	
-	public static boolean eliminarUsuarios(int id) {
-		String datos = "DELETE FROM Usuarios  WHERE IDUsuario=?";
+
+	public static void eliminarDato(String tabla, String campo, int id) {
+		String datos = "DELETE FROM " + tabla + " WHERE ID"+campo+ " = ?";
 		
 		try (Connection con = Conectar.conexion();
 				PreparedStatement ps = con.prepareStatement(datos)) {
 			
 			
 			ps.setInt(1,id);
-			
-			
-			return ps.executeUpdate()>0;
+			ps.executeUpdate();
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Datos no eliminados", "Error", JOptionPane.ERROR_MESSAGE);
 			System.out.println("Datos no ingresados");
-			return false;
+			
 		}
 	}
+	
 	
 	
 	
