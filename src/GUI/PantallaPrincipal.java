@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.foreign.AddressLayout;
+import java.nio.file.FileAlreadyExistsException;
 import java.security.PublicKey;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -232,7 +233,7 @@ public class PantallaPrincipal {
         lblbarber.setBounds(10, 10, 130, 35);
         menu.add(lblbarber);
         
-        JButton aggCliente = new JButton("Agregar Cliente");
+        JButton aggCliente = new JButton("Gestionar Clientes");
         aggCliente.setOpaque(false);
         aggCliente.setForeground(new Color(242, 240, 235));
         aggCliente.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -303,19 +304,19 @@ public class PantallaPrincipal {
         panelAgregarCliente.setLayout(null);
         
         Panel panelDatosCliente = new Panel(15, 1, Paleta.textologin2);
-        panelDatosCliente.setBounds(12, 105, 452, 526);
+        panelDatosCliente.setBounds(12, 142, 452, 558);
         panelDatosCliente.setBackground(Paleta.menu);
         panelAgregarCliente.add(panelDatosCliente);
         panelDatosCliente.setLayout(null);
         
-        JLabel lblInformacionDeLa_1 = new JLabel("Informacon del cliente");
-        lblInformacionDeLa_1.setBounds(12, 12, 211, 21);
+        JLabel lblInformacionDeLa_1 = new JLabel("Agregar Cliente");
+        lblInformacionDeLa_1.setBounds(12, 20, 167, 21);
         panelDatosCliente.add(lblInformacionDeLa_1);
         lblInformacionDeLa_1.setForeground(new Color(96, 165, 250));
-        lblInformacionDeLa_1.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblInformacionDeLa_1.setFont(new Font("SansSerif", Font.BOLD, 20));
         
         campoNombreCliente = new JTextField();
-        campoNombreCliente.setBounds(12, 77, 428, 35);
+        campoNombreCliente.setBounds(12, 93, 428, 35);
         panelDatosCliente.add(campoNombreCliente);
         campoNombreCliente.setForeground(new Color(242, 240, 235));
         campoNombreCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -324,13 +325,13 @@ public class PantallaPrincipal {
         campoNombreCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-        lblNewLabel_1_2.setBounds(12, 53, 65, 16);
+        lblNewLabel_1_2.setBounds(12, 69, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_2);
         lblNewLabel_1_2.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoTelefonoCliente = new JTextField();
-        campoTelefonoCliente.setBounds(12, 195, 428, 35);
+        campoTelefonoCliente.setBounds(12, 212, 428, 35);
         panelDatosCliente.add(campoTelefonoCliente);
         campoTelefonoCliente.setForeground(new Color(242, 240, 235));
         campoTelefonoCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -339,13 +340,13 @@ public class PantallaPrincipal {
         campoTelefonoCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_1_2 = new JLabel("Telefono");
-        lblNewLabel_1_1_2.setBounds(12, 171, 65, 16);
+        lblNewLabel_1_1_2.setBounds(12, 187, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_1_2);
         lblNewLabel_1_1_2.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoCorreoCliente = new JTextField();
-        campoCorreoCliente.setBounds(12, 315, 428, 35);
+        campoCorreoCliente.setBounds(12, 337, 428, 35);
         panelDatosCliente.add(campoCorreoCliente);
         campoCorreoCliente.setForeground(new Color(242, 240, 235));
         campoCorreoCliente.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -354,7 +355,7 @@ public class PantallaPrincipal {
         campoCorreoCliente.setBackground(new Color(31, 41, 55));
         
         JLabel lblNewLabel_1_1_1_1 = new JLabel("Correo");
-        lblNewLabel_1_1_1_1.setBounds(12, 289, 65, 16);
+        lblNewLabel_1_1_1_1.setBounds(12, 312, 65, 16);
         panelDatosCliente.add(lblNewLabel_1_1_1_1);
         lblNewLabel_1_1_1_1.setForeground(new Color(242, 240, 235));
         lblNewLabel_1_1_1_1.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -365,7 +366,7 @@ public class PantallaPrincipal {
         ImageIcon aggIcon = new ImageIcon(size);
         
         JButton agregarCliente = new JButton("Agregar", aggIcon);
-        agregarCliente.setBounds(245, 408, 173, 41);
+        agregarCliente.setBounds(246, 440, 173, 41);
         panelDatosCliente.add(agregarCliente);
         agregarCliente.setForeground(new Color(242, 240, 235));
         agregarCliente.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -383,32 +384,31 @@ public class PantallaPrincipal {
         cancelarCliente.setBorderPainted(false);
         cancelarCliente.setBorder(null);
         cancelarCliente.setBackground(Paleta.fondoPrincipal);
-        cancelarCliente.setBounds(30, 408, 173, 41);
+        cancelarCliente.setBounds(31, 440, 173, 41);
         panelDatosCliente.add(cancelarCliente);
         
         
-        JLabel lblAgregarCliente = new JLabel("Agregar Cliente");
+        JLabel lblAgregarCliente = new JLabel("Gestionar Clientes");
         lblAgregarCliente.setForeground(new Color(96, 165, 250));
         lblAgregarCliente.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblAgregarCliente.setBackground(new Color(242, 240, 235));
-        lblAgregarCliente.setBounds(12, 12, 210, 35);
+        lblAgregarCliente.setBounds(12, 12, 238, 35);
         panelAgregarCliente.add(lblAgregarCliente);
         
-        JLabel lblClientes = new JLabel("Clientes");
-        lblClientes.setForeground(new Color(96, 165, 250));
-        lblClientes.setFont(new Font("SansSerif", Font.BOLD, 27));
-        lblClientes.setBackground(new Color(242, 240, 235));
-        lblClientes.setBounds(538, 12, 210, 35);
-        panelAgregarCliente.add(lblClientes);
+        JPanel panelClientes = new Panel(20, 1, Paleta.textologin2);
+        panelClientes.setBounds(476, 142, 802, 558);
+        panelClientes.setBackground(Paleta.menu);
+        panelAgregarCliente.add(panelClientes);
+        panelClientes.setLayout(null);
         
         JScrollPane scrollPane_2 = new JScrollPane();
-        scrollPane_2.setBounds(476, 105, 802, 526);
-        panelAgregarCliente.add(scrollPane_2);
+        scrollPane_2.setBounds(12, 69, 778, 466);
+        panelClientes.add(scrollPane_2);
         
         
-        DefaultTableModel modeloClientes = new DefaultTableModel();
         
-        tableClientes = new JTable(modeloClientes);
+        
+        tableClientes = new JTable(cargartabla());
         tableClientes.setSize(new Dimension(0, 5));
         tableClientes.setShowGrid(true);
         tableClientes.setRowHeight(20);
@@ -419,7 +419,18 @@ public class PantallaPrincipal {
         tableClientes.setFillsViewportHeight(true);
         tableClientes.setBackground(new Color(31, 41, 55));
         tableClientes.setOpaque(true);
+        tableClientes.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tableClientes.getColumnModel().getColumn(1).setPreferredWidth(5);
+        tableClientes.getColumnModel().getColumn(2).setPreferredWidth(5);
+        tableClientes.getColumnModel().getColumn(3).setPreferredWidth(200);
+        
         scrollPane_2.setViewportView(tableClientes);
+        
+        JLabel lblInformacionDeLa_1_1 = new JLabel("Clientes");
+        lblInformacionDeLa_1_1.setForeground(new Color(96, 165, 250));
+        lblInformacionDeLa_1_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblInformacionDeLa_1_1.setBounds(12, 12, 94, 21);
+        panelClientes.add(lblInformacionDeLa_1_1);
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBounds(12, 12, 1001, 51);
@@ -634,7 +645,7 @@ public class PantallaPrincipal {
         lblNewLabel_1_2_2_1_1_1_1.setBounds(13, 237, 70, 16);
         panelBarberos.add(lblNewLabel_1_2_2_1_1_1_1);
       
-        JComboBox<String> comboClientes = new JComboBox<String>(cargarModeloClientes());
+        JComboBox<String> comboClientes = new JComboBox<String>(cargarcombobox());
         comboClientes.setOpaque(false);
         comboClientes.setForeground(new Color(242, 240, 235));
         comboClientes.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -869,9 +880,25 @@ public class PantallaPrincipal {
 				campoTelefonoCliente.setText("");
 				campoCorreoCliente.setText("");
 				
+				if (!nombre.equals("") &&
+					!telefono.equals("") &&
+					!correo.equals("")) {
 				GuardarDatos.guardarClientes(nombre, telefono, correo);
+				confirmaciones("Cliente agregado exitosamente!");
 				
-				comboClientes.setModel(cargarModeloClientes());
+				comboClientes.setModel(cargarcombobox());
+				tableClientes.setModel(cargartabla());
+				}
+				
+				else {errores("Rellena todos los campos para continuar", "Campos Vacios");}
+			}	
+		});
+        
+        cancelarCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				campoNombreCliente.setText("");
+				campoTelefonoCliente.setText("");
+				campoCorreoCliente.setText("");		
 			}	
 		});
         
@@ -1002,7 +1029,7 @@ public class PantallaPrincipal {
 		JOptionPane.showMessageDialog(null, confirmacion);
 	}
 	
-	public static DefaultComboBoxModel<String> cargarModeloClientes() {
+	public static DefaultComboBoxModel<String> cargarcombobox() {
 	    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
 	    for (Cliente c : ConsultarDatos.obtenerClientes()) {
@@ -1011,15 +1038,16 @@ public class PantallaPrincipal {
 	    return model;
 	}
 	
-	public static DefaultComboBoxModel<String> cargartabla() {
-	    DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+	public static DefaultTableModel cargartabla() {
+		String [] columnas = {"ID", "Nombre", "Telefono", "Correo"};
+		DefaultTableModel model = new DefaultTableModel(null, columnas);
 
 	    for (Cliente c : ConsultarDatos.obtenerClientes()) {
-	        model.addElement(c.getNombre());
+	    	Object row [] = {c.getId(), c.getNombre(), c.getTelefono(), c.getCorreo()};
+	    	if (c.getId() > 0) {model.addRow(row);}
 	    }
 	    return model;
 	}
-	
 }
 
 

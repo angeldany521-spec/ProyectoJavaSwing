@@ -92,26 +92,6 @@ public class ConsultarDatos {
 	return modelo;
 }
 	
-	public static void refrescarcombos(JComboBox<String> combo, String tabla) {
-	    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-
-	    try {
-	        Connection conn = Conectar.conexion();
-	        PreparedStatement ps = conn.prepareStatement("SELECT nombre FROM "+ tabla);
-	        ResultSet rs = ps.executeQuery();
-
-	        while (rs.next()) {
-	        	
-	        	modelo.addElement(rs.getString("nombre"));
-	        }
-
-	        combo.setModel(modelo);
-	        conn.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
 	public static ArrayList<Cliente> obtenerClientes() {
 		ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
 		
@@ -196,8 +176,6 @@ public class ConsultarDatos {
 	        ex.printStackTrace();
 	    }
 	    return false;
-	
-	
-	
+
 	}
-	}
+}
