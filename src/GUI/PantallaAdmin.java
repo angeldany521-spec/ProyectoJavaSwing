@@ -955,6 +955,7 @@ public class PantallaAdmin {
         sidebar.add(Box.createVerticalStrut(310));
         sidebar.add(createMenuButton("Cerrar Sesión", () -> {
 			frame.dispose();
+			Login.main(null);
 			
 		}));
         
@@ -1079,13 +1080,13 @@ public class PantallaAdmin {
 		
 		
 		if(confirmacion == JOptionPane.YES_OPTION) {
-			if(GuardarDatos.eliminarUsuarios(id)) {
-				JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
+			GuardarDatos.eliminarDato("Usuarios", "Usuario", id); 
+			JOptionPane.showMessageDialog(null, "Empleado eliminado correctamente.");
 				cargarUsuariosEnTabla();
 			}else {
 				 JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}
+		
 		
 		cargarUsuariosEnTabla();
 		
