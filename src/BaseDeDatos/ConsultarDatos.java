@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Dominio.Barbero;
 import Dominio.Cliente;
+import Dominio.Pago;
 import Dominio.Usuario;
 import Dominio.UsuarioRegular;
 
@@ -60,7 +61,7 @@ public class ConsultarDatos {
 	
 }  
 	public static DefaultTableModel cargar_citas() {
-		String [] columns = {"ID", "Cliente", "Barbero", "Fecha", "Servicios", "monto"};
+		String [] columns = {"ID", "Cliente", "Barbero", "Fecha", "Hora", "Servicios", "monto"};
 		DefaultTableModel modelo = new DefaultTableModel(null, columns);
 		
 		String sql = "SELECT * FROM vw_citas";
@@ -79,8 +80,9 @@ public class ConsultarDatos {
             fila[1] = rs.getString("Cliente");
             fila[2] = rs.getString("Barbero");
             fila[3] = rs.getDate("Fecha");
-            fila[4] = rs.getString("Servicios");
-            fila[5] = rs.getInt("monto");
+            fila[4] = rs.getString("Hora");
+            fila[5] = rs.getString("Servicios");
+            fila[6] = rs.getInt("monto");
             
             modelo.addRow(fila);
         }
@@ -176,11 +178,36 @@ public class ConsultarDatos {
 	        ex.printStackTrace();
 	    }
 	    return false;
-
-	
-	
-	
-	
-
 	}
+	
+	public static ArrayList<Pago> obtenerPagos() {
+		ArrayList<Pago> listaPagos = new ArrayList<Pago>();
+		
+		
+		String sql = "SELECT IDPago, Cliente, Monto, MetodoDePago, Fecha FROM Pagos";
+	
+	try {
+        Connection con = Conectar.conexion();
+        
+
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        
+        while (rs.next()) {
+        	Pago p = new Pago(
+        		   rs.getInt("IDPago"),
+        		   rs.getString("Cliente"),
+        		   rs.getInt("Monto"),
+                   rs.getString("MetodoDePago"),
+                   rs.getDate("Fecha"));
+        	listaPagos.add(p);
+           
+        }
+        
+       con.close();  
+	}
+	
+	catch (Exception e) {e.printStackTrace();}
+	return listaPagos;	
+}
 }

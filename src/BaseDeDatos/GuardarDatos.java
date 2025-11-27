@@ -39,6 +39,7 @@ public class GuardarDatos {
 			return false;
 		}
 	}
+	
 	public static boolean guardarUsuarios(String nombre, String telefono, String correo,String usuario,String contraseña) {
 		String datos = "INSERT INTO Usuarios (Nombre, Telefono, Correo, Usuario, Contraseña) VALUES (?, ?, ?, ?, ?)";
 		
@@ -146,6 +147,32 @@ public class GuardarDatos {
 			ps.setDate(4, fecha);
 			ps.setString(5, hora);
 			ps.setInt(6, monto);
+			
+			
+			ps.executeUpdate();
+			return true;
+		}
+	
+		
+		catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERROR");
+            return false;
+		}
+}
+	
+	public static boolean guardarPago(int idCliente, String nombre, int monto, String metodo, Date fecha) {
+		String datos = "INSERT INTO Pagos Values(?, ?, ?, ?, ?)";
+		
+		try (Connection con = Conectar.conexion();
+				PreparedStatement ps = con.prepareStatement(datos)) {
+			
+			ps.setInt(1, idCliente);
+			ps.setString(2, nombre);
+			ps.setInt(3, monto);
+			ps.setString(4, metodo);
+			ps.setDate(5, fecha);
+			
 			
 			
 			ps.executeUpdate();
