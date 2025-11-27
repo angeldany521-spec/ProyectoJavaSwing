@@ -111,31 +111,19 @@ public class PantallaPrincipal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public PantallaPrincipal() {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1182, 737);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().setBackground(Paleta.fondo2);
 		
-		
 		ArrayList<Barbero> barberos = ConsultarDatos.obtenerBarberos();
 		ArrayList<Cliente> clientes = ConsultarDatos.obtenerClientes();
-		
-		
-		
-		
-		
 		
 		Servicio[] listservicios = {new Servicio(0, "Cerquillo", 100),
 								new Servicio(1, "Corte regular", 300),
@@ -151,8 +139,6 @@ public class PantallaPrincipal {
         menu.setBackground(Paleta.menu);
         menu.setOpaque(true);
         menu.setLayout(null);
-        
-        
         
         JButton crearCitas = new JButton("Crear Cita");
         crearCitas.setFont(new Font("SansSerif", Font.BOLD, 15));
@@ -177,10 +163,7 @@ public class PantallaPrincipal {
         historialPagos.setBackground(Paleta.fondoBoton2);
         
         JButton citas = new JButton("Citas");
-        citas.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
+        
         citas.setFont(new Font("SansSerif", Font.BOLD, 15));
         citas.setBorder(null);
         citas.setBounds(0, 160, 250, 46);
@@ -195,7 +178,6 @@ public class PantallaPrincipal {
         menu.add(crearCitas);
         menu.add(historialPagos);
  
-        
         frame.getContentPane().add(menu, BorderLayout.WEST);
         
         JButton btnCerrarSesion = new JButton("Cerrar Sesion");
@@ -349,12 +331,10 @@ public class PantallaPrincipal {
         JScrollPane scrollPane_2 = new JScrollPane();
         scrollPane_2.setBounds(16, 101, 770, 434);
         panelClientes.add(scrollPane_2);
-        
-        
-        
-        
+
         tableClientes = new JTable(cargartablaClientes());
         tableClientes.setSize(new Dimension(0, 5));
+        tableClientes.getTableHeader().setReorderingAllowed(false);
         tableClientes.setShowGrid(true);
         tableClientes.setRowHeight(21);
         tableClientes.getTableHeader().setBackground(Paleta.headers);
@@ -424,6 +404,7 @@ public class PantallaPrincipal {
         scrollPane.setBorder(null);
 
         tableCitas = new JTable(ConsultarDatos.cargar_citas());
+        tableCitas.getTableHeader().setReorderingAllowed(false);
         tableCitas.setRowHeight(21);
         tableCitas.setSize(new Dimension(0, 5));
         tableCitas.getTableHeader().setBackground(Paleta.headers);
@@ -433,7 +414,6 @@ public class PantallaPrincipal {
         tableCitas.setGridColor(Paleta.fondoPrincipal);
         tableCitas.setForeground(Paleta.fondoPrincipal);
         tableCitas.setFillsViewportHeight(true);
-        
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 14));
         
@@ -490,6 +470,7 @@ public class PantallaPrincipal {
         
        tableHistorialPagos = new JTable(cargartablaPagos());
        tableHistorialPagos.setRowHeight(21);
+       tableHistorialPagos.getTableHeader().setReorderingAllowed(false);
        tableHistorialPagos.setSize(new Dimension(0, 5));
        tableHistorialPagos.getTableHeader().setBackground(Paleta.headers);
        tableHistorialPagos.getTableHeader().setForeground(Paleta.textologin2);
@@ -540,7 +521,6 @@ public class PantallaPrincipal {
        
        buscarHistorialPagos = new JTextField();
        buscarHistorialPagos.setBounds(521, 13, 392, 41);
-       panelSuperior_1.add(buscarHistorialPagos);
        buscarHistorialPagos.setPreferredSize(new Dimension(100, 30));
        buscarHistorialPagos.setOpaque(false);
        buscarHistorialPagos.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -548,6 +528,7 @@ public class PantallaPrincipal {
        buscarHistorialPagos.setColumns(30);
        buscarHistorialPagos.setBorder(new Borde(10, Paleta.fondoPrincipal));
        buscarHistorialPagos.setBackground(Paleta.menu);
+       panelSuperior_1.add(buscarHistorialPagos);
        
        JLabel lblHistorialPagos = new JLabel("Historial De Pagos");
        lblHistorialPagos.setBounds(9, 30, 241, 37);
@@ -598,9 +579,7 @@ public class PantallaPrincipal {
         barberoscombo.setBackground(Paleta.menu);
         barberoscombo.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
         barberoscombo.setForeground(Paleta.fondoPrincipal);
-        
         barberoscombo.setOpaque(false);
-        
         panelBarberos.add(barberoscombo);
 
         for (int i=0; i<barberos.size(); i++) {
@@ -628,7 +607,7 @@ public class PantallaPrincipal {
         panelBarberos.add(comboClientes);
         
         JPanel panelServicios = new JPanel();
-        panelServicios.setBounds(613, 75, 486, 263);
+        panelServicios.setBounds(529, 75, 486, 263);
         panelServicios.setBackground(Paleta.fondoPrincipal);
         panelBarberos.add(panelServicios);
         
@@ -668,12 +647,12 @@ public class PantallaPrincipal {
         JLabel lblSeleccionarServicios = new JLabel("Seleccionar Servicios");
         lblSeleccionarServicios.setForeground(new Color(96, 165, 250));
         lblSeleccionarServicios.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblSeleccionarServicios.setBounds(716, 26, 205, 21);
+        lblSeleccionarServicios.setBounds(632, 26, 205, 21);
         panelBarberos.add(lblSeleccionarServicios);
         
         
         JButton confirmarCita = new JButton("Confirmar");
-        confirmarCita.setBounds(600, 400, 440, 41);
+        confirmarCita.setBounds(529, 400, 440, 41);
         panelBarberos.add(confirmarCita);
         confirmarCita.setOpaque(false);
         confirmarCita.setForeground(new Color(242, 240, 235));
@@ -698,7 +677,7 @@ public class PantallaPrincipal {
         
         JSeparator separator = new JSeparator();
         separator.setForeground(Color.RED);
-        separator.setBounds(0, 360, 1228, 2);
+        separator.setBounds(12, 360, 1207, 2);
         separator.setBackground(Paleta.fondoBoton);
         separator.setOpaque(false);
         panelBarberos.add(separator);
@@ -714,7 +693,7 @@ public class PantallaPrincipal {
         lblMonto_1.setVerticalAlignment(SwingConstants.TOP);
         lblMonto_1.setForeground(Paleta.fondoPrincipal);
         lblMonto_1.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblMonto_1.setBounds(1125, 48, 109, 22);
+        lblMonto_1.setBounds(1132, 54, 45, 22);
         panelBarberos.add(lblMonto_1);
         
         Panel paneldatos = new Panel(20,7, Paleta.textologin2);
@@ -1065,7 +1044,12 @@ public class PantallaPrincipal {
 	
 	public static DefaultTableModel cargartablaClientes() {
 		String [] columnas = {"ID", "Nombre", "Telefono", "Correo"};
-		DefaultTableModel model = new DefaultTableModel(null, columnas);
+		DefaultTableModel model = new DefaultTableModel(null, columnas) {
+		    
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
 
 	    for (Cliente c : ConsultarDatos.obtenerClientes()) {
 	    	Object row [] = {c.getId(), c.getNombre(), c.getTelefono(), c.getCorreo()};
@@ -1077,12 +1061,18 @@ public class PantallaPrincipal {
 	
 	public static DefaultTableModel cargartablaPagos() {
 		String [] columnas = {"ID", "Cliente", "Monto", "MetodoDePago", "Fecha"};
-		DefaultTableModel model = new DefaultTableModel(null, columnas);
+		DefaultTableModel model = new DefaultTableModel(null, columnas) {
+		    
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
 		
 		for (Pago p : ConsultarDatos.obtenerPagos()) {
 			Object row [] = {p.getIdPago(), p.getnombreCliente(), p.getMonto(), p.getMetodoPago(), p.getFechaPago()};
 			model.addRow(row);	
 		}	
+		
 		return model;
 	}
 	

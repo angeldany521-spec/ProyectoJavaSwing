@@ -1154,14 +1154,8 @@ public class PantallaAdmin {
         scrollPane_2.setBounds(72, 110, 947, 540);
         pantallaPagos.add(scrollPane_2);
         
-        tablaPagos = new JTable();
-        tablaPagos.setModel(new DefaultTableModel(
-        	new Object[][] {
-        	},
-        	new String[] {
-        		"Id", "Monto", "Metodo de Pago", "Fecha"
-        	}
-        ));
+        tablaPagos = new JTable(cargartablaPagos());
+        
         tablaPagos.getColumnModel().getColumn(2).setPreferredWidth(118);
         tablaPagos.setBackground(Paleta.headers);
         tablaPagos.setShowGrid(true);
@@ -1462,5 +1456,22 @@ public class PantallaAdmin {
 	    } else {
 	        JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
 	    }
+	}
+	
+	public static DefaultTableModel cargartablaPagos() {
+		String [] columnas = {"ID", "Cliente", "Monto", "MetodoDePago", "Fecha"};
+		DefaultTableModel model = new DefaultTableModel(null, columnas) {
+		    
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
+		
+		for (Pago p : ConsultarDatos.obtenerPagos()) {
+			Object row [] = {p.getIdPago(), p.getnombreCliente(), p.getMonto(), p.getMetodoPago(), p.getFechaPago()};
+			model.addRow(row);	
+		}	
+		
+		return model;
 	}
 }

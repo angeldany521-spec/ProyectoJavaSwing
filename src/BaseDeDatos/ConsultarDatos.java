@@ -1,26 +1,15 @@
 package BaseDeDatos;
-
-import java.lang.invoke.StringConcatFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
-
-
 import Dominio.Barbero;
 import Dominio.Cliente;
 import Dominio.Pago;
-import Dominio.Usuario;
 import Dominio.UsuarioRegular;
-
-
 
 
 public class ConsultarDatos {
@@ -28,7 +17,7 @@ public class ConsultarDatos {
 	
 	public static ArrayList<Barbero> obtenerBarberos() {
 		ArrayList<Barbero> listaBarberos = new ArrayList<Barbero>();
-		String horal;
+		
 		
 		String sql = "SELECT * FROM Barberos";
 	
@@ -62,7 +51,12 @@ public class ConsultarDatos {
 }  
 	public static DefaultTableModel cargar_citas() {
 		String [] columns = {"ID", "Cliente", "Barbero", "Fecha", "Hora", "Servicios", "monto"};
-		DefaultTableModel modelo = new DefaultTableModel(null, columns);
+		DefaultTableModel modelo = new DefaultTableModel(null, columns) {
+		    
+		    public boolean isCellEditable(int row, int column) {
+		        return false; 
+		    }
+		};
 		
 		String sql = "SELECT * FROM vw_citas";
 	
