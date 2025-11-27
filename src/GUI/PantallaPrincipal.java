@@ -54,7 +54,7 @@ import javax.swing.SwingConstants;
 public class PantallaPrincipal {
 
 	private JFrame frame;
-	private JTextField campoBuscar;
+	private JTextField campoBuscarCitas;
 	private JTable tableCitas;
 	private JTextField buscarHistorialPagos;
 	private JTable tableHistorialPagos;
@@ -62,11 +62,8 @@ public class PantallaPrincipal {
 	private JTextField campoTelefonoCliente;
 	private JTextField campoCorreoCliente;
 	private JTable tableClientes;
-	private JTextField textField;
+	private JTextField campoBuscarClientes;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 
 		try {
@@ -96,8 +93,6 @@ public class PantallaPrincipal {
 		}
 
 }
-        
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -140,43 +135,43 @@ public class PantallaPrincipal {
         menu.setOpaque(true);
         menu.setLayout(null);
         
-        JButton crearCitas = new JButton("Crear Cita");
-        crearCitas.setFont(new Font("SansSerif", Font.BOLD, 15));
-        crearCitas.setBorder(null);
-        crearCitas.setBounds(0, 206, 250, 46);
-        crearCitas.setForeground(Paleta.textologin);
-        crearCitas.setContentAreaFilled(true);
-        crearCitas.setFocusPainted(false);
-        crearCitas.setBorderPainted(false);
-        crearCitas.setOpaque(false);
-        crearCitas.setBackground(Paleta.fondoBoton2);
+        JButton btnPanelCrearCita = new JButton("Crear Cita");
+        btnPanelCrearCita.setFont(new Font("SansSerif", Font.BOLD, 15));
+        btnPanelCrearCita.setBorder(null);
+        btnPanelCrearCita.setBounds(0, 206, 250, 46);
+        btnPanelCrearCita.setForeground(Paleta.textologin);
+        btnPanelCrearCita.setContentAreaFilled(true);
+        btnPanelCrearCita.setFocusPainted(false);
+        btnPanelCrearCita.setBorderPainted(false);
+        btnPanelCrearCita.setOpaque(false);
+        btnPanelCrearCita.setBackground(Paleta.fondoBoton2);
         
-        JButton historialPagos = new JButton("Historial de Pagos");
-        historialPagos.setFont(new Font("SansSerif", Font.BOLD, 15));
-        historialPagos.setBorder(null);
-        historialPagos.setBounds(0, 251, 250, 46);
-        historialPagos.setForeground(Paleta.textologin);
-        historialPagos.setContentAreaFilled(true);
-        historialPagos.setFocusPainted(false);
-        historialPagos.setBorderPainted(false);
-        historialPagos.setOpaque(false);
-        historialPagos.setBackground(Paleta.fondoBoton2);
+        JButton btnPanelPagos = new JButton("Historial de Pagos");
+        btnPanelPagos.setFont(new Font("SansSerif", Font.BOLD, 15));
+        btnPanelPagos.setBorder(null);
+        btnPanelPagos.setBounds(0, 251, 250, 46);
+        btnPanelPagos.setForeground(Paleta.textologin);
+        btnPanelPagos.setContentAreaFilled(true);
+        btnPanelPagos.setFocusPainted(false);
+        btnPanelPagos.setBorderPainted(false);
+        btnPanelPagos.setOpaque(false);
+        btnPanelPagos.setBackground(Paleta.fondoBoton2);
         
-        JButton citas = new JButton("Citas");
+        JButton btnPanelCitas = new JButton("Citas");
         
-        citas.setFont(new Font("SansSerif", Font.BOLD, 15));
-        citas.setBorder(null);
-        citas.setBounds(0, 160, 250, 46);
-        citas.setForeground(Paleta.textologin);
-        citas.setContentAreaFilled(true);
-        citas.setFocusPainted(false);
-        citas.setBorderPainted(false);
-        citas.setOpaque(false);
-        citas.setBackground(Paleta.fondoBoton2);
+        btnPanelCitas.setFont(new Font("SansSerif", Font.BOLD, 15));
+        btnPanelCitas.setBorder(null);
+        btnPanelCitas.setBounds(0, 160, 250, 46);
+        btnPanelCitas.setForeground(Paleta.textologin);
+        btnPanelCitas.setContentAreaFilled(true);
+        btnPanelCitas.setFocusPainted(false);
+        btnPanelCitas.setBorderPainted(false);
+        btnPanelCitas.setOpaque(false);
+        btnPanelCitas.setBackground(Paleta.fondoBoton2);
         
-        menu.add(citas);
-        menu.add(crearCitas);
-        menu.add(historialPagos);
+        menu.add(btnPanelCitas);
+        menu.add(btnPanelCrearCita);
+        menu.add(btnPanelPagos);
  
         frame.getContentPane().add(menu, BorderLayout.WEST);
         
@@ -198,17 +193,17 @@ public class PantallaPrincipal {
         lblbarber.setBounds(10, 10, 130, 35);
         menu.add(lblbarber);
         
-        JButton aggCliente = new JButton("Gestionar Clientes");
-        aggCliente.setOpaque(false);
-        aggCliente.setForeground(new Color(242, 240, 235));
-        aggCliente.setFont(new Font("SansSerif", Font.BOLD, 15));
-        aggCliente.setFocusPainted(false);
-        aggCliente.setContentAreaFilled(true);
-        aggCliente.setBorderPainted(false);
-        aggCliente.setBorder(null);
-        aggCliente.setBackground(new Color(200, 50, 42));
-        aggCliente.setBounds(0, 296, 250, 46);
-        menu.add(aggCliente);
+        JButton btnPanelGestionClientes = new JButton("Gestionar Clientes");
+        btnPanelGestionClientes.setOpaque(false);
+        btnPanelGestionClientes.setForeground(new Color(242, 240, 235));
+        btnPanelGestionClientes.setFont(new Font("SansSerif", Font.BOLD, 15));
+        btnPanelGestionClientes.setFocusPainted(false);
+        btnPanelGestionClientes.setContentAreaFilled(true);
+        btnPanelGestionClientes.setBorderPainted(false);
+        btnPanelGestionClientes.setBorder(null);
+        btnPanelGestionClientes.setBackground(new Color(200, 50, 42));
+        btnPanelGestionClientes.setBounds(0, 296, 250, 46);
+        menu.add(btnPanelGestionClientes);
         
         CardLayout card = new CardLayout();
         JPanel panel = new JPanel();  
@@ -218,12 +213,12 @@ public class PantallaPrincipal {
         
         frame.getContentPane().add(panel);
         
-        PanelGestionCitas Inicio = new PanelGestionCitas();
-        Inicio.setForeground(new Color(0, 0, 0));
-        Inicio.setBackground(Paleta.fondo2);
-        Inicio.setOpaque(true);
-        panel.add(Inicio, "cita");
-        Inicio.setLayout(null);
+        PanelGestionCitas panelPrincipal = new PanelGestionCitas();
+        panelPrincipal.setForeground(new Color(0, 0, 0));
+        panelPrincipal.setBackground(Paleta.fondo2);
+        panelPrincipal.setOpaque(true);
+        panel.add(panelPrincipal, "cita");
+        panelPrincipal.setLayout(null);
         
         panelAgregarCliente panelAgregarCliente = new panelAgregarCliente();
         panelAgregarCliente.setBackground(Paleta.fondoPrincipal);
@@ -251,11 +246,11 @@ public class PantallaPrincipal {
         campoNombreCliente.setBorder(new Borde(8, Paleta.fondoPrincipal));
         campoNombreCliente.setBackground(new Color(31, 41, 55));
         
-        JLabel lblNewLabel_1_2 = new JLabel("Nombre");
-        lblNewLabel_1_2.setBounds(16, 69, 65, 16);
-        panelDatosCliente.add(lblNewLabel_1_2);
-        lblNewLabel_1_2.setForeground(new Color(242, 240, 235));
-        lblNewLabel_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
+        JLabel lblNombre = new JLabel("Nombre");
+        lblNombre.setBounds(16, 69, 65, 16);
+        panelDatosCliente.add(lblNombre);
+        lblNombre.setForeground(new Color(242, 240, 235));
+        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoTelefonoCliente = new JTextField();
         campoTelefonoCliente.setBounds(16, 212, 420, 35);
@@ -266,11 +261,11 @@ public class PantallaPrincipal {
         campoTelefonoCliente.setBorder(new Borde(8, Paleta.fondoPrincipal));
         campoTelefonoCliente.setBackground(new Color(31, 41, 55));
         
-        JLabel lblNewLabel_1_1_2 = new JLabel("Telefono");
-        lblNewLabel_1_1_2.setBounds(16, 187, 65, 16);
-        panelDatosCliente.add(lblNewLabel_1_1_2);
-        lblNewLabel_1_1_2.setForeground(new Color(242, 240, 235));
-        lblNewLabel_1_1_2.setFont(new Font("SansSerif", Font.BOLD, 14));
+        JLabel lblTelefono = new JLabel("Telefono");
+        lblTelefono.setBounds(16, 187, 65, 16);
+        panelDatosCliente.add(lblTelefono);
+        lblTelefono.setForeground(new Color(242, 240, 235));
+        lblTelefono.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         campoCorreoCliente = new JTextField();
         campoCorreoCliente.setBounds(16, 337, 420, 35);
@@ -281,11 +276,11 @@ public class PantallaPrincipal {
         campoCorreoCliente.setBorder(new Borde(8, Paleta.fondoPrincipal));
         campoCorreoCliente.setBackground(new Color(31, 41, 55));
         
-        JLabel lblNewLabel_1_1_1_1 = new JLabel("Correo");
-        lblNewLabel_1_1_1_1.setBounds(16, 312, 65, 16);
-        panelDatosCliente.add(lblNewLabel_1_1_1_1);
-        lblNewLabel_1_1_1_1.setForeground(new Color(242, 240, 235));
-        lblNewLabel_1_1_1_1.setFont(new Font("SansSerif", Font.BOLD, 14));
+        JLabel lblCorreo = new JLabel("Correo");
+        lblCorreo.setBounds(16, 312, 65, 16);
+        panelDatosCliente.add(lblCorreo);
+        lblCorreo.setForeground(new Color(242, 240, 235));
+        lblCorreo.setFont(new Font("SansSerif", Font.BOLD, 14));
         
         ImageIcon agg = new ImageIcon(getClass().getResource("/Imagenes/botonAgregar.png"));
         Image img = agg.getImage();
@@ -328,9 +323,9 @@ public class PantallaPrincipal {
         panelAgregarCliente.add(panelClientes);
         panelClientes.setLayout(null);
         
-        JScrollPane scrollPane_2 = new JScrollPane();
-        scrollPane_2.setBounds(16, 101, 770, 434);
-        panelClientes.add(scrollPane_2);
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(16, 101, 770, 434);
+        panelClientes.add(scrollPane);
 
         tableClientes = new JTable(cargartablaClientes());
         tableClientes.setSize(new Dimension(0, 5));
@@ -351,28 +346,28 @@ public class PantallaPrincipal {
         tableClientes.getColumnModel().getColumn(2).setPreferredWidth(5);
         tableClientes.getColumnModel().getColumn(3).setPreferredWidth(200);
         
-        scrollPane_2.setViewportView(tableClientes);
+        scrollPane.setViewportView(tableClientes);
         ImageIcon elim = new ImageIcon(getClass().getResource("/Imagenes/botonBorrar.png"));
         Image img1 = elim.getImage();
         Image size1 = img1.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         ImageIcon elimIcon = new ImageIcon(size1);
         
-        JLabel lblInformacionDeLa_1_1 = new JLabel("Clientes");
-        lblInformacionDeLa_1_1.setForeground(new Color(96, 165, 250));
-        lblInformacionDeLa_1_1.setFont(new Font("SansSerif", Font.BOLD, 20));
-        lblInformacionDeLa_1_1.setBounds(16, 16, 94, 21);
-        panelClientes.add(lblInformacionDeLa_1_1);
+        JLabel lblClientes = new JLabel("Clientes");
+        lblClientes.setForeground(new Color(96, 165, 250));
+        lblClientes.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblClientes.setBounds(16, 16, 94, 21);
+        panelClientes.add(lblClientes);
         
-        textField = new JTextField();
-        textField.setBounds(16, 49, 371, 40);
-        panelClientes.add(textField);
-        textField.setPreferredSize(new Dimension(100, 40));
-        textField.setOpaque(false);
-        textField.setForeground(new Color(31, 41, 55));
-        textField.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        textField.setColumns(40);
-        textField.setBorder(new Borde(10, Paleta.fondoPrincipal));
-        textField.setBackground(Paleta.menu);
+        campoBuscarClientes = new JTextField();
+        campoBuscarClientes.setBounds(16, 49, 371, 40);
+        panelClientes.add(campoBuscarClientes);
+        campoBuscarClientes.setPreferredSize(new Dimension(100, 40));
+        campoBuscarClientes.setOpaque(false);
+        campoBuscarClientes.setForeground(new Color(31, 41, 55));
+        campoBuscarClientes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        campoBuscarClientes.setColumns(40);
+        campoBuscarClientes.setBorder(new Borde(10, Paleta.fondoPrincipal));
+        campoBuscarClientes.setBackground(Paleta.menu);
         
         JButton eliminarCliente = new JButton("Eliminar Cliente", elimIcon);
         eliminarCliente.setBounds(561, 47, 225, 40);
@@ -386,22 +381,22 @@ public class PantallaPrincipal {
         
         JLabel lblCitas = new JLabel("Citas");
         lblCitas.setBounds(12, 26, 66, 35);
-        Inicio.add(lblCitas);
+        panelPrincipal.add(lblCitas);
         lblCitas.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblCitas.setForeground(Paleta.textologin2);
         lblCitas.setBackground(Paleta.fondo2);
         
-        JPanel panel_2 = new Panel(20, 7, Paleta.textologin2);
-        panel_2.setBounds(12, 78, 1252, 694);
-        panel_2.setBackground(Paleta.menu);
-        Inicio.add(panel_2);
-        panel_2.setLayout(null);
+        JPanel panelCitas = new Panel(20, 7, Paleta.textologin2);
+        panelCitas.setBounds(12, 78, 1252, 694);
+        panelCitas.setBackground(Paleta.menu);
+        panelPrincipal.add(panelCitas);
+        panelCitas.setLayout(null);
         
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(12, 106, 1228, 576);
-        panel_2.add(scrollPane);
-        scrollPane.setOpaque(false);
-        scrollPane.setBorder(null);
+        JScrollPane scrollPaneCitas = new JScrollPane();
+        scrollPaneCitas.setBounds(12, 106, 1228, 576);
+        panelCitas.add(scrollPaneCitas);
+        scrollPaneCitas.setOpaque(false);
+        scrollPaneCitas.setBorder(null);
 
         tableCitas = new JTable(ConsultarDatos.cargar_citas());
         tableCitas.getTableHeader().setReorderingAllowed(false);
@@ -417,28 +412,28 @@ public class PantallaPrincipal {
         tableCitas.setBackground(Paleta.table);
         tableCitas.setFont(new Font("SansSerif", Font.PLAIN, 14));
         
-        scrollPane.setViewportView(tableCitas);
+        scrollPaneCitas.setViewportView(tableCitas);
         
-        JPanel panel_1 = new Panel(20,7,Paleta.textologin2);
-        panel_1.setBounds(12, 25, 1228, 69);
-        panel_2.add(panel_1);
-        panel_1.setBackground(Paleta.menu);
-        panel_1.setLayout(null);
+        JPanel panelControlCitas = new Panel(20,7,Paleta.textologin2);
+        panelControlCitas.setBounds(12, 25, 1228, 69);
+        panelCitas.add(panelControlCitas);
+        panelControlCitas.setBackground(Paleta.menu);
+        panelControlCitas.setLayout(null);
         
-        campoBuscar = new JTextField();
-        campoBuscar.setBounds(12, 17, 461, 40);
-        panel_1.add(campoBuscar);
-        campoBuscar.setPreferredSize(new Dimension(100, 40));
-        campoBuscar.setOpaque(false);
-        campoBuscar.setBackground(Paleta.menu);
-        campoBuscar.setForeground(Paleta.fondoPrincipal);
-        campoBuscar.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        campoBuscar.setBorder(new Borde(10, Paleta.fondoPrincipal));
-        campoBuscar.setColumns(40);
+        campoBuscarCitas = new JTextField();
+        campoBuscarCitas.setBounds(12, 17, 461, 40);
+        panelControlCitas.add(campoBuscarCitas);
+        campoBuscarCitas.setPreferredSize(new Dimension(100, 40));
+        campoBuscarCitas.setOpaque(false);
+        campoBuscarCitas.setBackground(Paleta.menu);
+        campoBuscarCitas.setForeground(Paleta.fondoPrincipal);
+        campoBuscarCitas.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        campoBuscarCitas.setBorder(new Borde(10, Paleta.fondoPrincipal));
+        campoBuscarCitas.setColumns(40);
         
         JButton eliminarCita = new JButton("Eliminar Cita", elimIcon);
         eliminarCita.setBounds(964, 15, 252, 40);
-        panel_1.add(eliminarCita);
+        panelControlCitas.add(eliminarCita);
         eliminarCita.setOpaque(false);
         eliminarCita.setBorder(null);
         eliminarCita.setPreferredSize(new Dimension(200, 40));
@@ -462,11 +457,11 @@ public class PantallaPrincipal {
         verHistorialPagos.add(panelPagos);
         panelPagos.setLayout(null);
         
-        JScrollPane scrollPane_1 = new JScrollPane();
-        scrollPane_1.setBounds(12, 110, 1033, 538);
-        panelPagos.add(scrollPane_1);
-        scrollPane_1.setOpaque(false);
-        scrollPane_1.setBorder(null);
+        JScrollPane scrollPanePagos = new JScrollPane();
+        scrollPanePagos.setBounds(12, 110, 1033, 538);
+        panelPagos.add(scrollPanePagos);
+        scrollPanePagos.setOpaque(false);
+        scrollPanePagos.setBorder(null);
         
        tableHistorialPagos = new JTable(cargartablaPagos());
        tableHistorialPagos.setRowHeight(21);
@@ -481,17 +476,17 @@ public class PantallaPrincipal {
        tableHistorialPagos.setFillsViewportHeight(true);
        tableHistorialPagos.setBackground(Paleta.table);
        tableHistorialPagos.setFont(new Font("SansSerif", Font.PLAIN, 14));
-       scrollPane_1.setViewportView(tableHistorialPagos);
+       scrollPanePagos.setViewportView(tableHistorialPagos);
        
-       JPanel panelSuperior_1 = new Panel(20, 7, Paleta.textologin2);
-       panelSuperior_1.setBounds(12, 20, 1033, 67);
-       panelPagos.add(panelSuperior_1);
-       panelSuperior_1.setBackground(Paleta.menu);
-       panelSuperior_1.setLayout(null);
+       JPanel panelControlPagos = new Panel(20, 7, Paleta.textologin2);
+       panelControlPagos.setBounds(12, 20, 1033, 67);
+       panelPagos.add(panelControlPagos);
+       panelControlPagos.setBackground(Paleta.menu);
+       panelControlPagos.setLayout(null);
        
        JPanel panelFiltro = new JPanel();
        panelFiltro.setBounds(152, 8, 267, 51);
-       panelSuperior_1.add(panelFiltro);
+       panelControlPagos.add(panelFiltro);
        panelFiltro.setPreferredSize(new Dimension(100, 19));
        panelFiltro.setBackground(Paleta.menu);
        panelFiltro.setLayout(null);
@@ -528,7 +523,7 @@ public class PantallaPrincipal {
        buscarHistorialPagos.setColumns(30);
        buscarHistorialPagos.setBorder(new Borde(10, Paleta.fondoPrincipal));
        buscarHistorialPagos.setBackground(Paleta.menu);
-       panelSuperior_1.add(buscarHistorialPagos);
+       panelControlPagos.add(buscarHistorialPagos);
        
        JLabel lblHistorialPagos = new JLabel("Historial De Pagos");
        lblHistorialPagos.setBounds(9, 30, 241, 37);
@@ -537,42 +532,42 @@ public class PantallaPrincipal {
        lblHistorialPagos.setFont(new Font("SansSerif", Font.BOLD, 27));
        lblHistorialPagos.setBackground(new Color(240, 235, 220));
         
-        CrearCita crearCita = new CrearCita();
-        panel.add(crearCita, "crearcitas");
-        crearCita.setOpaque(true);
-        crearCita.setBackground(Paleta.fondoPrincipal);
-        crearCita.setLayout(null);
+        CrearCita PanelcrearCita = new CrearCita();
+        panel.add(PanelcrearCita, "crearcitas");
+        PanelcrearCita.setOpaque(true);
+        PanelcrearCita.setBackground(Paleta.fondoPrincipal);
+        PanelcrearCita.setLayout(null);
 
         JLabel lblHistorialPagos_1 = new JLabel("Agregar Cita");
         lblHistorialPagos_1.setForeground(new Color(70, 150, 230));
         lblHistorialPagos_1.setFont(new Font("SansSerif", Font.BOLD, 27));
         lblHistorialPagos_1.setBackground(new Color(240, 235, 220));
         lblHistorialPagos_1.setBounds(33, 22, 241, 35);
-        crearCita.add(lblHistorialPagos_1);
+        PanelcrearCita.add(lblHistorialPagos_1);
         
         Panel panelFecha = new Panel(20,7, Paleta.textologin2);
         panelFecha.setBounds(31, 69, 375, 160);
         panelFecha.setBackground(Paleta.menu);
-        crearCita.add(panelFecha);
+        PanelcrearCita.add(panelFecha);
         panelFecha.setLayout(null);
         
-        JLabel lblNewLabel = new JLabel("Fecha");
-        lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblNewLabel.setForeground(Paleta.textologin2);
-        lblNewLabel.setBounds(20, 20, 165, 21);
-        panelFecha.add(lblNewLabel);
+        JLabel lblLabel = new JLabel("Fecha");
+        lblLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblLabel.setForeground(Paleta.textologin2);
+        lblLabel.setBounds(20, 20, 165, 21);
+        panelFecha.add(lblLabel);
         
         Panel panelBarberos = new Panel(25,7, Paleta.textologin2);
         panelBarberos.setLayout(null);
         panelBarberos.setBackground(Paleta.menu);
         panelBarberos.setBounds(31, 265, 1228, 490);
-        crearCita.add(panelBarberos);
+        PanelcrearCita.add(panelBarberos);
         
-        JLabel lblNewLabel_1_2_2 = new JLabel("Barbero");
-        lblNewLabel_1_2_2.setForeground(new Color(242, 240, 235));
-        lblNewLabel_1_2_2.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblNewLabel_1_2_2.setBounds(20, 59, 76, 16);
-        panelBarberos.add(lblNewLabel_1_2_2);
+        JLabel lblBarbero = new JLabel("Barbero");
+        lblBarbero.setForeground(new Color(242, 240, 235));
+        lblBarbero.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblBarbero.setBounds(20, 59, 76, 16);
+        panelBarberos.add(lblBarbero);
         
         JComboBox<String> barberoscombo = new JComboBox<>();
         barberoscombo.setBounds(20, 87, 440, 34);
@@ -586,17 +581,17 @@ public class PantallaPrincipal {
         	barberoscombo.addItem(barberos.get(i).getNombre());
         }
         
-        JLabel lblSeleccionarBarbero = new JLabel("Seleccionar Barbero");
-        lblSeleccionarBarbero.setForeground(new Color(96, 165, 250));
-        lblSeleccionarBarbero.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblSeleccionarBarbero.setBounds(20, 26, 283, 21);
-        panelBarberos.add(lblSeleccionarBarbero);
+        JLabel lblSeleccionarBarberos = new JLabel("Seleccionar Barbero");
+        lblSeleccionarBarberos.setForeground(new Color(96, 165, 250));
+        lblSeleccionarBarberos.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblSeleccionarBarberos.setBounds(20, 26, 283, 21);
+        panelBarberos.add(lblSeleccionarBarberos);
  
-        JLabel lblNewLabel_1_2_2_1_1_1_1 = new JLabel("Cliente");
-        lblNewLabel_1_2_2_1_1_1_1.setForeground(new Color(242, 240, 235));
-        lblNewLabel_1_2_2_1_1_1_1.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lblNewLabel_1_2_2_1_1_1_1.setBounds(20, 237, 70, 16);
-        panelBarberos.add(lblNewLabel_1_2_2_1_1_1_1);
+        JLabel lblCliente = new JLabel("Cliente");
+        lblCliente.setForeground(new Color(242, 240, 235));
+        lblCliente.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblCliente.setBounds(20, 237, 70, 16);
+        panelBarberos.add(lblCliente);
       
         JComboBox<String> comboClientes = new JComboBox<String>(cargarcombobox());
         comboClientes.setOpaque(false);
@@ -696,22 +691,22 @@ public class PantallaPrincipal {
         lblMonto_1.setBounds(1132, 54, 45, 22);
         panelBarberos.add(lblMonto_1);
         
-        Panel paneldatos = new Panel(20,7, Paleta.textologin2);
-        paneldatos.setLayout(null);
-        paneldatos.setBackground(Paleta.menu);
-        paneldatos.setBounds(455, 69, 804, 160);
-        crearCita.add(paneldatos);
+        Panel panelHorarios_1 = new Panel(20,7, Paleta.textologin2);
+        panelHorarios_1.setLayout(null);
+        panelHorarios_1.setBackground(Paleta.menu);
+        panelHorarios_1.setBounds(455, 69, 804, 160);
+        PanelcrearCita.add(panelHorarios_1);
         
-        JLabel lblHorariosDisponiblesDel = new JLabel("Horarios disponibles del barbero");
-        lblHorariosDisponiblesDel.setForeground(new Color(96, 165, 250));
-        lblHorariosDisponiblesDel.setFont(new Font("SansSerif", Font.BOLD, 18));
-        lblHorariosDisponiblesDel.setBounds(20, 20, 292, 21);
-        paneldatos.add(lblHorariosDisponiblesDel);
+        JLabel lblHorariosDisponibles = new JLabel("Horarios disponibles del barbero");
+        lblHorariosDisponibles.setForeground(new Color(96, 165, 250));
+        lblHorariosDisponibles.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lblHorariosDisponibles.setBounds(20, 20, 292, 21);
+        panelHorarios_1.add(lblHorariosDisponibles);
         
         JPanel panelHorarios = new JPanel();
         panelHorarios.setBounds(20, 45, 761, 97);
         panelHorarios.setBackground(Paleta.menu);
-        paneldatos.add(panelHorarios);
+        panelHorarios_1.add(panelHorarios);
         panelHorarios.setLayout(new GridLayout(0, 4, 10, 10));
         
         
@@ -765,24 +760,24 @@ public class PantallaPrincipal {
 		
 	});
     
-       aggCliente.addActionListener(new ActionListener() {
+       btnPanelGestionClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				aggCliente.setBackground(Paleta.active);
-				crearCitas.setBackground(Paleta.fondoBoton2);
-				historialPagos.setBackground(Paleta.fondoBoton2);
-				citas.setBackground(Paleta.fondoBoton2);
+				btnPanelGestionClientes.setBackground(Paleta.active);
+				btnPanelCrearCita.setBackground(Paleta.fondoBoton2);
+				btnPanelPagos.setBackground(Paleta.fondoBoton2);
+				btnPanelCitas.setBackground(Paleta.fondoBoton2);
 				card.show(panel, "agregarcliente");
 				
 				
 			}
 		});
         
-        citas.addActionListener(new ActionListener() {
+        btnPanelCitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				citas.setBackground(Paleta.active);
-				crearCitas.setBackground(Paleta.fondoBoton2);
-				historialPagos.setBackground(Paleta.fondoBoton2);
-				aggCliente.setBackground(Paleta.fondoBoton2);
+				btnPanelCitas.setBackground(Paleta.active);
+				btnPanelCrearCita.setBackground(Paleta.fondoBoton2);
+				btnPanelPagos.setBackground(Paleta.fondoBoton2);
+				btnPanelGestionClientes.setBackground(Paleta.fondoBoton2);
 				card.show(panel, "cita");
 				
 				
@@ -790,22 +785,22 @@ public class PantallaPrincipal {
 		});
         
         
-        crearCitas.addActionListener(new ActionListener() {
+        btnPanelCrearCita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				crearCitas.setBackground(Paleta.active);
-				citas.setBackground(Paleta.fondoBoton2);
-				historialPagos.setBackground(Paleta.fondoBoton2);
-				aggCliente.setBackground(Paleta.fondoBoton2);
+				btnPanelCrearCita.setBackground(Paleta.active);
+				btnPanelCitas.setBackground(Paleta.fondoBoton2);
+				btnPanelPagos.setBackground(Paleta.fondoBoton2);
+				btnPanelGestionClientes.setBackground(Paleta.fondoBoton2);
 				card.show(panel, "crearcitas");
 			}
 		});
         
-        historialPagos.addActionListener(new ActionListener() {
+        btnPanelPagos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				historialPagos.setBackground(Paleta.active);
-				crearCitas.setBackground(Paleta.fondoBoton2);
-				citas.setBackground(Paleta.fondoBoton2);
-				aggCliente.setBackground(Paleta.fondoBoton2);
+				btnPanelPagos.setBackground(Paleta.active);
+				btnPanelCrearCita.setBackground(Paleta.fondoBoton2);
+				btnPanelCitas.setBackground(Paleta.fondoBoton2);
+				btnPanelGestionClientes.setBackground(Paleta.fondoBoton2);
 				card.show(panel, "historialPagos");
 			}
 		});

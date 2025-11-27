@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 
 import javax.swing.JOptionPane;
 
+import Dominio.Barbero;
 import Dominio.UsuarioRegular;
 
 
@@ -186,4 +187,26 @@ public class GuardarDatos {
             return false;
 		}
 }
+	public static boolean actualizarBarbero(Barbero b) {
+		String datos = "UPDATE Barberos SET Nombre=?, Telefono=?, Correo=?, Turno=? WHERE IDBarbero=?";
+		
+		try (Connection con = Conectar.conexion();
+				PreparedStatement ps = con.prepareStatement(datos)) {
+			
+			ps.setString(1, b.getNombre());
+			ps.setString(2, b.getTelefono());
+			ps.setString(3, b.getCorreo());
+			ps.setString(4, b.getTurno());
+			ps.setInt(5,b.getId());
+			
+			int filas = ps.executeUpdate();
+			return filas > 0;
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Datos no actualizador", "Error", JOptionPane.ERROR_MESSAGE);
+			System.out.println("Datos no ingresados");
+			return false;
+		}
+	}
 }
