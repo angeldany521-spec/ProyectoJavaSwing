@@ -1343,19 +1343,6 @@ public class PantallaAdmin {
         pantallaCitas.add(scrollPane);
         
         tablaCitas = new JTable();
-        tablaCitas.setModel(new DefaultTableModel(
-        	new Object[][] {
-        		
-        	},
-        	new String[] {
-        		"ID", "Cliente", "Barbero", "Fecha", "Hora", "Servicios", "monto"
-        	}
-        ));
-        tablaCitas.getColumnModel().getColumn(0).setPreferredWidth(59);
-        tablaCitas.getColumnModel().getColumn(1).setPreferredWidth(138);
-        tablaCitas.getColumnModel().getColumn(2).setPreferredWidth(133);
-        tablaCitas.getColumnModel().getColumn(3).setPreferredWidth(202);
-        tablaCitas.getColumnModel().getColumn(5).setPreferredWidth(355);
         tablaCitas.setModel(ConsultarDatos.cargar_citas());
         DefaultTableModel modeloCitas = (DefaultTableModel) tablaCitas.getModel();
         sorter2 = new TableRowSorter<DefaultTableModel>(modeloCitas);
@@ -1634,6 +1621,32 @@ public class PantallaAdmin {
 			}
 
 	}
+	public void cargarCitasEnTabla() {
+		
+		tablaCitas.setRowSorter(null);
+	    tablaCitas.clearSelection();
+	    tablaCitas.setModel(new DefaultTableModel());
+		
+		DefaultTableModel model = ConsultarDatos.cargar_citas();
+	    tablaCitas.setModel(model);
+	    
+	    tablaCitas.setAutoCreateColumnsFromModel(true);
+	    tablaCitas.setModel(model);
+
+	    if (tablaCitas.getColumnCount() > 0) {
+	        tablaCitas.getColumnModel().getColumn(0).setPreferredWidth(60);
+	        tablaCitas.getColumnModel().getColumn(1).setPreferredWidth(150);
+	        tablaCitas.getColumnModel().getColumn(2).setPreferredWidth(150);
+	        tablaCitas.getColumnModel().getColumn(3).setPreferredWidth(100);
+	        tablaCitas.getColumnModel().getColumn(4).setPreferredWidth(100);
+	        tablaCitas.getColumnModel().getColumn(5).setPreferredWidth(200);
+	        tablaCitas.getColumnModel().getColumn(6).setPreferredWidth(100);
+	    }
+	    
+	    tablaCitas.revalidate();
+	    tablaCitas.repaint();
+	}
+
 	public void eliminarBarbero() {
 		int filaBarbero = tablaBarberos.getSelectedRow();
 		
@@ -1650,12 +1663,13 @@ public class PantallaAdmin {
 		if(confirmacion1 == JOptionPane.YES_OPTION) {
 			GuardarDatos.eliminarDato("Barberos", "Barbero", idB); 
 			JOptionPane.showMessageDialog(null, "Barbero eliminado correctamente.");
-			cargarBarberosEnTabla();;
+			cargarBarberosEnTabla();
+			cargarCitasEnTabla();
 		}else {
 			JOptionPane.showMessageDialog(null, "ERROR al eliminar.","Error", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
+
+        
 	}
 	
 }
