@@ -1240,9 +1240,9 @@ public class PantallaAdmin {
 			public void insertUpdate(javax.swing.event.DocumentEvent e) {
 				String text = tfPagos.getText();
 				if (rbMetodoPago.isSelected()) {
-					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 2));
-				} else if (rbFecha.isSelected()) {
 					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 3));
+				} else if (rbFecha.isSelected()) {
+					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 4));
 				} else {
 					sorter3.setRowFilter(null);
 				}
@@ -1250,9 +1250,9 @@ public class PantallaAdmin {
 			public void removeUpdate(javax.swing.event.DocumentEvent e) {
 				String text = tfPagos.getText();
 				if (rbMetodoPago.isSelected()) {
-					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 2));
-				} else if (rbFecha.isSelected()) {
 					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 3));
+				} else if (rbFecha.isSelected()) {
+					sorter3.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + text, 4));
 				} else {
 					sorter3.setRowFilter(null);
 				}
@@ -1277,6 +1277,7 @@ public class PantallaAdmin {
         tablaPagos = new JTable(cargartablaPagos());
         DefaultTableModel modeloPagos = (DefaultTableModel) tablaPagos.getModel();
         sorter3 = new TableRowSorter<DefaultTableModel>(modeloPagos);
+        tablaPagos.setRowSorter(sorter3);
         tablaPagos.setBackground(Paleta.headers);
         tablaPagos.setShowGrid(true);
         tablaPagos.setGridColor(Paleta.fondoPrincipal);
