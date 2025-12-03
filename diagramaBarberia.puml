@@ -10,24 +10,26 @@ package "Interfaz" {
 	+ RegistrarEmpleados() : void
 	+ EliminarEmpleados() : void
 	}
+	
+	
 
     class PantallaPrincipal {
         + mostrarMenu(): void
         + mostrarVentanas() : void
     }
 
-    class GestionCitasUI {
+    class PanelGestionCitasUI {
         + mostrarCitas(): void
         + crearCita(): void
         + cancelarCita(): void
     }
 
-    class GestionClientesUI {
+    class PanelGestionClientesUI {
         + registrarCliente(): void
         + mostrarClientes(): void
     }
 
-    class GestionPagosUI {
+    class PanelGestionPagosUI {
         + procesarPago(): void
         + mostrarHistorialPagos(): void
     }
@@ -49,13 +51,12 @@ package "Dominio" {
         
     }
 
-    class Cliente {
-    - PuntosFidelidad : int
-    }
+    class Cliente {}
 
     class Barbero {
-        - especialidad: String
-        - disponible: boolean
+   		- turno : String 
+        - horarios : ArrayList
+        - bototnes : ArrayList
         + asignarCita(): void
         + actualizarDisponibilidad(): void
         + mostrarHorarios(): void
@@ -76,9 +77,7 @@ package "Dominio" {
     class UsuarioRegular extends UsuarioBase implements Usuario {
     }
     
-    class Admin extends UsuarioBase implements Usuario{
-    - nivelAcceso : int
-    }
+    class Admin extends UsuarioBase implements Usuario {}
 
 
     class Cita {
@@ -116,11 +115,32 @@ package "Dominio" {
 }
 
 ' === Paquete de Persistencia / Datos ===
-package "Persistencia" {
-    class BaseDatos {
-        + conectar(): void
-        + guardarDatos(objeto): void
-        + consultarDatos(tabla: String): void
+package "Base de Datos" as bd {
+    class Conectar {
+        + conexion(): void
+     
+    }
+    
+    class ConsultarDatos {
+    + obtenerBarberos() : Arraylist
+    + obtenerClientes() : Arraylist
+    + obtenerUsuarios() : Arraylist
+    + cargarCitas() : DefaultTableModel
+    + obtenerPagos() : Arraylist
+    + horaOcupada() : boolean
+    
+    }
+    
+    class GuardarDatos {
+    + guardarBarbero() : boolean
+    + guardarUsuario() : boolean
+    + guardarCliente() : boolean
+    + guardarCita() : boolean
+    + guardarPago() : boolean
+    + actualizarUsuario() : boolean
+    + actualizarBarbero() : boolean
+    + eliminarDato() : void
+    
     }
 }
 
@@ -130,10 +150,11 @@ Barbero  --  Cita
 Cita  --  Pago 
 Cita  --  Servicio  
 
+
 ' === Relaciones entre paquetes ===
-GestionClientesUI --> Cliente 
-GestionCitasUI --> Cita 
-GestionPagosUI --> Pago 
-Dominio --> Persistencia 
+PanelGestionClientesUI --> Cliente 
+PanelGestionCitasUI --> Cita 
+PanelGestionPagosUI --> Pago 
+Dominio --> bd
 Login --> Usuario
 @enduml

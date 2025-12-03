@@ -12,7 +12,7 @@ public class UsuarioRegular extends UsuarioBase implements Usuario{
 
 	@Override
 	public void registrar() {
-
+		
 	}
 
 	@Override

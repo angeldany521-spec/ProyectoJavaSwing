@@ -15,7 +15,6 @@ import GUI.Paleta;
 
 public class Barbero extends Persona{
 
-	private boolean disponible;
 	private String[] horario;
 	private String turno; 
 	private JButton[] botones = new JButton[8];

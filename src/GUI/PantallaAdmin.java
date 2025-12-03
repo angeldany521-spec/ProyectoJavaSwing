@@ -109,8 +109,7 @@ public class PantallaAdmin {
   		  
   		  } catch (Exception ex) {
   		  
-  		  // Manejo de excepción
-  		  
+
   		  }
   		  
   		  }
